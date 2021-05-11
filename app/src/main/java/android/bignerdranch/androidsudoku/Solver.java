@@ -1,8 +1,8 @@
 package android.bignerdranch.androidsudoku;
 
 public class Solver {
-    private static int selected_row;
-    private static int selected_column;
+    int selected_row;
+    int selected_column;
 
     //constructor
     Solver(){
@@ -25,5 +25,13 @@ public class Solver {
 
     public void setSelected_column(int c){
         selected_column = c;
+    }
+
+
+    //sets the selected position on the board to the number clicked
+    private void setNumberPos(int num){
+        if(this.selected_row != -1 && this.selected_column != -1){
+            
+        }
     }
 }

@@ -36,12 +36,8 @@ public class SudokuBoard extends View {
         TypedArray b = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SudokuBoard,
                 0, 0);
 
-        //Todo: delete this
-        for(int i = 0; i < 100; i++){
-            //Log.d("Blah", "SudokuBoard: i:" + i + " a:" + a.getInteger(i, 2));
-        }
+
         try{
-            //Todo: this line doesn't work, uses default
             boardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, Color.BLUE);
             cellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             cellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
