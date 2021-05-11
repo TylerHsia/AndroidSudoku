@@ -44,7 +44,7 @@ public class SudokuBoard extends View {
             //Todo: this line doesn't work, uses default
             boardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, Color.BLUE);
             cellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
-            cellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHightlightColor, 0);
+            cellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
 
 
 
