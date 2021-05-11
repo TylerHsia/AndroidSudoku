@@ -17,7 +17,7 @@ public class Coordinate {
         row = r;
     }
 
-    public int Column;
+    private int Column;
     public int getColumn(){
         return column;
     }
@@ -27,11 +27,11 @@ public class Coordinate {
 
 
 
-    public String ToString() {
-        return "(" + IntToLetter(row) + ", " + (column + 1) + ")";
+    public String toString() {
+        return "(" + intToLetter(row) + ", " + (column + 1) + ")";
     }
 
-    public String IntToLetter(int x) {
+    public String intToLetter(int x) {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return alphabet.substring(x, 1);
     }
