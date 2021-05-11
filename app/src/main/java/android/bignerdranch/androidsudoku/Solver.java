@@ -29,9 +29,9 @@ public class Solver {
 
 
     //sets the selected position on the board to the number clicked
-    private void setNumberPos(int num){
+    public void setNumberPos(int num){
         if(this.selected_row != -1 && this.selected_column != -1){
-            
+            //Todo: set inputted number here
         }
     }
 }
