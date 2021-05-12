@@ -1,6 +1,5 @@
 package android.bignerdranch.androidsudoku;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SudokuGrid{
@@ -205,7 +204,7 @@ public class SudokuGrid{
         //two for loops to go through each row, check no duplicates
         for (int row = 0; row < 9; row++)
         {
-            ArrayList myList = new ArrayList<Integer>();
+            ArrayList<Integer> myList = new ArrayList<Integer>();
             int numTotal = 0;
             for (int column = 0; column < 9; column++)
             {
@@ -221,7 +220,7 @@ public class SudokuGrid{
         //two for loops to go through each column, check no duplicates
         for (int column = 0; column < 9; column++)
         {
-            ArrayList myList = new ArrayList<Integer>();
+            ArrayList<Integer> myList = new ArrayList<Integer>();
             int numTotal = 0;
             for (int row = 0; row < 9; row++)
             {
@@ -238,14 +237,17 @@ public class SudokuGrid{
         //for each box row
         for (int boxRow = 0; boxRow < 3; boxRow++)
         {
+
             //for each box column
             for (int boxColumn = 0; boxColumn < 3; boxColumn++)
             {
-                ArrayList mylist = new ArrayList<Integer>();
+                ArrayList<Integer> myList = new ArrayList<Integer>();
                 int numTotal = 0;
+
                 //for each row in the small box
                 for (int row2 = boxRow * 3; row2 < boxRow * 3 + 3; row2++)
                 {
+
                     //for each column in the small box
                     for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++)
                     {

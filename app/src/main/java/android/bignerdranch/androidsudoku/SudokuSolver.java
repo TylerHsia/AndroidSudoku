@@ -223,7 +223,7 @@ public class SudokuSolver {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in the column
                         for (int row2 = 0; row2 < 9; row2++) {
-                            if (!rowVals.Contains(row2)) {
+                            if (!rowVals.contains(row2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].
                                         size();
                                      possibleIndex++) {
@@ -258,7 +258,7 @@ public class SudokuSolver {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in that row
                         for (int column2 = 0; column2 < 9; column2++) {
-                            if (!columnVals.Contains(column2)) {
+                            if (!columnVals.contains(column2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].
                                         size();
                                      possibleIndex++) {
@@ -324,7 +324,7 @@ public class SudokuSolver {
                             //for each column in the small box
                             for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                                 //if the box was not one of the ones that had same pair
-                                if (!columnVals.Contains(column2) || !rowVals.Contains(row2)) {
+                                if (!columnVals.contains(column2) || !rowVals.contains(row2)) {
 
                                     for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].
                                             size();
@@ -1396,7 +1396,7 @@ public class SudokuSolver {
         }
     }
 
-    public boolean Equals(SudokuGrid obj, SudokuGrid obj2) {
+    public boolean equals(SudokuGrid obj, SudokuGrid obj2) {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 if (!obj2.getSudokuGrid()[row][column].equals(obj.getSudokuGrid()[row][column])) {

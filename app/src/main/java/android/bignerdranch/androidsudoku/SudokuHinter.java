@@ -33,7 +33,7 @@ public class SudokuHinter {
             return myHint;
         }
 
-        myHint.Text = "no hint found due to solver limitations, remainder solved with brute force";
+        myHint.setText("no hint found due to solver limitations, remainder solved with brute force");
         return myHint;
     }
 
@@ -262,7 +262,7 @@ public class SudokuHinter {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in the column
                         for (int row2 = 0; row2 < 9; row2++) {
-                            if (!rowVals.Contains(row2)) {
+                            if (!rowVals.contains(row2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].size(); possibleIndex++) {
                                     if (mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)) != -1) {
                                         mySudoku.getSudokuGrid()[row2][column].remove(mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
@@ -292,7 +292,7 @@ public class SudokuHinter {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in that row
                         for (int column2 = 0; column2 < 9; column2++) {
-                            if (!columnVals.Contains(column2)) {
+                            if (!columnVals.contains(column2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].size(); possibleIndex++) {
                                     if (mySudoku.getSudokuGrid()[row][column2].indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)) != -1) {
                                         mySudoku.getSudokuGrid()[row][column2].remove(mySudoku.getSudokuGrid()[row][column2].indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
@@ -353,7 +353,7 @@ public class SudokuHinter {
                             //for each column in the small box
                             for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                                 //if the box was not one of the ones that had same pair
-                                if (!columnVals.Contains(column2) || !rowVals.Contains(row2)) {
+                                if (!columnVals.contains(column2) || !rowVals.contains(row2)) {
 
                                     for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].size(); possibleIndex++) {
                                         //if the other cell Contains that possibility
