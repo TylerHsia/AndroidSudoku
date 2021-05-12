@@ -1,6 +1,9 @@
 package android.bignerdranch.androidsudoku;
 
-public class SudokuGrid {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class SudokuGrid{
     //sudokCell[,] grid;
     //public SudokuGrid()
     //{
@@ -18,29 +21,29 @@ public class SudokuGrid {
 
 
 
-    public SudokCell[,] cells;
-
-
-    public SudokCell this[int row, int col]
-    {
-        get
-        {
-            return cells[row, col];
-        }
-        set
-        {
-            cells[row, col] = value;
-        }
+    private SudokCell[][] cells;
+    public SudokCell[][] getSudokuGrid(){
+        return cells;
     }
+
+
+    private SudokCell sudokCell;
+    public SudokCell getSudokCell(int row, int column){
+        return cells[row][column];
+    }
+    public void setSudokCell(int row, int column, SudokCell s){
+        cells[row][column] = s;
+    }
+
 
     public SudokuGrid()
     {
-        cells = new SudokCell[9, 9];
+        cells = new SudokCell[9][9];
         for(int row = 0; row < 9; row++)
         {
             for(int column = 0; column < 9; column++)
             {
-                this[row, column] = new SudokCell();
+                cells[row][column] = new SudokCell();
             }
         }
     }
@@ -50,34 +53,35 @@ public class SudokuGrid {
 
 
 
-    public override string ToString()
+    public String ToString()
     {
-        var sb = new StringBuilder();
-        sb.AppendLine();
+        StringBuilder sb = new StringBuilder();
+        //Todo: check \n escape character
+        sb.append("\n");
         for (int row = 0; row < 9; row++)
         {
             for (int column = 0; column < 9; column++)
             {
                 if (false)
                 {
-                    sb.Append(this[row, column].ToString());
+                    sb.append(cells[row][column].ToString());
                 }
                 else
                 {
-                    sb.Append(this[row, column].toStringWithoutCands());
+                    sb.append(cells[row][column].toStringWithoutCands());
                     //sb.Append("0");
                 }
             }
-            sb.AppendLine();
+            sb.append("\n");
         }
-        return sb.ToString();
+        return sb.toString();
     }
 
     /// <summary>
     /// Checks whether a given SudokuGrid is valid
     /// </summary>
     /// <returns></returns>
-    public bool IsValid()
+    public boolean IsValid()
     {
         SudokuSolver sudokuSolver = new SudokuSolver();
         SudokuGrid mySudoku = sudokuSolver.Copy(this);
@@ -100,10 +104,11 @@ public class SudokuGrid {
             return true;
         }
 
-        bool solvedOne = false;
+        boolean fsolvedOne = false;
 
         SudokuGrid copy1 = sudokuSolver.Copy(this);
-        sudokuSolver.bruteForceSolver(ref copy1);
+        //Todo: pass by referenece sudokuSolver.bruteForceSolver(ref copy1);
+        sudokuSolver.bruteForceSolver(copy1);
 
         if (!sudokuSolver.IsSolved(copy1))
         {
@@ -124,28 +129,28 @@ public class SudokuGrid {
             for (int column = 0; column < 9; column++)
             {
                 //if unsolved
-                if (!this[row, column].getSolved())
+                if (!cells[row][column].getSolved())
                 {
 
-                    for(int i = 0; i < this[row, column].getPossibles().Count; i++)
+                    for(int i = 0; i < cells[row][column].getPossibles().size(); i++)
                     {
                         SudokuGrid copy = sudokuSolver.Copy(this);
                         //solve to the index of the guess
-                        copy[row, column].solve(copy[row, column].getPossibles()[i]);
+                        copy.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getPossibles().get(i));
 
 
 
-                        bool solvedThisOne;
+                        boolean solvedThisOne;
 
 
 
                         try
                         {
                             //brute force it
-                            sudokuSolver.bruteForceSolver(ref copy);
+                            sudokuSolver.bruteForceSolver(copy);
                             solvedThisOne = sudokuSolver.IsSolved(copy);
                         }
-                        catch
+                        catch(Exception e)
                         {
                             solvedThisOne = false;
                         }
@@ -155,16 +160,16 @@ public class SudokuGrid {
                         {
                             try
                             {
-                                if (!firstSolve.ToString().Equals(copy.ToString()))
+                                if (!firstSolve.ToString().equals(copy.ToString()))
                                 {
                                     //return false;
                                 }
-                                if (!sudokuSolver.Equals(firstSolve, copy))
+                                if (!sudokuSolver.equals(firstSolve, copy))
                                 {
                                     return false;
                                 }
                             }
-                            catch
+                            catch(Exception e)
                             {
 
                             }
@@ -181,7 +186,7 @@ public class SudokuGrid {
 
     }
 
-    public bool IsSolved()
+    public boolean IsSolved()
     {
         SudokuSolver sudokuSolver = new SudokuSolver();
         //checks each box is solved
@@ -190,7 +195,7 @@ public class SudokuGrid {
             for (int column = 0; column < 9; column++)
             {
                 //if unsolved, return false
-                if (!this[row, column].getSolved())
+                if (!cells[row][column].getSolved())
                 {
                     return false;
                 }
@@ -200,11 +205,11 @@ public class SudokuGrid {
         //two for loops to go through each row, check no duplicates
         for (int row = 0; row < 9; row++)
         {
-            var myList = new List<int>();
+            ArrayList myList = new ArrayList<Integer>();
             int numTotal = 0;
             for (int column = 0; column < 9; column++)
             {
-                myList.Add(this[row, column].getVal());
+                myList.add(cells[row][column].getVal());
             }
             if (sudokuSolver.ContainsDuplicate(myList))
             {
@@ -216,11 +221,11 @@ public class SudokuGrid {
         //two for loops to go through each column, check no duplicates
         for (int column = 0; column < 9; column++)
         {
-            var myList = new List<int>();
+            ArrayList myList = new ArrayList<Integer>();
             int numTotal = 0;
             for (int row = 0; row < 9; row++)
             {
-                myList.Add(this[row, column].getVal());
+                myList.add(cells[row][column].getVal());
             }
             if (sudokuSolver.ContainsDuplicate(myList))
             {
@@ -236,7 +241,7 @@ public class SudokuGrid {
             //for each box column
             for (int boxColumn = 0; boxColumn < 3; boxColumn++)
             {
-                var myList = new List<int>();
+                ArrayList mylist = new ArrayList<Integer>();
                 int numTotal = 0;
                 //for each row in the small box
                 for (int row2 = boxRow * 3; row2 < boxRow * 3 + 3; row2++)
@@ -244,7 +249,7 @@ public class SudokuGrid {
                     //for each column in the small box
                     for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++)
                     {
-                        myList.Add(this[row2, column2].getVal());
+                        myList.add(cells[row2][column2].getVal());
                     }
                 }
                 if (sudokuSolver.ContainsDuplicate(myList))
@@ -257,13 +262,13 @@ public class SudokuGrid {
         return true;
     }
 
-    public bool Equals(SudokuGrid obj)
+    public boolean Equals(SudokuGrid obj)
     {
         for(int row = 0; row < 9; row++)
         {
             for(int column = 0; column < 9; column++)
             {
-                if(!this[row, column].Equals(obj[row, column]))
+                if(!cells[row][column].equals(obj.getSudokuGrid()[row][column]))
                 {
                     return false;
                 }
@@ -279,7 +284,7 @@ public class SudokuGrid {
         {
             for(int column = 0; column < 9; column++)
             {
-                if(this[row, column].getSolved())
+                if(cells[row][column].getSolved())
                 {
                     numSolved++;
                 }

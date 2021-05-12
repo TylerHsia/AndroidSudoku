@@ -1,21 +1,23 @@
 package android.bignerdranch.androidsudoku;
 
+import java.util.ArrayList;
+
 public class SudokCell {
     //constructors
-    private List<int> possibles = new List<int>();
-    private bool solved = false;
+    private ArrayList<Integer> possibles = new ArrayList<Integer>();
+    private boolean solved = false;
     public SudokCell(int value)
     {
         if (value == -1 || value == 0)
         {
             for (int i = 1; i <= 9; i++)
             {
-                possibles.Add(i);
+                possibles.add(i);
             }
         }
         else
         {
-            possibles.Add(value);
+            possibles.add(value);
             solved = true;
         }
 
@@ -27,27 +29,27 @@ public class SudokCell {
     {
         for (int i = 1; i <= 9; i++)
         {
-            possibles.Add(i);
+            possibles.add(i);
         }
     }
     public SudokCell(SudokCell obj)
     {
         new SudokCell(obj.getPossibles(), obj.getSolved());
     }
-    public SudokCell(List<int> possibles, bool solved)
+    public SudokCell(ArrayList<Integer> possibles, boolean solved)
     {
-        for (int i = 0; i < possibles.Count; i++)
+        for (int i = 0; i < possibles.size(); i++)
         {
-            this.possibles.Add(possibles[i]);
+            this.possibles.add(possibles.get(i));
         }
         this.solved = solved;
     }
 
-    public SudokCell(List<int> possibles)
+    public SudokCell(ArrayList<Integer> possibles)
     {
-        for (int i = 0; i < possibles.Count; i++)
+        for (int i = 0; i < possibles.size(); i++)
         {
-            this.possibles.Add(possibles[i]);
+            this.possibles.add(possibles.get(i));
         }
         this.solved = false;
     }
@@ -64,28 +66,28 @@ public class SudokCell {
 
     public int indexOf(int val)
     {
-        return possibles.IndexOf(val);
+        return possibles.indexOf(val);
     }
     //removes a candidate
-    public bool RemoveAt(int toRemove)
+    public boolean remove(int toRemove)
     {
 
         //to be commented out
-        bool toPrint = false;
+        boolean toPrint = false;
 
-        possibles.RemoveAt(toRemove);
-        if (possibles.Count == 1)
+        possibles.remove(toRemove);
+        if (possibles.size() == 1)
         {
             solved = true;
         }
 
         //to be commented out
-        if (possibles.Count == 0)
+        if (possibles.size() == 0)
         {
             //System.out.println("Removed all possibilities, my null pointer exception");
             toPrint = true;
 
-            throw new InvalidOperationException("Cell has zero candidates");
+            throw new IllegalStateException("Cell has zero candidates");
         }
         return toPrint;
     }
@@ -93,24 +95,24 @@ public class SudokCell {
     //removes all other candidates
     public void solve(int solution)
     {
-        while (possibles.Count > 0)
+        while (possibles.size() > 0)
         {
-            possibles.RemoveAt(0);
+            possibles.remove(0);
         }
-        possibles.Add(solution);
+        possibles.add(solution);
         solved = true;
     }
 
     //checks two cells for the same possibilities
-    public bool samePossible(SudokCell other)
+    public boolean samePossible(SudokCell other)
     {
-        if (this.possibles.Count != other.possibles.Count)
+        if (this.possibles.size() != other.possibles.size())
         {
             return false;
         }
-        for (int i = 0; i < this.possibles.Count; i++)
+        for (int i = 0; i < this.possibles.size(); i++)
         {
-            if (this.possibles[i] != other.possibles[i])
+            if (this.possibles.get(i) != other.possibles.get(i))
             {
                 return false;
             }
@@ -119,12 +121,12 @@ public class SudokCell {
     }
 
     //toString
-    public string toStringWithoutCands()
+    public String toStringWithoutCands()
     {
-        string toReturn = "";
+        String toReturn = "";
         if (solved)
         {
-            return toReturn + possibles[0] + " ";
+            return toReturn + possibles.get(0) + " ";
         }
         else
         {
@@ -132,30 +134,30 @@ public class SudokCell {
         }
     }
 
-    public override string ToString()
+    public String ToString()
     {
-        string toReturn = "";
+        String toReturn = "";
         if (solved)
         {
-            return toReturn + possibles[0] + "\t";
+            return toReturn + possibles.get(0) + "\t";
         }
         else
         {
-            for (int i = 0; i < possibles.Count; i++)
+            for (int i = 0; i < possibles.size(); i++)
             {
-                toReturn = toReturn + possibles[i];
+                toReturn = toReturn + possibles.get(i);
             }
             return toReturn + "\t";
         }
     }
 
     //contains
-    public bool contains(int x)
+    public boolean contains(int x)
     {
-        return possibles.Contains(x);
+        return possibles.contains(x);
     }
     //accessors
-    public bool getSolved()
+    public boolean getSolved()
     {
         return solved;
     }
@@ -164,7 +166,7 @@ public class SudokCell {
     {
         if (solved)
         {
-            return possibles[0];
+            return possibles.get(0);
         }
         else
         {
@@ -174,33 +176,34 @@ public class SudokCell {
 
     public int getVal(int index)
     {
-        return possibles[index];
+        return possibles.get(index);
     }
 
-    public List<int> getPossibles()
+    public ArrayList<Integer> getPossibles()
     {
         return possibles;
     }
-    public List<int> getPossibles(SudokCell obj)
+    public ArrayList<Integer> getPossibles(SudokCell obj)
     {
         return obj.getPossibles();
     }
 
     public int size()
     {
-        return possibles.Count;
+        return possibles.size();
     }
 
-    public bool Equals(SudokCell obj)
+    public boolean Equals(SudokCell obj)
     {
-        if (!this.getPossibles().SequenceEqual(obj.getPossibles()) || this.getSolved() != obj.getSolved())
+        //Todo: this line might cause error if equals doesn't compares references
+        if (!this.getPossibles().equals(obj.getPossibles()) || this.getSolved() != obj.getSolved())
         {
             return false;
         }
         return true;
     }
 
-    public string ToStringVal()
+    public String ToStringVal()
     {
         if(this.getSolved())
         {
@@ -212,7 +215,7 @@ public class SudokCell {
         return "";
     }
 
-    public bool isDigit(int x)
+    public boolean isDigit(int x)
     {
         for(int i = 1; i <= 9; i++)
         {

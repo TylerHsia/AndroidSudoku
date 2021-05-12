@@ -24,7 +24,8 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         Log.i("Test", "addition_isCorrect: ");
-        assertEquals(4, 2 + 2);
+        //Todo: can i make messages like this
+        assertEquals("Test message", 4, 2 + 2);
     }
 
 
@@ -35,7 +36,7 @@ public class ExampleUnitTest {
     public void TestRateDifficulty() {
         SudokuSolver sudokuSolver = new SudokuSolver();
         for (int i = 1; i <= NumStoredSudokus; i++) {
-            SudokuLogic.sudokCell sudokCell = new SudokuLogic.sudokCell();
+            SudokCell sudokCell = new SudokCell();
             //inputted sudoku
             int[][] sudokuInputted = input(i);
 
@@ -44,12 +45,12 @@ public class ExampleUnitTest {
             //my sudoku to be worked with
             for (int row = 0; row < 9; row++) {
                 for (int column = 0; column < 9; column++) {
-                    mySudoku[row, column] =new sudokCell(sudokuInputted[row, column]);
+                    mySudoku.getSudokuGrid()[row][column] =new SudokCell(sudokuInputted[row][column]);
                 }
             }
 
 
-            TestContext.WriteLine($"the level of {i} is {sudokuSolver.RateDifficulty(mySudoku)}");
+            Log.i("Difficulty", "the level of " + i + " is " + sudokuSolver.RateDifficulty(mySudoku));
         }
     }
 
@@ -59,14 +60,14 @@ public class ExampleUnitTest {
 
         ArrayList<Integer> possibles = new ArrayList<Integer>();
         possibles.add(10);
-        possibles.RemoveAt(0);
+        possibles.remove(0);
         //var x = new SudokuLogic.Class1();
         //var y = x.HelloTest();
-        //TestContext.WriteLine($"the value is {y}");
+        //Log.i("Test", $"the value is {y}");
         ////Assert.Fail(y);
-        SudokuLogic.sudokCell sudokCell = new SudokuLogic.sudokCell();
-        sudokCell newCell = new sudokCell(0);
-        newCell.RemoveAt(0);
+        SudokCell sudokCell = new SudokCell();
+        SudokCell newCell = new SudokCell(0);
+        newCell.getPossibles().remove(0);
 
 
     }
@@ -85,44 +86,44 @@ public class ExampleUnitTest {
         int[] x4 = {1, 5, 6, 3, 9, 8, 4, 7, 6};
         ArrayList<Integer> list4 = new ArrayList<Integer>(x4);
 
-        SudokuLogic.SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuSolver sudokuSolver = new SudokuSolver();
 
-        Assert.IsFalse(sudokuSolver.ContainsDuplicate(list1), "1 wrong");
-        Assert.IsTrue(sudokuSolver.ContainsDuplicate(list2), "2 wrong");
-        Assert.IsFalse(sudokuSolver.ContainsDuplicate(list3), "3 wrong");
-        Assert.IsTrue(sudokuSolver.ContainsDuplicate(list4), "4 wrong ");
+        assertFalse(sudokuSolver.ContainsDuplicate(list1), "1 wrong");
+        assertTrue(sudokuSolver.ContainsDuplicate(list2), "2 wrong");
+        assertFalse(sudokuSolver.ContainsDuplicate(list3), "3 wrong");
+        assertTrue(sudokuSolver.ContainsDuplicate(list4), "4 wrong ");
     }
 
     @Test
     public void TestSudokuGridCopier() {
-        SudokuLogic.SudokuSolver sudokuSolver = new SudokuLogic.SudokuSolver();
+        SudokuSolver sudokuSolver = new SudokuSolver();
         SudokuGrid myGrid = new SudokuGrid();
         myGrid = sudokuSolver.FromIntArray(input(1));
         SudokuGrid myGrid2 = sudokuSolver.Copy(myGrid);
-        Assert.IsTrue(myGrid.ToString().Equals(myGrid2.ToString()));
+        assertTrue(myGrid.ToString().equals(myGrid2.ToString()));
 
-        myGrid2[2, 3].solve(2);
-        myGrid[2, 3].solve(3);
-        Assert.IsFalse(myGrid.ToString().Equals(myGrid2.ToString()));
+        myGrid2.getSudokuGrid()[2][3].solve(2);
+        myGrid.getSudokuGrid()[2][3].solve(3);
+        assertFalse(myGrid.ToString().equals(myGrid2.ToString()));
     }
 
     @Test
     public void CheckAllStoredLogic() {
 
-        bool solvedAll = true;
+        boolean solvedAll = true;
         //1 to 23, inclusive
         for (int i = 1; i <= NumStoredSudokus; i++) {
-            SudokuLogic.SudokuSolver sudokuSolver = new SudokuLogic.SudokuSolver();
-            SudokuLogic.sudokCell sudokCell = new SudokuLogic.sudokCell();
+            SudokuSolver sudokuSolver = new SudokuSolver();
+            SudokCell sudokCell = new SudokCell();
             //inputted sudoku
-            int[,]sudokuInputted = input(i);
+            int[][] sudokuInputted = input(i);
 
             SudokuGrid mySudoku = new SudokuGrid();
 
             //my sudoku to be worked with
             for (int row = 0; row < 9; row++) {
                 for (int column = 0; column < 9; column++) {
-                    mySudoku[row, column] =new sudokCell(sudokuInputted[row, column]);
+                    mySudoku.getSudokuGrid()[row][column] =new SudokCell(sudokuInputted[row][column]);
                 }
             }
 
@@ -133,19 +134,19 @@ public class ExampleUnitTest {
             //if unsolved
             if (!sudokuSolver.IsSolved(mySudoku, false)) {
                 solvedAll = false;
-                TestContext.WriteLine("More work on " + i);
-                TestContext.WriteLine("Num unsolved is " + sudokuSolver.numUnsolved(mySudoku));
+                Log.i("Test", "More work on " + i);
+                Log.i("Test", "Num unsolved is " + sudokuSolver.numUnsolved(mySudoku));
             }
             //if there was a duplicate in row, column, or box
             if (sudokuSolver.InvalidMove(mySudoku)) {
-                TestContext.WriteLine("Invalid move on " + i);
+                Log.i("Test", "Invalid move on " + i);
             }
         }
         if (solvedAll) {
-            TestContext.WriteLine("All solved");
+            Log.i("Test", "All solved");
         }
 
-        Assert.IsTrue(solvedAll, "Not all solved");
+        assertTrue("Not all solved", solvedAll);
     }
 
     @Test
@@ -153,21 +154,21 @@ public class ExampleUnitTest {
         //1 to 23, inclusive
         //23 broke
         for (int i = 1; i <= 23; i++) {
-            SudokuLogic.SudokuSolver sudokuSolver = new SudokuLogic.SudokuSolver();
-            SudokuLogic.sudokCell sudokCell = new SudokuLogic.sudokCell();
+            SudokuSolver sudokuSolver = new SudokuSolver();
+            SudokCell sudokCell = new SudokCell();
             //inputted sudoku
-            int[,]sudokuInputted = input(i);
+            int[][]sudokuInputted = input(i);
 
             SudokuGrid mySudoku = new SudokuGrid();
 
             //my sudoku to be worked with
             for (int row = 0; row < 9; row++) {
                 for (int column = 0; column < 9; column++) {
-                    mySudoku[row, column] =new sudokCell(sudokuInputted[row, column]);
+                    mySudoku.getSudokuGrid()[row][column] =new SudokCell(sudokuInputted[row][column]);
                 }
             }
 
-            Assert.IsTrue(mySudoku.IsValid(), $"{i} was said to be not valid");
+            assertTrue(i + " was said to be not valid", mySudoku.IsValid());
 
         }
 
@@ -175,11 +176,11 @@ public class ExampleUnitTest {
         //my sudoku to be worked with
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                notValid1[row, column] =new sudokCell();
+                notValid1.getSudokuGrid()[row][column] =new SudokCell();
             }
         }
-        notValid1[1, 1].solve(2);
-        Assert.IsFalse(notValid1.IsValid(), "IsValid said a nonValid Sudoku is validx");
+        notValid1.getSudokuGrid()[1][1].solve(2);
+        assertFalse("IsValid said a nonValid Sudoku is valid", notValid1.IsValid());
     }
 
     @Test
@@ -188,17 +189,17 @@ public class ExampleUnitTest {
 
         //need to check 5, 9, 12, 13
         SudokuGrid mySudoku = new SudokuGrid();
-        int[,]sudokuInputted = input(5);
+        int[][] sudokuInputted = input(5);
         //my sudoku to be worked with
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                mySudoku[row, column] =new sudokCell(sudokuInputted[row, column]);
+                mySudoku.getSudokuGrid()[row][column] =new SudokCell(sudokuInputted[row][column]);
             }
         }
 
 
-        sudokuSolver.bruteForceSolver(ref mySudoku);
-        Assert.IsTrue(sudokuSolver.IsSolved(mySudoku), "Brute force did not solve it");
+        sudokuSolver.bruteForceSolver(mySudoku);
+        assertTrue( "Brute force did not solve it", sudokuSolver.IsSolved(mySudoku));
 
 
     }
@@ -207,17 +208,19 @@ public class ExampleUnitTest {
     @Test
     public void TestSudokuGridCopy() {
         SudokuGrid myGrid1 = new SudokuGrid();
-        myGrid1[0, 0].solve(1);
+        myGrid1.getSudokuGrid()[0][0].solve(1);
 
         SudokuGrid myGrid2 = new SudokuGrid();
-        myGrid2[0, 0].solve(1);
+        myGrid2.getSudokuGrid()[0][0].solve(1);
 
-        Assert.IsTrue(myGrid1.Equals(myGrid2));
+        assertTrue(myGrid1.equals(myGrid2));
     }
 
 
     //gives sudoku from list of possibles
     public static int[][] input(int x) {
+        //Todo: make these sample inputs work
+        /*
         if (x == 1) {
             int[,]beginner = {{-1, -1, 5, 8, 2, -1, -1, 1, 4},
                     {3, 1, -1, 9, -1, 4, 5, -1, -1},
@@ -318,6 +321,7 @@ public class ExampleUnitTest {
                     {0, 0, 0, 5, 2, 0, 0, 0, 4}};
             return fiveStar3;
         }
+        */
         if (x == 9) {
             ArrayList<Integer> onlineSudokuHard = new ArrayList<Integer>();
             onlineSudokuHard.add(204010);
@@ -548,20 +552,18 @@ public class ExampleUnitTest {
 
             return twoDConverter(crackingAToughClassic);
         }
-        int[,]other = new int[9, 9];
+        int[][] other = new int[9][9];
         return other;
     }
 
 
     //converts int[] of integers length 9 into a 2d array
-    public static int[,]
-
-    twoDConverter(ArrayList<Integer> oneD) {
-        int[,]twoD = new int[9, 9];
+    public static int[][] twoDConverter(ArrayList<Integer> oneD) {
+        int[][]twoD = new int[9][9];
         for (int row = 0; row < 9; row++) {
-            int oneDRow = oneD[row];
+            int oneDRow = oneD.get(row);
             for (int column = 8; column >= 0; column--) {
-                twoD[row, column] =oneDRow % 10;
+                twoD[row][column] = oneDRow % 10;
                 oneDRow = oneDRow / 10;
             }
         }

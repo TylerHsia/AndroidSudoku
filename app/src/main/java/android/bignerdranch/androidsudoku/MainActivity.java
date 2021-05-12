@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Todo: make buttons custom
     //Todo: delete button
+    //Todo: lowercase method names
+    //Todo: change all sudoku.getSudokuGrid[row][column] to getsudokucell(row, column)
 
 
     @Override

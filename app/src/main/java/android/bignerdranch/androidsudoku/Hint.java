@@ -1,5 +1,7 @@
 package android.bignerdranch.androidsudoku;
 
+import java.util.ArrayList;
+
 public class Hint {
 
     private  String text;
@@ -13,7 +15,7 @@ public class Hint {
 
 
 
-    private List<SudokCell> RelevantCells;
+    private ArrayList<SudokCell> RelevantCells;
     //hint types: naked single, naked pair...
 
     private Coordinate hintCoord;
