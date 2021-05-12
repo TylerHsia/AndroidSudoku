@@ -131,7 +131,7 @@ public class ExampleUnitTest {
             SudokuGrid mySudoku = getInput(i);
 
             //Todo: change forcing chains back to true
-            sudokuSolver.Solve(mySudoku, false);
+            sudokuSolver.Solve(mySudoku, true);
 
             //bruteForceSolver(mySudoku);
 
@@ -225,7 +225,7 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void TestRookAndBox(){
+    public void TestSolvingMethods(){
         boolean failed = false;
         //1 to 23, inclusive
         for (int i = 1; i <= NumStoredSudokus; i++) {
@@ -233,14 +233,27 @@ public class ExampleUnitTest {
             SudokuGrid mySudoku = getInput(i);
 
             //Solving methods to be checked for invalid results
-            sudokuSolver.RookChecker(mySudoku);
-            sudokuSolver.BoxChecker(mySudoku);
+            for(int j = 0; j<10; j++) {
+                sudokuSolver.RookChecker(mySudoku);
+                sudokuSolver.BoxChecker(mySudoku);
+                sudokuSolver.OnlyCandidateLeftBoxChecker(mySudoku);
+                sudokuSolver.OnlyCandidateLeftRookChecker(mySudoku);
+                sudokuSolver.NakedCandidateRookChecker(mySudoku);
+                sudokuSolver.NakedCandidateBoxChecker(mySudoku);
+                sudokuSolver.CandidateLinesChecker(mySudoku);
+                sudokuSolver.HiddenCandidatePairChecker(mySudoku);
+                sudokuSolver.pointingPairRookToBoxChecker(mySudoku);
+                sudokuSolver.forcingChainsChecker(mySudoku);
+            }
 
             failed = false;
             //if there was a duplicate in row, column, or box
             if (sudokuSolver.InvalidMove(mySudoku)) {
-                Log.i("Test", "RookBox failed on " + i + mySudoku);
+                Log.i("Test", "Solving methods failed on " + i + mySudoku);
                 failed = true;
+            }
+            if(!sudokuSolver.IsSolved(mySudoku)){
+                Log.i("Test", "Solving methods couldn't solve " + i);
             }
         }
         assertFalse(failed);

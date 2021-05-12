@@ -884,6 +884,8 @@ public class SudokuSolver {
                     }
 
 
+
+
                     //all other guesses
                     for (int candidateIndex = 1; candidateIndex < numCands; candidateIndex++) {
                         SudokuGrid copy = Copy(mySudoku);
@@ -1084,20 +1086,14 @@ public class SudokuSolver {
             CandidateLinesChecker(mySudoku);
             HiddenCandidatePairChecker(mySudoku);
             pointingPairRookToBoxChecker(mySudoku);
-
-            //System.out.println("HeHe");
+            //forcingChainsChecker(mySudoku);
         }
-        boolean forcingChainsCheckerWorks = false;
+        boolean forcingChainsCheckerWorks = true;
         if (forcingChains) {
-            forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
+            while(forcingChainsCheckerWorks){
+                forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
+            }
         }
-        if (forcingChainsCheckerWorks) {
-            Solve(mySudoku, true);
-        }
-            /*if(bruteForce && !solved(mySudoku, false)){
-                System.out.println("multiple guesses");
-                bruteForceSolver(mySudoku);
-            }*/
     }
 
 
