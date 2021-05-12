@@ -1107,7 +1107,9 @@ public class SudokuSolver {
         for (int column = 0; column < 9; column++) {
             ArrayList<Integer> myList = new ArrayList<Integer>();
             for (int row = 0; row < 9; row++) {
-                myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                    myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                }
             }
             if (ContainsDuplicate(myList)) {
                 return true;
@@ -1118,7 +1120,9 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             ArrayList<Integer> myList = new ArrayList<Integer>();
             for (int column = 0; column < 9; column++) {
-                myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                    myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                }
             }
             if (ContainsDuplicate(myList)) {
                 return true;
@@ -1135,7 +1139,9 @@ public class SudokuSolver {
                 for (int row = boxRow * 3; row < boxRow * 3 + 3; row++) {
                     //for each column in the small box
                     for (int column = boxColumn * 3; column < boxColumn * 3 + 3; column++) {
-                        myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                        if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                            myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
+                        }
                     }
                 }
                 if (ContainsDuplicate(myList)) {
@@ -1193,7 +1199,6 @@ public class SudokuSolver {
 
     //checks if a List contains a duplicate over the domain [1, 9]
     public boolean ContainsDuplicate(ArrayList<Integer> myList) {
-        //Todo: check that new implementation of this method works
         ArrayList<Integer> results = new ArrayList<Integer>();
         Set<Integer> set = new HashSet<Integer>(myList);
 
@@ -1508,9 +1513,9 @@ public class SudokuSolver {
 
     //gives sudoku from list of possibles
     public int[][] input(int x) {
-        /*
+
         if (x == 1) {
-            int[,]beginner = {{-1, -1, 5, 8, 2, -1, -1, 1, 4},
+            int[][]beginner = {{-1, -1, 5, 8, 2, -1, -1, 1, 4},
                     {3, 1, -1, 9, -1, 4, 5, -1, -1},
                     {-1, 4, 2, -1, 3, -1, 9, 6, 8},
 
@@ -1524,7 +1529,7 @@ public class SudokuSolver {
             return beginner;
         }
         if (x == 2) {
-            int[,]normal = {{0, 0, 0, 0, 9, 0, 0, 0, 0},
+            int[][]normal = {{0, 0, 0, 0, 9, 0, 0, 0, 0},
                     {0, 9, 0, 0, 0, 0, 0, 4, 0},
                     {0, 5, 1, 8, 0, 7, 0, 0, 0},
 
@@ -1538,7 +1543,7 @@ public class SudokuSolver {
             return normal;
         }
         if (x == 3) {
-            int[,]hard = {{0, 8, 0, 0, 0, 0, 0, 4, 0},
+            int[][]hard = {{0, 8, 0, 0, 0, 0, 0, 4, 0},
                     {2, 0, 0, 8, 0, 0, 5, 0, 7},
                     {0, 0, 4, 7, 0, 0, 0, 0, 0},
                     {0, 0, 0, 3, 0, 0, 0, 7, 1},
@@ -1550,7 +1555,7 @@ public class SudokuSolver {
             return hard;
         }
         if (x == 4) {
-            int[,]expert = {{0, 0, 7, 0, 0, 0, 6, 3, 0},
+            int[][]expert = {{0, 0, 7, 0, 0, 0, 6, 3, 0},
                     {6, 0, 0, 5, 0, 3, 0, 0, 9},
                     {8, 0, 0, 0, 7, 0, 0, 0, 0},
                     {0, 0, 0, 9, 0, 0, 0, 0, 3},
@@ -1562,7 +1567,7 @@ public class SudokuSolver {
             return expert;
         }
         if (x == 5) {
-            int[,]expert2 = {{0, 9, 1, 0, 0, 0, 0, 0, 0},
+            int[][]expert2 = {{0, 9, 1, 0, 0, 0, 0, 0, 0},
                     {4, 0, 0, 0, 9, 0, 0, 0, 0},
                     {2, 0, 0, 0, 0, 7, 0, 0, 0},
                     {9, 0, 0, 0, 0, 0, 0, 1, 0},
@@ -1574,7 +1579,7 @@ public class SudokuSolver {
             return expert2;
         }
         if (x == 6) {
-            int[,]fiveStar = {{0, 5, 0, 0, 1, 3, 0, 0, 0},
+            int[][]fiveStar = {{0, 5, 0, 0, 1, 3, 0, 0, 0},
                     {0, 0, 1, 0, 8, 0, 3, 0, 0},
                     {8, 0, 0, 5, 0, 0, 0, 6, 4},
                     {5, 0, 7, 0, 3, 0, 0, 0, 0},
@@ -1586,7 +1591,7 @@ public class SudokuSolver {
             return fiveStar;
         }
         if (x == 7) {
-            int[,]fiveStar2 = {{0, 0, 6, 0, 0, 0, 0, 4, 0},
+            int[][]fiveStar2 = {{0, 0, 6, 0, 0, 0, 0, 4, 0},
                     {0, 0, 0, 0, 3, 0, 7, 1, 6},
                     {3, 0, 0, 0, 7, 9, 8, 0, 0},
                     {0, 0, 0, 0, 9, 0, 0, 0, 7},
@@ -1598,7 +1603,7 @@ public class SudokuSolver {
             return fiveStar2;
         }
         if (x == 8) {
-            int[,]fiveStar3 = {{8, 0, 0, 0, 5, 6, 0, 0, 0},
+            int[][]fiveStar3 = {{8, 0, 0, 0, 5, 6, 0, 0, 0},
                     {0, 0, 0, 8, 0, 0, 0, 6, 0},
                     {9, 0, 0, 3, 4, 0, 1, 0, 0},
                     {6, 0, 0, 0, 3, 0, 0, 5, 0},
@@ -1610,7 +1615,7 @@ public class SudokuSolver {
             return fiveStar3;
         }
 
-         */
+
         if (x == 9) {
             ArrayList<Integer> onlineSudokuHard = new ArrayList<Integer>();
             onlineSudokuHard.add(204010);

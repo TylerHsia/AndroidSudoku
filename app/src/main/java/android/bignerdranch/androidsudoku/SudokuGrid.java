@@ -51,11 +51,10 @@ public class SudokuGrid{
 
 
 
-
-    public String ToString()
+    @Override
+    public String toString()
     {
         StringBuilder sb = new StringBuilder();
-        //Todo: check \n escape character
         sb.append("\n");
         for (int row = 0; row < 9; row++)
         {
@@ -63,7 +62,7 @@ public class SudokuGrid{
             {
                 if (false)
                 {
-                    sb.append(cells[row][column].ToString());
+                    sb.append(cells[row][column].toString());
                 }
                 else
                 {
@@ -159,7 +158,7 @@ public class SudokuGrid{
                         {
                             try
                             {
-                                if (!firstSolve.ToString().equals(copy.ToString()))
+                                if (!firstSolve.toString().equals(copy.toString()))
                                 {
                                     //return false;
                                 }
@@ -264,7 +263,8 @@ public class SudokuGrid{
         return true;
     }
 
-    public boolean Equals(SudokuGrid obj)
+    //Todo: make sure this method is being called, not generic equals
+    public boolean equals(SudokuGrid obj)
     {
         for(int row = 0; row < 9; row++)
         {

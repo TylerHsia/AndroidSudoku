@@ -134,7 +134,8 @@ public class SudokCell {
         }
     }
 
-    public String ToString()
+    @Override
+    public String toString()
     {
         String toReturn = "";
         if (solved)
@@ -193,7 +194,8 @@ public class SudokCell {
         return possibles.size();
     }
 
-    public boolean Equals(SudokCell obj)
+    //Todo: make sure this method is being called, not generic equals
+    public boolean equals(SudokCell obj)
     {
         //Todo: this line might cause error if equals doesn't compares references
         if (!this.getPossibles().equals(obj.getPossibles()) || this.getSolved() != obj.getSolved())
@@ -203,7 +205,7 @@ public class SudokCell {
         return true;
     }
 
-    public String ToStringVal()
+    public String toStringVal()
     {
         if(this.getSolved())
         {
