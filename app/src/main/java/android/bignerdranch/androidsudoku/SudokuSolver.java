@@ -1238,7 +1238,7 @@ public class SudokuSolver {
             for (int column = 0; column < 9; column++) {
                 //if unsolved
                 if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
-
+                    //for each candidate
                     for (int i = 0; i < mySudoku.getSudokuGrid()[row][column].getPossibles().size();
                          i++) {
 
@@ -1246,12 +1246,15 @@ public class SudokuSolver {
                         //solve to the index of the guess
                         copy.getSudokuGrid()[row][column].solve(mySudoku.getSudokuGrid()[row][column].getPossibles().get(i));
 
+                        //if solving the copy make a remove all error, remove the guessed candidate from mySudoku
                         if (solveForBruteForce(copy)) {
                             mySudoku.getSudokuGrid()[row][column].remove(i);
                             i--;
                             solveForBruteForce(mySudoku);
                         } else if (IsSolved(copy)) {
-                            mySudoku = Copy(copy);
+                            //error is this is making mySudoku have different reference
+                            //mySudoku = Copy(copy);
+                            set(mySudoku, copy);
                             return "Solved";
                         } else if (InvalidMove(copy)) {
                             try {
@@ -1259,11 +1262,9 @@ public class SudokuSolver {
                                 i--;
                                 solveForBruteForce(mySudoku);
                             } catch (Exception e) {
-
-                            }
-                            {
                                 return "Mistake Made";
                             }
+
                             //bruteForceSolver(mySudoku);
                             //return "";
                         } else if (numUnsolved(copy) == 0) {
@@ -1281,7 +1282,8 @@ public class SudokuSolver {
                                 solveForBruteForce(mySudoku);
 
                             } else if (IsSolved(copy)) {
-                                mySudoku = Copy(copy);
+                                //mySudoku = Copy(copy);
+                                set(mySudoku, copy);
                                 return "solved";
                             }
                             //return "Valid moves, still not solved";
@@ -1291,6 +1293,15 @@ public class SudokuSolver {
             }
         }
         return "blah";
+    }
+
+    //for given solved copy, sets all cells in mySudoku to be solved to the corresponding values in copy
+    public void set(SudokuGrid mySudoku, SudokuGrid copy){
+        for(int row = 0; row < 9; row++){
+            for(int column = 0; column < 9; column++){
+                mySudoku.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getVal());
+            }
+        }
     }
 
     public boolean solveForBruteForce(SudokuGrid mySudoku) {

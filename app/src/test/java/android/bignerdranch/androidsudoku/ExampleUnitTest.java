@@ -130,10 +130,7 @@ public class ExampleUnitTest {
 
             SudokuGrid mySudoku = getInput(i);
 
-            //Todo: change forcing chains back to true
             sudokuSolver.Solve(mySudoku, true);
-
-            //bruteForceSolver(mySudoku);
 
             //if unsolved
             if (!sudokuSolver.IsSolved(mySudoku, false)) {
@@ -179,6 +176,38 @@ public class ExampleUnitTest {
     @Test
     public void TestBruteForceChecker() {
         SudokuSolver sudokuSolver = new SudokuSolver();
+        boolean solvedAll = true;
+        String errorMessage = "";
+        int numUnsolved = 0;
+        boolean invalidMoveMade = false;
+        //1 to 23, inclusive
+        for (int i = 1; i <= NumStoredSudokus; i++) {
+
+            SudokuGrid mySudoku = getInput(i);
+
+            sudokuSolver.bruteForceSolver(mySudoku);
+
+
+            //if unsolved
+            if (!sudokuSolver.IsSolved(mySudoku, false)) {
+                solvedAll = false;
+                Log.i("Test", "More work on " + i);
+                Log.i("Test", "Num unsolved is " + sudokuSolver.numUnsolved(mySudoku) + mySudoku);
+                numUnsolved++;
+            }
+            //if there was a duplicate in row, column, or box
+            if (sudokuSolver.InvalidMove(mySudoku)) {
+                Log.i("Test", "Invalid move on " + i);
+                invalidMoveMade = true;
+            }
+        }
+        if (solvedAll) {
+            Log.i("Test", "All solved");
+        }
+        if(invalidMoveMade) errorMessage = errorMessage + "Invalid move made ";
+        errorMessage = errorMessage + numUnsolved + " unsolved";
+        assertTrue(errorMessage, solvedAll);
+
 
         //need to check 5, 9, 12, 13
         SudokuGrid mySudoku = new SudokuGrid();
