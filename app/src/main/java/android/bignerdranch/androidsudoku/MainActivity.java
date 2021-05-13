@@ -11,12 +11,11 @@ public class MainActivity extends AppCompatActivity {
     private SudokuBoard sudokuBoard;
     private Button generate;
     private Button solve;
-    //Todo: UI functional
-    //Todo: copy C# code
     //Todo: All UI capability
     //Todo: hinting
     //Todo: generation
     //Todo: rotation and mirroring
+    //Todo: note capability
 
 
     //Todo: make buttons custom

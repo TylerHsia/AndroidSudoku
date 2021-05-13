@@ -46,12 +46,15 @@ public class SudokuBoard extends View {
     private Canvas canvas;
 
 
+
     public static SudokuBoard get(Context context){
         if(sudokuBoard == null){
             sudokuBoard = new SudokuBoard(context, myAttrs);
         }
         return sudokuBoard;
     }
+
+
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -192,6 +195,13 @@ public class SudokuBoard extends View {
             fillCell(r, c, cellFillColorPaint);
 
 
+            //for each row in the small box
+            for (int row2 = (r/3) * 3; row2 < (r/3) * 3 + 3; row2++) {
+                //for each column in the small box
+                for (int column2 = (c/3) * 3; column2 < (c/3) * 3 + 3; column2++) {
+                    fillCell(row2, column2, cellsHighlightColorPaint);
+                }
+            }
         }
 
         invalidate();

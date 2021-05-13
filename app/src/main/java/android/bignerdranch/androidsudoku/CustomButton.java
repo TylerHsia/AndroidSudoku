@@ -67,6 +67,7 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         Resources resources = getResources();
         setTextSize(1, 24);
         setTextColor(Color.BLACK);
+
     }
 
     /*
