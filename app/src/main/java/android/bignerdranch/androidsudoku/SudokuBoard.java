@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -15,6 +16,11 @@ import androidx.annotation.Nullable;
 
 //visual board
 public class SudokuBoard extends View {
+
+    SudokuSolver sudokuSolver = new SudokuSolver();
+    SudokuGrid mySudoku = new SudokuGrid();
+    int selected_row;
+    int selected_column;
 
     //ints of various colors used across the board
     private final int boardColor;
@@ -34,11 +40,13 @@ public class SudokuBoard extends View {
 
     private int cellSize;
 
-    private final Solver solver = new Solver();
     private Canvas canvas;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        selected_column = -1;
+        selected_row = -1;
 
         //retrieve custom attrs
         Resources.Theme theme = context.getTheme();
@@ -97,10 +105,10 @@ public class SudokuBoard extends View {
         letterPaint.setAntiAlias(true);
         letterPaint.setColor(numberColor);
 
-        colorCells(canvas, solver.getSelected_row(), solver.getSelected_column());
+        colorCells(canvas, selected_row, selected_column);
         canvas.drawRect(0, 0, getWidth(), getHeight(), boardColorPaint);
         drawBoard(canvas);
-        drawnumbers();
+        drawNumbers();
     }
 
     //click event handler
@@ -115,10 +123,10 @@ public class SudokuBoard extends View {
         //can differentiate between types of taps on screen
         int action = event.getAction();
         if(action == MotionEvent.ACTION_DOWN){
-            solver.setSelected_row((int) Math.ceil(y/cellSize));
-            solver.setSelected_column((int) Math.ceil(x/cellSize));
+            selected_row = ((int) Math.ceil(y/cellSize)) - 1;
+            selected_column = ((int) Math.ceil(x/cellSize)) - 1;
 
-            colorCells(canvas, solver.getSelected_row(), solver.getSelected_column());
+            colorCells(canvas, selected_row, selected_column);
             isValid = true;
         }else{
             isValid = false;
@@ -128,18 +136,21 @@ public class SudokuBoard extends View {
     }
 
     //draws the numbers in the grid
-    private void drawnumbers(){
+    private void drawNumbers(){
         letterPaint.setTextSize(cellSize);
+        //for each cell, if it is solved, draw the number
         for(int row = 0; row < 9; row++){
             for(int column = 0; column < 9; column++){
-                if(true /*Todo: if the cell has a single value*/){
-                    String text = "0"; //Todo: text = int at the indeces
+                if(mySudoku.getSudokCell(row, column).getSolved()){
+                    String text = "" + mySudoku.getSudokCell(row, column).getVal();
                     float width, height;
 
                     //get dimensions of the number to be drawn
                     letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
                     width = letterPaint.measureText(text);
                     height = letterPaintBounds.height();
+                    //Todo: get paint vals from xml
+                    letterPaint.setColor(Color.BLACK);
 
                     //draws the number centered
                     canvas.drawText(text, (column*cellSize) + ((cellSize - width) / 2),
@@ -154,16 +165,16 @@ public class SudokuBoard extends View {
     //Highlights the row, column, and cell that user selected
     private void colorCells(Canvas canv, int r, int c){
         canvas = canv;
-        if(solver.getSelected_column() != -1 && solver.getSelected_row() != -1){
+        if(selected_column != -1 && selected_row != -1){
             //highlight column
-            canvas.drawRect((c-1)*cellSize, 0, c*cellSize, cellSize*9,
+            canvas.drawRect((c)*cellSize, 0, (c+1)*cellSize, cellSize*9,
                     cellsHighlightColorPaint);
             //highlight row
-            canvas.drawRect(0, (r-1)*cellSize, cellSize*9, r*cellSize,
+            canvas.drawRect(0, (r)*cellSize, cellSize*9, (r+1)*cellSize,
                     cellsHighlightColorPaint);
 
             //hightlight cell
-            canvas.drawRect((c-1)*cellSize, (r-1)*cellSize, c*cellSize, r*cellSize,
+            canvas.drawRect((c)*cellSize, (r)*cellSize, (c+1)*cellSize, (r+1)*cellSize,
                     cellsHighlightColorPaint);
 
         }
@@ -208,7 +219,29 @@ public class SudokuBoard extends View {
         }
     }
 
-    public Solver getSolver(){
-        return this.solver;
+    //sets the selected position on the board to the number clicked
+    public void setNumberPos(int num){
+        if(this.selected_row != -1 && this.selected_column != -1){
+            //Todo: set inputted number here
+            mySudoku.getSudokCell(this.selected_row, this.selected_column).solve(num);
+            drawNumbers();
+        }
     }
+
+    //solves sudoku
+    public void solveSudoku(){
+        if(mySudoku.IsValid()){
+            sudokuSolver.bruteForceSolver(mySudoku);
+            drawNumbers();
+        }
+    }
+
+    //gets sudoku from input list
+    public void getInput(int i){
+        mySudoku = sudokuSolver.getInput(i);
+        drawNumbers();
+    }
+
+
 }
+

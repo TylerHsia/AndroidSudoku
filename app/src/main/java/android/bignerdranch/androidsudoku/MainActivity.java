@@ -3,13 +3,11 @@ package android.bignerdranch.androidsudoku;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private SudokuBoard gameBoard;
-    private Solver gameBoardSolver;
+    private SudokuBoard sudokuBoard;
     private CustomButton myButton;
     //Todo: UI functional
     //Todo: copy C# code
@@ -32,20 +30,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gameBoard = findViewById(R.id.SudokuBoard);
-        gameBoardSolver = gameBoard.getSolver();
+        sudokuBoard = findViewById(R.id.SudokuBoard);
 
         myButton = (CustomButton) findViewById(R.id.custombuttontest);
         myButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+                sudokuBoard.getInput((int) Math.random() * 24);
             }
         });
     }
 
     public void buttonOnePress(View view){
-        gameBoardSolver.setNumberPos(1);
-        gameBoard.invalidate();
+        //sudokuBoard.setNumberPos(1);
+        sudokuBoard.solveSudoku();
+        sudokuBoard.invalidate();
     }//Todo: button press capability
 }

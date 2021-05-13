@@ -106,7 +106,6 @@ public class SudokuGrid{
         boolean fsolvedOne = false;
 
         SudokuGrid copy1 = sudokuSolver.Copy(this);
-        //Todo: pass by referenece sudokuSolver.bruteForceSolver(ref copy1);
         sudokuSolver.bruteForceSolver(copy1);
 
         if (!sudokuSolver.IsSolved(copy1))

@@ -1227,7 +1227,7 @@ public class SudokuSolver {
         return false;
     }
 
-    //Todo: make passed by preference
+    //solves the sudoku via brute force
     public String bruteForceSolver(SudokuGrid mySudoku) {
         if (IsSolved(mySudoku)) {
             return "already solved";
@@ -1868,5 +1868,10 @@ public class SudokuSolver {
         }
         return twoD;
 
+    }
+
+    //returns the SudokuGrid stored at input i
+    public SudokuGrid getInput(int i) {
+        return FromIntArray(input(i));
     }
 }
