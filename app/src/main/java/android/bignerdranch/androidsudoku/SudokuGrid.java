@@ -95,90 +95,75 @@ public class SudokuGrid{
         {
             return false;
         }
+        try {
+            mySudoku.SolveForIsValid();
+            //if simple solve, return is valid
+            if (sudokuSolver.IsSolved(mySudoku)) {
+                return true;
+            }
 
-        mySudoku.SolveForIsValid();
-        //if simple solve, return is valid
-        if (sudokuSolver.IsSolved(mySudoku))
-        {
-            return true;
-        }
+            boolean fsolvedOne = false;
 
-        boolean fsolvedOne = false;
+            SudokuGrid copy1 = sudokuSolver.Copy(this);
+            sudokuSolver.bruteForceSolver(copy1);
 
-        SudokuGrid copy1 = sudokuSolver.Copy(this);
-        sudokuSolver.bruteForceSolver(copy1);
+            if (!sudokuSolver.IsSolved(copy1)) {
+                return false;
+            }
 
-        if (!sudokuSolver.IsSolved(copy1))
-        {
-            return false;
-        }
+            if (sudokuSolver.InvalidMove(this)) {
+                return false;
+            }
 
-        if (sudokuSolver.InvalidMove(this))
-        {
-            return false;
-        }
+            SudokuGrid firstSolve = new SudokuGrid();
+            firstSolve = sudokuSolver.Copy(copy1);
 
-        SudokuGrid firstSolve = new SudokuGrid();
-        firstSolve = sudokuSolver.Copy(copy1);
+            //else, guess all possibles and brute force solve. if multiple solutions, return false
+            for (int row = 0; row < 9; row++) {
+                for (int column = 0; column < 9; column++) {
+                    //if unsolved
+                    if (!cells[row][column].isSolved()) {
 
-        //else, guess all possibles and brute force solve. if multiple solutions, return false
-        for (int row = 0; row < 9; row++)
-        {
-            for (int column = 0; column < 9; column++)
-            {
-                //if unsolved
-                if (!cells[row][column].getSolved())
-                {
-
-                    for(int i = 0; i < cells[row][column].getPossibles().size(); i++)
-                    {
-                        SudokuGrid copy = sudokuSolver.Copy(this);
-                        //solve to the index of the guess
-                        copy.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getPossibles().get(i));
+                        for (int i = 0; i < cells[row][column].getPossibles().size(); i++) {
+                            SudokuGrid copy = sudokuSolver.Copy(this);
+                            //solve to the index of the guess
+                            copy.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getPossibles().get(i));
 
 
-
-                        boolean solvedThisOne;
-
+                            boolean solvedThisOne;
 
 
-                        try
-                        {
-                            //brute force it
-                            sudokuSolver.bruteForceSolver(copy);
-                            solvedThisOne = sudokuSolver.IsSolved(copy);
-                        }
-                        catch(Exception e)
-                        {
-                            solvedThisOne = false;
-                        }
+                            try {
+                                //brute force it
+                                sudokuSolver.bruteForceSolver(copy);
+                                solvedThisOne = sudokuSolver.IsSolved(copy);
+                            } catch (Exception e) {
+                                solvedThisOne = false;
+                            }
 
-                        //if this one and another different one were solved, invalid for too many solutions
-                        if (solvedThisOne)
-                        {
-                            try
-                            {
-                                if (!firstSolve.toString().equals(copy.toString()))
-                                {
-                                    //return false;
-                                }
-                                if (!sudokuSolver.equals(firstSolve, copy))
-                                {
-                                    return false;
+                            //if this one and another different one were solved, invalid for too many solutions
+                            if (solvedThisOne) {
+                                try {
+                                    if (!firstSolve.toString().equals(copy.toString())) {
+                                        //return false;
+                                    }
+                                    if (!sudokuSolver.equals(firstSolve, copy)) {
+                                        return false;
+                                    }
+                                } catch (Exception e) {
+
                                 }
                             }
-                            catch(Exception e)
-                            {
-
+                            if (solvedThisOne) {
+                                firstSolve = sudokuSolver.Copy(copy);
                             }
-                        }
-                        if (solvedThisOne)
-                        {
-                            firstSolve = sudokuSolver.Copy(copy);
                         }
                     }
                 }
             }
+        }
+        catch(Exception e){
+            return false;
         }
         return true;
 
@@ -193,7 +178,7 @@ public class SudokuGrid{
             for (int column = 0; column < 9; column++)
             {
                 //if unsolved, return false
-                if (!cells[row][column].getSolved())
+                if (!cells[row][column].isSolved())
                 {
                     return false;
                 }
@@ -263,7 +248,6 @@ public class SudokuGrid{
         return true;
     }
 
-    //Todo: make sure this method is being called, not generic equals
     public boolean equals(SudokuGrid obj)
     {
         for(int row = 0; row < 9; row++)
@@ -286,7 +270,7 @@ public class SudokuGrid{
         {
             for(int column = 0; column < 9; column++)
             {
-                if(cells[row][column].getSolved())
+                if(cells[row][column].isSolved())
                 {
                     numSolved++;
                 }
@@ -310,5 +294,19 @@ public class SudokuGrid{
         }
 
 
+    }
+
+    //deletes cell value at specified row, column
+    public void deleteCell(int selected_row, int selected_column) {
+        if(cells[selected_row][selected_column].isSolved()){
+            cells[selected_row][selected_column].addAllPossibles();
+            for(int row = 0; row < 9; row++){
+                for(int column = 0; column < 9; column++){
+                    if(!cells[row][column].isSolved()){
+                        cells[row][column].addAllPossibles();
+                    }
+                }
+            }
+        }
     }
 }

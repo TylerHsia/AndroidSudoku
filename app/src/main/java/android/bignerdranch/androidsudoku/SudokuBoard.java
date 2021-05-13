@@ -160,7 +160,7 @@ public class SudokuBoard extends View {
         //for each cell, if it is solved, draw the number
         for(int row = 0; row < 9; row++){
             for(int column = 0; column < 9; column++){
-                if(mySudoku.getSudokCell(row, column).getSolved()){
+                if(mySudoku.getSudokCell(row, column).isSolved()){
                     String text = "" + mySudoku.getSudokCell(row, column).getVal();
                     float width, height;
 
@@ -265,7 +265,7 @@ public class SudokuBoard extends View {
             }
             drawNumbers();
         }
-        Toast.makeText(getContext(), "Sudoku is invalid", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getContext(), "Sudoku is invalid", Toast.LENGTH_SHORT).show();
     }
 
     //gets sudoku from input list
@@ -281,7 +281,11 @@ public class SudokuBoard extends View {
                 paint);
     }
 
-
-
+    //removes number in a given cell
+    public void removeCell() {
+        if(selected_column != 0 && selected_row != 0){
+            mySudoku.deleteCell(selected_row, selected_column);
+        }
+    }
 }
 

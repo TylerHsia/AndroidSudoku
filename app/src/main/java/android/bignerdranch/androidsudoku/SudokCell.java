@@ -1,6 +1,8 @@
 package android.bignerdranch.androidsudoku;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class SudokCell {
     //constructors
@@ -34,7 +36,7 @@ public class SudokCell {
     }
     public SudokCell(SudokCell obj)
     {
-        new SudokCell(obj.getPossibles(), obj.getSolved());
+        new SudokCell(obj.getPossibles(), obj.isSolved());
     }
     public SudokCell(ArrayList<Integer> possibles, boolean solved)
     {
@@ -158,7 +160,7 @@ public class SudokCell {
         return possibles.contains(x);
     }
     //accessors
-    public boolean getSolved()
+    public boolean isSolved()
     {
         return solved;
     }
@@ -198,7 +200,7 @@ public class SudokCell {
     public boolean equals(SudokCell obj)
     {
         //Todo: this line might cause error if equals doesn't compares references
-        if (!this.getPossibles().equals(obj.getPossibles()) || this.getSolved() != obj.getSolved())
+        if (!this.getPossibles().equals(obj.getPossibles()) || this.isSolved() != obj.isSolved())
         {
             return false;
         }
@@ -207,7 +209,7 @@ public class SudokCell {
 
     public String toStringVal()
     {
-        if(this.getSolved())
+        if(this.isSolved())
         {
             if (isDigit(this.getVal()))
             {
@@ -227,5 +229,12 @@ public class SudokCell {
             }
         }
         return false;
+    }
+
+    //effectively deletes the given cell and reverts to unsolved state
+    public void addAllPossibles() {
+        solved = false;
+        possibles = new ArrayList<Integer>();
+        Collections.addAll(possibles, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     }
 }

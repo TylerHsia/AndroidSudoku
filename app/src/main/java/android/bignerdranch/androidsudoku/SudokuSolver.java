@@ -15,11 +15,11 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if that element is solved
-                if (mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     //for each other element in the row
                     for (int row2 = 0; row2 < 9; row2++) {
                         //if the other element is not solved
-                        if (!mySudoku.getSudokuGrid()[row2][column].getSolved()) {
+                        if (!mySudoku.getSudokuGrid()[row2][column].isSolved()) {
                             //index is index of the solved value in not solved element
                             int index = mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].
                                     getVal());
@@ -38,7 +38,7 @@ public class SudokuSolver {
                     //for each other element in the column
                     for (int column2 = 0; column2 < 9; column2++) {
                         //if the other element is not solved
-                        if (!mySudoku.getSudokuGrid()[row][column2].getSolved()) {
+                        if (!mySudoku.getSudokuGrid()[row][column2].isSolved()) {
                             //index is index of the solved value in not solved element
                             int index = mySudoku.getSudokuGrid()[row][column2].indexOf(mySudoku.getSudokuGrid()[row][column].
                                     getVal());
@@ -69,7 +69,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if that element is solved
-                if (mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     int boxColumn = column / 3;
                     int boxRow = row / 3;
 
@@ -78,7 +78,7 @@ public class SudokuSolver {
                         //for each column in the small box
                         for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                             //if the other element is not solved
-                            if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                 //index is index of the solved value in not solved element
                                 int index = mySudoku.getSudokuGrid()[row2][column2].indexOf(mySudoku.getSudokuGrid()[row][column].
                                         getVal());
@@ -112,7 +112,7 @@ public class SudokuSolver {
                 //for each row
                 for (int row = 0; row < 9; row++) {
                     //if not solved
-                    if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                    if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
 
                         if (mySudoku.getSudokuGrid()[row][column].contains(i)) {
                             num++;
@@ -139,7 +139,7 @@ public class SudokuSolver {
                 //for each column
                 for (int column = 0; column < 9; column++) {
                     //if not solved
-                    if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                    if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                         if (mySudoku.getSudokuGrid()[row][column].contains(i)) {
                             num++;
                             index = column;
@@ -176,7 +176,7 @@ public class SudokuSolver {
                         //for each column in the small box
                         for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                             //if the element is not solved
-                            if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                 //if it contains i
                                 if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                     num++;
@@ -207,7 +207,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if that element is unsolved
-                if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     //for each other element in the column
                     int numSame = 0;
                     ArrayList<Integer> rowVals = new ArrayList<Integer>();
@@ -290,7 +290,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if that element is unsolved
-                if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     int numSame = 0;
                     ArrayList<Integer> rowVals = new ArrayList<Integer>();
                     ArrayList<Integer> columnVals = new ArrayList<Integer>();
@@ -304,7 +304,7 @@ public class SudokuSolver {
                         //for each column in the small box
                         for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                             //if the element is not solved
-                            if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                 //if it has same possibles
                                 if (mySudoku.getSudokuGrid()[row2][column2].samePossible(mySudoku.getSudokuGrid()[row][column])) {
                                     numSame++;
@@ -595,7 +595,7 @@ public class SudokuSolver {
                         //for each column in the small box
                         for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                             //if the element is not solved
-                            if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                 //if it contains the candidate integer
                                 if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                     numHasCandidate++;
@@ -712,7 +712,7 @@ public class SudokuSolver {
                             for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                                 //if none of the three
                                 if (!(columnCoord1 == column2 && row == row2) && !(columnCoord2 == column2 && row == row2) && !(columnCoord3 == column2 && row == row2)) {
-                                    if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                                    if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                             mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
@@ -740,7 +740,7 @@ public class SudokuSolver {
                                 //if none of the two
                                 if (!(columnCoord2 == column2 && row == row2) && !(columnCoord3 == column2 && row == row2)) {
                                     //if other cell is not solved
-                                    if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                                    if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                             mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
@@ -787,7 +787,7 @@ public class SudokuSolver {
                             for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
                                 //if none of the three
                                 if (!(rowCoord1 == row2 && column == column2) && !(rowCoord2 == row2 && column == column2) && !(rowCoord3 == row2 && column == column2)) {
-                                    if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                                    if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                             mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
@@ -815,7 +815,7 @@ public class SudokuSolver {
                                 //if none of the two
                                 if (!(rowCoord2 == row2 && column == column2) && !(rowCoord3 == row2 && column == column2)) {
                                     //if other cell is not solved
-                                    if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                                    if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
                                             mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
@@ -844,7 +844,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if unsolved
-                if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     //setup
                     int numCands = mySudoku.getSudokuGrid()[row][column].getPossibles().size();
 
@@ -853,7 +853,7 @@ public class SudokuSolver {
                     for (int solvedRow = 0; solvedRow < 9; solvedRow++) {
                         for (int solvedColumn = 0; solvedColumn < 9; solvedColumn++) {
                             sameSolved[solvedRow][solvedColumn] = true;
-                            if (mySudoku.getSudokuGrid()[solvedRow][solvedColumn].getSolved()) {
+                            if (mySudoku.getSudokuGrid()[solvedRow][solvedColumn].isSolved()) {
                                 sameSolved[solvedRow][solvedColumn] = false;
                             }
                         }
@@ -877,7 +877,7 @@ public class SudokuSolver {
                     }
                     for (int row2 = 0; row2 < 9; row2++) {
                         for (int column2 = 0; column2 < 9; column2++) {
-                            if (!copy1.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!copy1.getSudokuGrid()[row2][column2].isSolved()) {
                                 sameSolved[row2][column2] = false;
                             }
                         }
@@ -905,14 +905,14 @@ public class SudokuSolver {
 
                         for (int row2 = 0; row2 < 9; row2++) {
                             for (int column2 = 0; column2 < 9; column2++) {
-                                if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
-                                    if (copy.getSudokuGrid()[row2][column2].getSolved()) {
+                                if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
+                                    if (copy.getSudokuGrid()[row2][column2].isSolved()) {
                                         if (!copy.getSudokuGrid()[row2][column2].samePossible(copy1.getSudokuGrid()[row2][column2])) {
                                             sameSolved[row2][column2] = false;
                                         }
                                     }
                                 }
-                                if (!copy.getSudokuGrid()[row2][column2].getSolved()) {
+                                if (!copy.getSudokuGrid()[row2][column2].isSolved()) {
                                     sameSolved[row2][column2] = false;
                                 }
                             }
@@ -920,9 +920,9 @@ public class SudokuSolver {
                     }
                     for (int row2 = 0; row2 < 9; row2++) {
                         for (int column2 = 0; column2 < 9; column2++) {
-                            if (!mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                            if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                 if (sameSolved[row2][column2]) {
-                                    if (copy1.getSudokuGrid()[row2][column2].getSolved()) {
+                                    if (copy1.getSudokuGrid()[row2][column2].isSolved()) {
                                         mySudoku.getSudokuGrid()[row2][column2].solve(copy1.getSudokuGrid()[row2][column2].
                                                 getVal())
                                         ;
@@ -1004,7 +1004,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if unsolved, return false
-                if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     return false;
                 }
             }
@@ -1066,7 +1066,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if that element is solved
-                if (mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     numUnsolvedB--;
                 }
             }
@@ -1153,7 +1153,7 @@ public class SudokuSolver {
 
 
         for (int row2 = 0; row2 < 9; row2++) {
-            if (mySudoku.getSudokuGrid()[row2][column].getSolved()) {
+            if (mySudoku.getSudokuGrid()[row2][column].isSolved()) {
                 if (row2 != row && mySudoku.getSudokuGrid()[row2][column].getVal() == mySudoku.getSudokuGrid()[row][column].getVal()) {
                     return true;
                 }
@@ -1164,7 +1164,7 @@ public class SudokuSolver {
         //check rows for duplicates
 
         for (int column2 = 0; column2 < 9; column2++) {
-            if (mySudoku.getSudokuGrid()[row][column2].getSolved()) {
+            if (mySudoku.getSudokuGrid()[row][column2].isSolved()) {
                 if (column2 != column && mySudoku.getSudokuGrid()[row][column2].
                         getVal() == mySudoku.getSudokuGrid()[row][column].
                         getVal()) {
@@ -1182,7 +1182,7 @@ public class SudokuSolver {
         for (int row2 = boxRow * 3; row2 < boxRow * 3 + 3; row2++) {
             //for each column in the small box
             for (int column2 = boxColumn * 3; column2 < boxColumn * 3 + 3; column2++) {
-                if (mySudoku.getSudokuGrid()[row2][column2].getSolved()) {
+                if (mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                     if (column2 != column && row2 != row && mySudoku.getSudokuGrid()[row2][column2].
                             getVal() == mySudoku.getSudokuGrid()[row][column].getVal()) {
                         return true;
@@ -1237,7 +1237,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 //if unsolved
-                if (!mySudoku.getSudokuGrid()[row][column].getSolved()) {
+                if (!mySudoku.getSudokuGrid()[row][column].isSolved()) {
                     //for each candidate
                     for (int i = 0; i < mySudoku.getSudokuGrid()[row][column].getPossibles().size();
                          i++) {
@@ -1350,7 +1350,7 @@ public class SudokuSolver {
                         row = 0;
                         column = 0;
                     }
-                    if (!testCase.getSudokuGrid()[row][column].getSolved()) {
+                    if (!testCase.getSudokuGrid()[row][column].isSolved()) {
                         num++;
                         if (num == i) {
                             foundUnsolved = true;

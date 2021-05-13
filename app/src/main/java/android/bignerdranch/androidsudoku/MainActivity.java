@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private SudokuBoard sudokuBoard;
     private Button generate;
     private Button solve;
+    private Button delete;
     //Todo: All UI capability
     //Todo: hinting
     //Todo: generation
@@ -18,10 +19,11 @@ public class MainActivity extends AppCompatActivity {
     //Todo: note capability
 
 
-    //Todo: make buttons custom
     //Todo: delete button
     //Todo: lowercase method names
     //Todo: change all sudoku.getSudokuGrid[row][column] to getsudokucell(row, column)
+    //Todo: sound effects
+    //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
 
 
     @Override
@@ -48,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 sudokuBoard.solveSudoku();
                 sudokuBoard.invalidate();
+
+            }
+        });
+
+        delete = (Button) findViewById(R.id.deleteButton);
+        delete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sudokuBoard.removeCell();
 
             }
         });

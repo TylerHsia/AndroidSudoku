@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -21,26 +22,36 @@
             android:id="@+id/generatebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:backgroundTint="#1274DC"
             android:text="Generate"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
         </Button>
+
         <Button
             android:id="@+id/solvebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:backgroundTint="#1274DC"
-
             android:text="Solve"
+
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
         </Button>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <TextView
         android:id="@+id/textView"
@@ -82,55 +93,61 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SudokuBoard">
+        app:layout_constraintTop_toBottomOf="@+id/deleteButton">
 
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="1"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            />
+            android:text="1" />
 
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="2"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="3"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="4"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="4" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="5"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="5" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="6"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="6" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="7"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="7" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="8"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="8" />
+
         <android.bignerdranch.androidsudoku.CustomButton
-            android:text="9"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="9" />
 
 
     </LinearLayout>

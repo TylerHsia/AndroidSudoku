@@ -21,6 +21,8 @@ Unit tests typically run the fastest out of the different kinds of tests, becaus
 of the Android framework and so do not need to run on a device or emulator. JUnit is usually used to run these tests."
  */
 public class ExampleUnitTest {
+
+    //Todo: add test for mySudoku remove method
     @Test
     public void addition_isCorrect() {
         Log.i("Test", "addition_isCorrect: ");
