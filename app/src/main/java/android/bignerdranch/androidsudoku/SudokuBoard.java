@@ -19,8 +19,10 @@ public class SudokuBoard extends View {
 
     SudokuSolver sudokuSolver = new SudokuSolver();
     SudokuGrid mySudoku = new SudokuGrid();
+    static SudokuBoard sudokuBoard;
     int selected_row;
     int selected_column;
+    static AttributeSet myAttrs;
 
     //ints of various colors used across the board
     private final int boardColor;
@@ -42,8 +44,21 @@ public class SudokuBoard extends View {
 
     private Canvas canvas;
 
+
+    public static SudokuBoard get(Context context){
+        if(sudokuBoard == null){
+            sudokuBoard = new SudokuBoard(context, myAttrs);
+        }
+        return sudokuBoard;
+    }
+
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        myAttrs = attrs;
+
+        if(sudokuBoard == null){
+            sudokuBoard = this;
+        }
 
         selected_column = -1;
         selected_row = -1;
@@ -123,8 +138,8 @@ public class SudokuBoard extends View {
         //can differentiate between types of taps on screen
         int action = event.getAction();
         if(action == MotionEvent.ACTION_DOWN){
-            selected_row = ((int) Math.ceil(y/cellSize)) - 1;
-            selected_column = ((int) Math.ceil(x/cellSize)) - 1;
+            sudokuBoard.selected_row = ((int) Math.ceil(y/cellSize)) - 1;
+            sudokuBoard.selected_column = ((int) Math.ceil(x/cellSize)) - 1;
 
             colorCells(canvas, selected_row, selected_column);
             isValid = true;
@@ -231,7 +246,13 @@ public class SudokuBoard extends View {
     //solves sudoku
     public void solveSudoku(){
         if(mySudoku.IsValid()){
-            sudokuSolver.bruteForceSolver(mySudoku);
+            sudokuSolver.Solve(mySudoku, false);
+            if(!mySudoku.IsSolved()){
+                sudokuSolver.Solve(mySudoku, true);
+                if(!mySudoku.IsSolved()){
+                    sudokuSolver.bruteForceSolver(mySudoku);
+                }
+            }
             drawNumbers();
         }
     }

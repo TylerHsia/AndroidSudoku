@@ -2,9 +2,18 @@ package android.bignerdranch.androidsudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Toast;
+
+import org.w3c.dom.Attr;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.StringReader;
 
 public class MainActivity extends AppCompatActivity {
     private SudokuBoard sudokuBoard;
@@ -29,15 +38,39 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*
+        try{
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            XmlPullParser xpp = factory.newPullParser();
+            AttributeSet attributes = Xml.asAttributeSet(xpp);
 
+            sudokuBoard = SudokuBoard.get(getApplicationContext(), attributes);
+
+
+        }catch (Exception e){
+
+        }
+
+        XmlPullParser parser = Resources.getXml(R.xml.class);
+        AttributeSet attributes = Xml.asAttributeSet(parser);
+
+        sudokuBoard = SudokuBoard.get(getApplicationContext());
+
+         */
+        //sudokuBoard = SudokuBoard.get(getApplicationContext());
         sudokuBoard = findViewById(R.id.SudokuBoard);
+
+        //android.content.res.Resources.Theme#obtainStyledAttributes(AttributeSet, int[], int, int)
+   //* Resources.Theme.obtainStyledAttributes()
 
         myButton = (CustomButton) findViewById(R.id.custombuttontest);
         myButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
-                sudokuBoard.getInput((int) Math.random() * 24);
+                sudokuBoard.getInput((int) (Math.random() * 24));
+
             }
         });
     }

@@ -1,4 +1,5 @@
 package android.bignerdranch.androidsudoku;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -47,6 +48,29 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         }
     }
 
+
+    //Todo: implement properly
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        boolean isValid;
+
+        float x = event.getX();
+        float y = event.getY();
+
+        //can differentiate between types of taps on screen
+        int action = event.getAction();
+        if(action == MotionEvent.ACTION_DOWN){
+            SudokuBoard sudokuBoard = SudokuBoard.get(getContext());
+            sudokuBoard.setNumberPos(1);
+            isValid = true;
+        }else{
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     public void blockTouch() {
         setOnTouchListener(new OnTouchListener() {
             @Override
@@ -72,10 +96,10 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         Resources resources = getResources();
         int blue = Color.BLUE;
         int blueDark = Color.BLUE;
-        StateListDrawable background = new StateListDrawable();
+        //StateListDrawable background = new StateListDrawable();
         mColor = blue;
         mStrokeColor = blue;
-        setBackgroundCompat(background);
+        //setBackgroundCompat(background);
     }
 
     @SuppressWarnings("deprecation")
@@ -86,27 +110,14 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
             setBackground(drawable);
         }
     }
-    public void setIcon(@DrawableRes final int icon) {
-// post is necessary, to make sure getWidth() doesn't return 0
-        post(new Runnable() {
-            @Override
-            public void run() {
-                Drawable drawable = getResources().getDrawable(icon);
-                int padding = (getWidth() / 2) - (drawable.getIntrinsicWidth() / 2);
-                setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-                setPadding(padding, 0, 0, 0);
-            }
-        });
-    }
-    public void setIconLeft(@DrawableRes int icon) {
-        setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-    }
+
     private class Padding {
         public int left;
         public int right;
         public int top;
         public int bottom;
     }
+    /*
     public static class Params {
         private int cornerRadius;
         private int width;
@@ -165,4 +176,6 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         }
 
     }
+
+     */
 }
