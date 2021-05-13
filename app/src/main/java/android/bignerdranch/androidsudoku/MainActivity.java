@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
+    private CustomButton myButton;
     //Todo: UI functional
     //Todo: copy C# code
     //Todo: All UI capability
@@ -32,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
         gameBoard = findViewById(R.id.SudokuBoard);
         gameBoardSolver = gameBoard.getSolver();
+
+        myButton = (CustomButton) findViewById(R.id.custombuttontest);
+        myButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void buttonOnePress(View view){

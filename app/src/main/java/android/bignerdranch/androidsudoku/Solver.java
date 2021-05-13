@@ -1,6 +1,9 @@
 package android.bignerdranch.androidsudoku;
 
+//interface between ui and backend
 public class Solver {
+    SudokuSolver sudokuSolver = new SudokuSolver();
+    SudokuGrid mySudoku = new SudokuGrid();
     int selected_row;
     int selected_column;
 
@@ -32,6 +35,7 @@ public class Solver {
     public void setNumberPos(int num){
         if(this.selected_row != -1 && this.selected_column != -1){
             //Todo: set inputted number here
+            mySudoku.getSudokCell(this.selected_row, this.selected_column).solve(num);
         }
     }
 }

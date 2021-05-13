@@ -2,6 +2,7 @@ package android.bignerdranch.androidsudoku;
 
 import java.util.ArrayList;
 
+//Java representation of sudoku class
 public class SudokuGrid{
     //sudokCell[,] grid;
     //public SudokuGrid()

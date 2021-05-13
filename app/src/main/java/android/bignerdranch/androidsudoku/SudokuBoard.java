@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+//visual board
 public class SudokuBoard extends View {
 
     //ints of various colors used across the board
