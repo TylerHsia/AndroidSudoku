@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -188,9 +189,8 @@ public class SudokuBoard extends View {
             canvas.drawRect(0, (r)*cellSize, cellSize*9, (r+1)*cellSize,
                     cellsHighlightColorPaint);
 
-            //hightlight cell
-            canvas.drawRect((c)*cellSize, (r)*cellSize, (c+1)*cellSize, (r+1)*cellSize,
-                    cellsHighlightColorPaint);
+            fillCell(r, c, cellFillColorPaint);
+
 
         }
 
@@ -255,6 +255,7 @@ public class SudokuBoard extends View {
             }
             drawNumbers();
         }
+        Toast.makeText(getContext(), "Sudoku is invalid", Toast.LENGTH_SHORT).show();
     }
 
     //gets sudoku from input list
@@ -262,6 +263,14 @@ public class SudokuBoard extends View {
         mySudoku = sudokuSolver.getInput(i);
         drawNumbers();
     }
+
+    //fills in the cell at the given row, column index
+    public void fillCell(int row, int column, Paint paint){
+        //hightlight cell
+        canvas.drawRect((column)*cellSize, (row)*cellSize, (column+1)*cellSize, (row+1)*cellSize,
+                paint);
+    }
+
 
 
 }

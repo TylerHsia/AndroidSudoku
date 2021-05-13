@@ -3,10 +3,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.StateSet;
 import android.view.MotionEvent;
@@ -19,14 +15,8 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
-    private Padding mPadding;
     private int mHeight;
     private int mWidth;
-    private int mColor;
-    private int mCornerRadius;
-    private int mStrokeWidth;
-    private int mStrokeColor;
-    protected boolean mAnimationInProgress;
     public CustomButton(Context context) {
         super(context);
         initView();
@@ -53,6 +43,7 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        super.onTouchEvent(event);
         boolean isValid;
 
         float x = event.getX();
@@ -62,120 +53,32 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         int action = event.getAction();
         if(action == MotionEvent.ACTION_DOWN){
             SudokuBoard sudokuBoard = SudokuBoard.get(getContext());
-            sudokuBoard.setNumberPos(1);
+            sudokuBoard.setNumberPos(Integer.parseInt(getText().toString()));
             isValid = true;
         }else{
             isValid = false;
         }
 
+
         return isValid;
     }
 
-    public void blockTouch() {
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-    }
-    public void unblockTouch() {
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-    }
     private void initView() {
-        mPadding = new Padding();
-        mPadding.left = getPaddingLeft();
-        mPadding.right = getPaddingRight();
-        mPadding.top = getPaddingTop();
-        mPadding.bottom = getPaddingBottom();
         Resources resources = getResources();
-        int blue = Color.BLUE;
-        int blueDark = Color.BLUE;
-        //StateListDrawable background = new StateListDrawable();
-        mColor = blue;
-        mStrokeColor = blue;
-        //setBackgroundCompat(background);
+        setTextSize(1, 24);
+        setTextColor(Color.BLACK);
     }
 
-    @SuppressWarnings("deprecation")
-    private void setBackgroundCompat(Drawable drawable) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-            setBackgroundDrawable(drawable);
-        } else {
-            setBackground(drawable);
-        }
-    }
-
-    private class Padding {
-        public int left;
-        public int right;
-        public int top;
-        public int bottom;
-    }
     /*
-    public static class Params {
-        private int cornerRadius;
-        private int width;
-        private int height;
-        private int color;
-        private int colorPressed;
-        private int duration;
-        private int icon;
-        private int strokeWidth;
-        private int strokeColor;
-        private String text;
-        private Params() {
-        }
-        public static Params create() {
-            return new Params();
-        }
-        public Params text(@NonNull String text) {
-            this.text = text;
-            return this;
-        }
-        public Params icon(@DrawableRes int icon) {
-            this.icon = icon;
-            return this;
-        }
-        public Params cornerRadius(int cornerRadius) {
-            this.cornerRadius = cornerRadius;
-            return this;
-        }
-        public Params width(int width) {
-            this.width = width;
-            return this;
-        }
-        public Params height(int height) {
-            this.height = height;
-            return this;
-        }
-        public Params color(int color) {
-            this.color = color;
-            return this;
-        }
-        public Params colorPressed(int colorPressed) {
-            this.colorPressed = colorPressed;
-            return this;
-        }
-        public Params duration(int duration) {
-            this.duration = duration;
-            return this;
-        }
-        public Params strokeWidth(int strokeWidth) {
-            this.strokeWidth = strokeWidth;
-            return this;
-        }
-        public Params strokeColor(int strokeColor) {
-            this.strokeColor = strokeColor;
-            return this;
-        }
-
-    }
+    android:id="@+id/button2"
+    style="@style/Widget.AppCompat.Button.Borderless"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="@string/button2"
+    android:textColor="@color/black"
+    android:textSize="24sp" />
 
      */
+
 }
