@@ -236,5 +236,6 @@ public class SudokCell {
         solved = false;
         possibles = new ArrayList<Integer>();
         Collections.addAll(possibles, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+
     }
 }

@@ -3,7 +3,6 @@ package android.bignerdranch.androidsudoku;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-//Todo: CoordinateList is here, needed?
 /*
 public class CoordinateList
 {
@@ -1191,7 +1190,6 @@ public class SudokuHinter {
 
     //checks if a List contains a duplicate over the domain [1, 9]
     public boolean ContainsDuplicate(ArrayList<Integer> myList) {
-        //Todo: check that new implementation of this method works
         ArrayList<Integer> results = new ArrayList<Integer>();
         Set<Integer> set = new HashSet<Integer>(myList);
 
@@ -1199,22 +1197,7 @@ public class SudokuHinter {
             return true;
         }
         return false;
-        /*
-        for (int i = 1; i <= 9; i++) {
-            results = myList.FindAll(
-                    delegate( int bk)
-            {
-                return bk == i;
-            }
-                );
 
-            if (results.size() > 1) {
-                return true;
-            }
-        }
-        return false;
-
-         */
     }
 
     //converts int array to sudokcell sudokugrid

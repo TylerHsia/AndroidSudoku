@@ -45,6 +45,8 @@ public class SudokuBoard extends View {
 
     private Canvas canvas;
 
+    private boolean highlightCells = true;
+
 
 
     public static SudokuBoard get(Context context){
@@ -85,6 +87,10 @@ public class SudokuBoard extends View {
             a.recycle();
         }
 
+    }
+
+    public void setHighlightCells(boolean checked) {
+        highlightCells = checked;
     }
 
     //sets dimensions of sudoku grid to be square that fills up canvas
@@ -183,53 +189,37 @@ public class SudokuBoard extends View {
 
     //Highlights the row, column, and cell that user selected
     private void colorCells(Canvas canv, int r, int c){
-        canvas = canv;
-        if(selected_column != -1 && selected_row != -1){
-            //Todo: this makes different colors because the color is partially transparent
-            /*
-            //highlight column
-            canvas.drawRect((c)*cellSize, 0, (c+1)*cellSize, cellSize*9,
-                    cellsHighlightColorPaint);
-            //highlight row
-            canvas.drawRect(0, (r)*cellSize, cellSize*9, (r+1)*cellSize,
-                    cellsHighlightColorPaint);
+        if(highlightCells) {
+            canvas = canv;
+            if (selected_column != -1 && selected_row != -1) {
 
-            fillCell(r, c, cellFillColorPaint);
-
-
-            //for each row in the small box
-            for (int row2 = (r/3) * 3; row2 < (r/3) * 3 + 3; row2++) {
-                //for each column in the small box
-                for (int column2 = (c/3) * 3; column2 < (c/3) * 3 + 3; column2++) {
-                    fillCell(row2, column2, cellsHighlightColorPaint);
-                }
-            }
-            */
-            //fill all cells in the row, column, and box, highlight
-            for(int row = 0; row < 9; row++){
-                for(int column = 0; column < 9; column++){
-                    //fill row
-                    if(row == r && column != c){
-                        fillCell(row, column, cellsHighlightColorPaint);
-                    }
-                    //fill column
-                    if(column == c && row != r){
-                        fillCell(row, column, cellsHighlightColorPaint);
-                    }
-                    //fill box
-                    if(row / 3 == r/3 && column/3 == c/3){
-                        //if not already row and column
-                        if(!(row == r && column != c) && !(column == c && row != r)){
+                //fill all cells in the row, column, and box, highlight
+                for (int row = 0; row < 9; row++) {
+                    for (int column = 0; column < 9; column++) {
+                        //fill row
+                        if (row == r && column != c) {
                             fillCell(row, column, cellsHighlightColorPaint);
+                        }
+                        //fill column
+                        if (column == c && row != r) {
+                            fillCell(row, column, cellsHighlightColorPaint);
+                        }
+                        //fill box
+                        if (row / 3 == r / 3 && column / 3 == c / 3) {
+                            //if not already row and column
+                            if ((row != r || column == c) && (column != c || row == r)) {
+                                fillCell(row, column, cellsHighlightColorPaint);
+                            }
                         }
                     }
                 }
-            }
-            //fill cell selected with a different color
-            fillCell(r, c, cellFillColorPaint);
 
+
+            }
         }
 
+        //fill cell selected with a different color
+        fillCell(r, c, cellFillColorPaint);
         invalidate();
     }
 
@@ -273,7 +263,6 @@ public class SudokuBoard extends View {
     //sets the selected position on the board to the number clicked
     public void setNumberPos(int num){
         if(this.selected_row != -1 && this.selected_column != -1){
-            //Todo: set inputted number here
             mySudoku.getSudokCell(this.selected_row, this.selected_column).solve(num);
             drawNumbers();
         }

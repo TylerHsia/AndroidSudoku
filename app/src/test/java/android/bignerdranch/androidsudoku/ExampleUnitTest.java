@@ -22,11 +22,10 @@ of the Android framework and so do not need to run on a device or emulator. JUni
  */
 public class ExampleUnitTest {
 
-    //Todo: add test for mySudoku remove method
+
     @Test
     public void addition_isCorrect() {
         Log.i("Test", "addition_isCorrect: ");
-        //Todo: can i make messages like this
         assertEquals("Test message", 4, 2 + 2);
     }
 
@@ -34,6 +33,24 @@ public class ExampleUnitTest {
     private int NumStoredSudokus = 23;
 
 
+    @Test
+    public void testSudokuGridRemoveMethod(){
+        SudokuGrid mySudoku = new SudokuGrid();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        mySudoku = sudokuSolver.getInput(3);
+        sudokuSolver.BoxChecker(mySudoku);
+        mySudoku.deleteCell(0, 1);
+        SudokuGrid newSudoku = new SudokuGrid();
+        newSudoku = sudokuSolver.getInput(3);
+        newSudoku.deleteCell(0, 1);
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                assertTrue("r: " + r + " c: " + c, mySudoku.getSudokCell(r, c).equals(newSudoku.getSudokCell(r, c)));
+            }
+        }
+        assertTrue(mySudoku.equals(newSudoku));
+        //Note: assertEquals does not call class's equals method
+    }
     @Test
     public void TestRateDifficulty() {
         SudokuSolver sudokuSolver = new SudokuSolver();

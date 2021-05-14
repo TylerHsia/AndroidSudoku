@@ -39,7 +39,6 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
     }
 
 
-    //Todo: implement properly
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event){
