@@ -12,18 +12,28 @@ public class MainActivity extends AppCompatActivity {
     private Button generate;
     private Button solve;
     private Button delete;
+    //Long term by senior project
     //Todo: All UI capability
     //Todo: hinting
     //Todo: generation
     //Todo: rotation and mirroring
     //Todo: note capability
+    //Todo: turn off cell highlighting option
+    //Todo: options menu
+    //Todo: store sudokus in file, read from file
+    //Todo: make impossible to delete givens
+    //Todo: onsolved, make happy display dances
+    //Todo: capability to undo solved
 
-
-    //Todo: delete button
+    //Short term
     //Todo: lowercase method names
     //Todo: change all sudoku.getSudokuGrid[row][column] to getsudokucell(row, column)
     //Todo: sound effects
     //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
+
+    //After senior project
+    //Todo: undo and redo
+
 
 
     @Override

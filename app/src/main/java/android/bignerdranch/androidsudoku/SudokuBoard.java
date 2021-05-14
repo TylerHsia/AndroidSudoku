@@ -185,6 +185,8 @@ public class SudokuBoard extends View {
     private void colorCells(Canvas canv, int r, int c){
         canvas = canv;
         if(selected_column != -1 && selected_row != -1){
+            //Todo: this makes different colors because the color is partially transparent
+            /*
             //highlight column
             canvas.drawRect((c)*cellSize, 0, (c+1)*cellSize, cellSize*9,
                     cellsHighlightColorPaint);
@@ -202,6 +204,30 @@ public class SudokuBoard extends View {
                     fillCell(row2, column2, cellsHighlightColorPaint);
                 }
             }
+            */
+            //fill all cells in the row, column, and box, highlight
+            for(int row = 0; row < 9; row++){
+                for(int column = 0; column < 9; column++){
+                    //fill row
+                    if(row == r && column != c){
+                        fillCell(row, column, cellsHighlightColorPaint);
+                    }
+                    //fill column
+                    if(column == c && row != r){
+                        fillCell(row, column, cellsHighlightColorPaint);
+                    }
+                    //fill box
+                    if(row / 3 == r/3 && column/3 == c/3){
+                        //if not already row and column
+                        if(!(row == r && column != c) && !(column == c && row != r)){
+                            fillCell(row, column, cellsHighlightColorPaint);
+                        }
+                    }
+                }
+            }
+            //fill cell selected with a different color
+            fillCell(r, c, cellFillColorPaint);
+
         }
 
         invalidate();
