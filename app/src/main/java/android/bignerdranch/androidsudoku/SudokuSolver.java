@@ -1150,24 +1150,27 @@ public class SudokuSolver {
     //checks if an invalid cell has been entered
     public boolean InvalidMove(SudokuGrid mySudoku, int r, int c) {
         int cellVal = mySudoku.getSudokCell(r, c).getVal();
-        //check columns for duplicates
+        if(cellVal == -1){
+            return false;
+        }
+        //check row for duplicates
+        int numInRow = 0;
         for (int column = 0; column < 9; column++) {
-            int numInColumn = 0;
             if (mySudoku.getSudokuGrid()[r][column].getVal() == cellVal) {
-                numInColumn++;
+                numInRow++;
             }
-            if (numInColumn > 1) {
+            if (numInRow > 1) {
                 return true;
             }
         }
 
-        //check row for duplicates
+        //check column for duplicates
+        int numInColumn = 0;
         for (int row = 0; row < 9; row++) {
-            int numInRow = 0;
             if (mySudoku.getSudokuGrid()[row][c].getVal() == cellVal) {
-                numInRow++;
+                numInColumn++;
             }
-            if (numInRow > 1) {
+            if (numInColumn > 1) {
                 return true;
             }
         }

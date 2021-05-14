@@ -36,7 +36,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="HighlightCells"
-            android:backgroundTint="#1274DC"/>
+            android:backgroundTint="#1274DC"
+            android:backgroundTintMode="add"/>
         <Button
             android:id="@+id/solvebutton"
             android:layout_width="0dp"

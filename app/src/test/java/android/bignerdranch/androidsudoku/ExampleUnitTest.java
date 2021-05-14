@@ -33,6 +33,36 @@ public class ExampleUnitTest {
     private int NumStoredSudokus = 23;
 
 
+    @Test
+    public void testInvalidMoveRowColumn(){
+        SudokuGrid mySudoku = new SudokuGrid();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        //duplicate in column
+        mySudoku = sudokuSolver.getInput(1);
+        mySudoku.getSudokCell(1, 7).solve(7);
+        assertTrue(sudokuSolver.InvalidMove(mySudoku, 1, 7));
+
+        //duplicate in row
+        mySudoku = sudokuSolver.getInput(1);
+        mySudoku.getSudokCell(4, 6).solve(1);
+        assertTrue(sudokuSolver.InvalidMove(mySudoku, 4, 6));
+
+
+        //duplicate in box
+        mySudoku = sudokuSolver.getInput(1);
+        mySudoku.getSudokCell(1, 4).solve(4);
+        assertTrue(sudokuSolver.InvalidMove(mySudoku, 1, 4));
+
+
+
+        //no duplicate
+        mySudoku = sudokuSolver.getInput(1);
+        for(int row = 0; row < 9; row++){
+            for(int column = 0; column < 9; column++){
+                assertFalse(sudokuSolver.InvalidMove(mySudoku, row, column));
+            }
+        }
+    }
 
     @Test
     public void testSudokuGridRemoveMethod(){

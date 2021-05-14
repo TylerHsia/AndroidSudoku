@@ -326,6 +326,7 @@ public class SudokuBoard extends View {
                     isGiven[row][column] = false;
                 }
                 computerSolved[row][column] = false;
+                invalidUserMove[row][column] = false;
             }
         }
         drawNumbers();
@@ -342,6 +343,7 @@ public class SudokuBoard extends View {
     public void removeCell() {
         if(selected_column != -1 && selected_row != -1){
             if(!isGiven[selected_row][selected_column]) {
+                invalidUserMove[selected_column][selected_column] = false;
                 mySudoku.deleteCell(selected_row, selected_column);
             }
         }
