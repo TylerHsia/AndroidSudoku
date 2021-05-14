@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -29,8 +28,9 @@ public class SudokuBoard extends View {
     private final int boardColor;
     private final int cellFillColor;
     private final int cellsHighlightColor;
-    private final int numberColor;
+    private final int numberColorInputted;
     private final int numberColorSolved;
+    private final int numberColorGiven;
 
     //paints for drawing in the board grid and highlighting cells
     private final Paint boardColorPaint = new Paint();
@@ -46,6 +46,10 @@ public class SudokuBoard extends View {
     private Canvas canvas;
 
     private boolean highlightCells = true;
+
+    //boolean arrays to keep track of extra states of certain cells on the board
+    boolean[][] isGiven = new boolean[9][9];
+    boolean[][] computerSolved = new boolean[9][9];
 
 
 
@@ -77,9 +81,10 @@ public class SudokuBoard extends View {
             boardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             cellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             cellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
-            numberColor = a.getInteger(R.styleable.SudokuBoard_numberColor, 0);
-            //Todo: set up xml for numbercolor and numbercolorsolved
+            numberColorInputted = a.getInteger(R.styleable.SudokuBoard_numberColorInputted, 0);
             numberColorSolved = a.getInteger(R.styleable.SudokuBoard_numberColorSolved, 0);
+            numberColorGiven = a.getInteger(R.styleable.SudokuBoard_numberColorGiven, 0);
+
 
 
 
@@ -128,7 +133,7 @@ public class SudokuBoard extends View {
 
         letterPaint.setStyle(Paint.Style.FILL);
         letterPaint.setAntiAlias(true);
-        letterPaint.setColor(numberColor);
+        letterPaint.setColor(numberColorInputted);
 
         colorCells(canvas, selected_row, selected_column);
         canvas.drawRect(0, 0, getWidth(), getHeight(), boardColorPaint);
@@ -175,13 +180,21 @@ public class SudokuBoard extends View {
                     width = letterPaint.measureText(text);
                     height = letterPaintBounds.height();
                     //Todo: get paint vals from xml
-                    letterPaint.setColor(Color.BLACK);
+                    letterPaint.setColor(numberColorInputted);
 
+                    if(isGiven[row][column]){
+                        letterPaint.setColor(numberColorGiven);
+                    }
+                    if(computerSolved[row][column]){
+                        letterPaint.setColor(numberColorSolved);
+                    }
                     //draws the number centered
                     canvas.drawText(text, (column*cellSize) + ((cellSize - width) / 2),
                             (row*cellSize + cellSize) - (cellSize - height)/2, letterPaint);
 
                     //Todo: different color for phone solved nums. 26:00 part 3
+
+                    //givens black, user inputted blue, computer solved green. simple error inputted red
                 }
             }
         }
@@ -271,6 +284,14 @@ public class SudokuBoard extends View {
     //solves sudoku
     public void solveSudoku(){
         if(mySudoku.IsValid()){
+            //when solving, if the cell is unsolved, set that that cell will be solved by computer
+            for(int row = 0; row < 9; row++){
+                for(int column = 0; column < 9; column++){
+                    if(!mySudoku.getSudokCell(row, column).isSolved()){
+                        computerSolved[row][column] = true;
+                    }
+                }
+            }
             sudokuSolver.Solve(mySudoku, false);
             if(!mySudoku.IsSolved()){
                 sudokuSolver.Solve(mySudoku, true);
@@ -286,6 +307,20 @@ public class SudokuBoard extends View {
     //gets sudoku from input list
     public void getInput(int i){
         mySudoku = sudokuSolver.getInput(i);
+
+        //each currently solved cell is a given. set given[][] to reflect that.
+        for(int row = 0; row < 9; row++){
+            for(int column = 0; column < 9; column++){
+                if(mySudoku.getSudokCell(row, column).isSolved()){
+                    isGiven[row][column] = true;
+                }
+                //reset memory of previous game
+                else{
+                    isGiven[row][column] = false;
+                }
+                computerSolved[row][column] = false;
+            }
+        }
         drawNumbers();
     }
 
@@ -298,8 +333,10 @@ public class SudokuBoard extends View {
 
     //removes number in a given cell
     public void removeCell() {
-        if(selected_column != 0 && selected_row != 0){
-            mySudoku.deleteCell(selected_row, selected_column);
+        if(selected_column != -1 && selected_row != -1){
+            if(!isGiven[selected_row][selected_column]) {
+                mySudoku.deleteCell(selected_row, selected_column);
+            }
         }
     }
 }

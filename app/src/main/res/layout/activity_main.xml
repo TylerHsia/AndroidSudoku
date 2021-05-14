@@ -85,6 +85,10 @@
         custom:boardColor="#000000"
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
+        custom:numberColorInputted="#5900FF"
+        custom:numberColorGiven="@color/black"
+        custom:numberColorSolved="#53A600"
+
 
         tools:ignore="MissingPrefix">
 

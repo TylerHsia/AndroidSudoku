@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 sudokuBoard.getInput((int) (Math.random() * 24));
-
             }
         });
 

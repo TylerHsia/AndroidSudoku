@@ -4,7 +4,8 @@
         <attr name="boardColor" format="color"/>
         <attr name="cellFillColor" format="color"/>
         <attr name="cellsHighlightColor" format="color"/>
-        <attr name="numberColor" format="color"/>
+        <attr name="numberColorInputted" format="color"/>
+        <attr name="numberColorGiven" format="color"/>
         <attr name="numberColorSolved" format="color"/>
     </declare-styleable>
 </resources>
