@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/SudokuBoard"
@@ -20,7 +20,8 @@
 
         <Button
             android:id="@+id/generatebutton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:backgroundTint="#1274DC"
             android:text="Generate"
@@ -29,10 +30,17 @@
             app:layout_constraintStart_toStartOf="parent">
 
         </Button>
-
+        <CheckBox
+            android:id="@+id/checkBoxHighlightCells"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="HighlightCells"
+            android:backgroundTint="#1274DC"/>
         <Button
             android:id="@+id/solvebutton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:backgroundTint="#1274DC"
             android:text="Solve"
@@ -43,11 +51,7 @@
 
         </Button>
 
-        <CheckBox
-            android:id="@+id/checkBoxHighlightCells"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HighlightCells"/>
+
     </LinearLayout>
 
     <Button

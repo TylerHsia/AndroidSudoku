@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -50,6 +51,7 @@ public class SudokuBoard extends View {
     //boolean arrays to keep track of extra states of certain cells on the board
     boolean[][] isGiven = new boolean[9][9];
     boolean[][] computerSolved = new boolean[9][9];
+    boolean[][] invalidUserMove = new boolean[9][9];
 
 
 
@@ -188,11 +190,13 @@ public class SudokuBoard extends View {
                     if(computerSolved[row][column]){
                         letterPaint.setColor(numberColorSolved);
                     }
+
+                    if(invalidUserMove[row][column]){
+                        letterPaint.setColor(Color.RED);
+                    }
                     //draws the number centered
                     canvas.drawText(text, (column*cellSize) + ((cellSize - width) / 2),
                             (row*cellSize + cellSize) - (cellSize - height)/2, letterPaint);
-
-                    //Todo: different color for phone solved nums. 26:00 part 3
 
                     //givens black, user inputted blue, computer solved green. simple error inputted red
                 }
@@ -277,6 +281,9 @@ public class SudokuBoard extends View {
     public void setNumberPos(int num){
         if(this.selected_row != -1 && this.selected_column != -1){
             mySudoku.getSudokCell(this.selected_row, this.selected_column).solve(num);
+            if(sudokuSolver.InvalidMove(mySudoku, selected_row, selected_column)){
+                invalidUserMove[selected_row][selected_column] = true;
+            }
             drawNumbers();
         }
     }

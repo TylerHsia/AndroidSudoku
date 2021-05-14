@@ -884,8 +884,6 @@ public class SudokuSolver {
                     }
 
 
-
-
                     //all other guesses
                     for (int candidateIndex = 1; candidateIndex < numCands; candidateIndex++) {
                         SudokuGrid copy = Copy(mySudoku);
@@ -1090,7 +1088,7 @@ public class SudokuSolver {
         }
         boolean forcingChainsCheckerWorks = true;
         if (forcingChains) {
-            while(forcingChainsCheckerWorks){
+            while (forcingChainsCheckerWorks) {
                 forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
             }
         }
@@ -1103,7 +1101,7 @@ public class SudokuSolver {
         for (int column = 0; column < 9; column++) {
             ArrayList<Integer> myList = new ArrayList<Integer>();
             for (int row = 0; row < 9; row++) {
-                if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                if (mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
                     myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
                 }
             }
@@ -1116,7 +1114,7 @@ public class SudokuSolver {
         for (int row = 0; row < 9; row++) {
             ArrayList<Integer> myList = new ArrayList<Integer>();
             for (int column = 0; column < 9; column++) {
-                if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                if (mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
                     myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
                 }
             }
@@ -1135,7 +1133,7 @@ public class SudokuSolver {
                 for (int row = boxRow * 3; row < boxRow * 3 + 3; row++) {
                     //for each column in the small box
                     for (int column = boxColumn * 3; column < boxColumn * 3 + 3; column++) {
-                        if(mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
+                        if (mySudoku.getSudokuGrid()[row][column].getVal() != -1) {
                             myList.add(mySudoku.getSudokuGrid()[row][column].getVal());
                         }
                     }
@@ -1145,6 +1143,54 @@ public class SudokuSolver {
                 }
             }
         }
+        return false;
+    }
+
+
+    //checks if an invalid cell has been entered
+    public boolean InvalidMove(SudokuGrid mySudoku, int r, int c) {
+        int cellVal = mySudoku.getSudokCell(r, c).getVal();
+        //check columns for duplicates
+        for (int column = 0; column < 9; column++) {
+            int numInColumn = 0;
+            if (mySudoku.getSudokuGrid()[r][column].getVal() == cellVal) {
+                numInColumn++;
+            }
+            if (numInColumn > 1) {
+                return true;
+            }
+        }
+
+        //check row for duplicates
+        for (int row = 0; row < 9; row++) {
+            int numInRow = 0;
+            if (mySudoku.getSudokuGrid()[row][c].getVal() == cellVal) {
+                numInRow++;
+            }
+            if (numInRow > 1) {
+                return true;
+            }
+        }
+
+        //check boxes for duplicates
+
+        //for box coords
+        int boxRow = r / 3;
+        int boxColumn = c / 3;
+        int numInBox = 0;
+        //for each row in the small box
+        for (int row = boxRow * 3; row < boxRow * 3 + 3; row++) {
+            //for each column in the small box
+            for (int column = boxColumn * 3; column < boxColumn * 3 + 3; column++) {
+                if (mySudoku.getSudokuGrid()[row][column].getVal() == cellVal) {
+                    numInBox++;
+                }
+            }
+        }
+        if (numInBox > 1) {
+            return true;
+        }
+
         return false;
     }
 
@@ -1296,9 +1342,9 @@ public class SudokuSolver {
     }
 
     //for given solved copy, sets all cells in mySudoku to be solved to the corresponding values in copy
-    public void set(SudokuGrid mySudoku, SudokuGrid copy){
-        for(int row = 0; row < 9; row++){
-            for(int column = 0; column < 9; column++){
+    public void set(SudokuGrid mySudoku, SudokuGrid copy) {
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
                 mySudoku.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getVal());
             }
         }
@@ -1522,21 +1568,21 @@ public class SudokuSolver {
     public int[][] input(int x) {
 
         if (x == 1) {
-            int[][]beginner = {{-1, -1, 5, 8, 2, -1, -1, 1, 4},
-                                {3, 1, -1, 9, -1, 4, 5, -1, -1},
-                                {-1, 4, 2, -1, 3, -1, 9, 6, 8},
+            int[][] beginner = {{-1, -1, 5, 8, 2, -1, -1, 1, 4},
+                    {3, 1, -1, 9, -1, 4, 5, -1, -1},
+                    {-1, 4, 2, -1, 3, -1, 9, 6, 8},
 
-                                {6, 3, -1, -1, -1, -1, 7, 4, 5},
-                                {1, 2, -1, 4, 5, -1, -1, 8, 9},
-                                {8, 5, -1, -1, -1, -1, -1, 3, 2},
+                    {6, 3, -1, -1, -1, -1, 7, 4, 5},
+                    {1, 2, -1, 4, 5, -1, -1, 8, 9},
+                    {8, 5, -1, -1, -1, -1, -1, 3, 2},
 
-                                {-1, -1, 6, 3, 7, 2, -1, 5, -1},
-                                {-1, 8, 1, 6, -1, 9, 2, 7, -1},
-                                {2, 7, 3, 1, -1, -1, -1, 9, 6}};
+                    {-1, -1, 6, 3, 7, 2, -1, 5, -1},
+                    {-1, 8, 1, 6, -1, 9, 2, 7, -1},
+                    {2, 7, 3, 1, -1, -1, -1, 9, 6}};
             return beginner;
         }
         if (x == 2) {
-            int[][]normal = {{0, 0, 0, 0, 9, 0, 0, 0, 0},
+            int[][] normal = {{0, 0, 0, 0, 9, 0, 0, 0, 0},
                     {0, 9, 0, 0, 0, 0, 0, 4, 0},
                     {0, 5, 1, 8, 0, 7, 0, 0, 0},
 
@@ -1550,7 +1596,7 @@ public class SudokuSolver {
             return normal;
         }
         if (x == 3) {
-            int[][]hard = {{0, 8, 0, 0, 0, 0, 0, 4, 0},
+            int[][] hard = {{0, 8, 0, 0, 0, 0, 0, 4, 0},
                     {2, 0, 0, 8, 0, 0, 5, 0, 7},
                     {0, 0, 4, 7, 0, 0, 0, 0, 0},
                     {0, 0, 0, 3, 0, 0, 0, 7, 1},
@@ -1562,7 +1608,7 @@ public class SudokuSolver {
             return hard;
         }
         if (x == 4) {
-            int[][]expert = {{0, 0, 7, 0, 0, 0, 6, 3, 0},
+            int[][] expert = {{0, 0, 7, 0, 0, 0, 6, 3, 0},
                     {6, 0, 0, 5, 0, 3, 0, 0, 9},
                     {8, 0, 0, 0, 7, 0, 0, 0, 0},
                     {0, 0, 0, 9, 0, 0, 0, 0, 3},
@@ -1574,7 +1620,7 @@ public class SudokuSolver {
             return expert;
         }
         if (x == 5) {
-            int[][]expert2 = {{0, 9, 1, 0, 0, 0, 0, 0, 0},
+            int[][] expert2 = {{0, 9, 1, 0, 0, 0, 0, 0, 0},
                     {4, 0, 0, 0, 9, 0, 0, 0, 0},
                     {2, 0, 0, 0, 0, 7, 0, 0, 0},
                     {9, 0, 0, 0, 0, 0, 0, 1, 0},
@@ -1586,7 +1632,7 @@ public class SudokuSolver {
             return expert2;
         }
         if (x == 6) {
-            int[][]fiveStar = {{0, 5, 0, 0, 1, 3, 0, 0, 0},
+            int[][] fiveStar = {{0, 5, 0, 0, 1, 3, 0, 0, 0},
                     {0, 0, 1, 0, 8, 0, 3, 0, 0},
                     {8, 0, 0, 5, 0, 0, 0, 6, 4},
                     {5, 0, 7, 0, 3, 0, 0, 0, 0},
@@ -1598,7 +1644,7 @@ public class SudokuSolver {
             return fiveStar;
         }
         if (x == 7) {
-            int[][]fiveStar2 = {{0, 0, 6, 0, 0, 0, 0, 4, 0},
+            int[][] fiveStar2 = {{0, 0, 6, 0, 0, 0, 0, 4, 0},
                     {0, 0, 0, 0, 3, 0, 7, 1, 6},
                     {3, 0, 0, 0, 7, 9, 8, 0, 0},
                     {0, 0, 0, 0, 9, 0, 0, 0, 7},
@@ -1610,7 +1656,7 @@ public class SudokuSolver {
             return fiveStar2;
         }
         if (x == 8) {
-            int[][]fiveStar3 = {{8, 0, 0, 0, 5, 6, 0, 0, 0},
+            int[][] fiveStar3 = {{8, 0, 0, 0, 5, 6, 0, 0, 0},
                     {0, 0, 0, 8, 0, 0, 0, 6, 0},
                     {9, 0, 0, 3, 4, 0, 1, 0, 0},
                     {6, 0, 0, 0, 3, 0, 0, 5, 0},
@@ -1858,11 +1904,11 @@ public class SudokuSolver {
 
     //converts int[] of integers length 9 into a 2d array
     public static int[][] twoDConverter(ArrayList<Integer> oneD) {
-        int[][]twoD = new int[9][9];
+        int[][] twoD = new int[9][9];
         for (int row = 0; row < 9; row++) {
             int oneDRow = oneD.get(row);
             for (int column = 8; column >= 0/*(int)(11 - Math.log(oneD.get(row)))*/; column--) {
-                twoD[row][column] =oneDRow % 10;
+                twoD[row][column] = oneDRow % 10;
                 oneDRow = oneDRow / 10;
             }
         }
