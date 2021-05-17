@@ -1326,6 +1326,7 @@ public class SudokuSolver {
                         {
                             //brute force it
                             if (bruteForceSolver(copy).equals("Mistake Made")) {
+                                //Brute force error fixed by adding try catch
                                 try {
 
 
@@ -1929,5 +1930,11 @@ public class SudokuSolver {
     //returns the SudokuGrid stored at input i
     public SudokuGrid getInput(int i) {
         return FromIntArray(input(i));
+    }
+
+    //eliminates candidates simpy in rook and box
+    public void eliminateCands(SudokuGrid sudokuGrid) {
+        RookChecker(sudokuGrid);
+        BoxChecker(sudokuGrid);
     }
 }

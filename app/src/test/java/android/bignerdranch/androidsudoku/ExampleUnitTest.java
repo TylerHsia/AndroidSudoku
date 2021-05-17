@@ -47,14 +47,18 @@ public class ExampleUnitTest {
         sudokuGenerator.swapBoxColumns(mySudoku, 2, 1);
         assertTrue(swapBoxColumns.equals(mySudoku));
 
+        sudokuGenerator.swapBoxRows(swapBoxColumns, 1, 2);
+        sudokuGenerator.swapBoxRows(mySudoku, 2, 1);
+        assertTrue(swapBoxColumns.equals(mySudoku));
+
         for(int i = 1; i <= 23; i++){
             swapBoxColumns = sudokuSolver.getInput(i);
             assertTrue("" + i, swapBoxColumns.IsValid());
-            sudokuGenerator.swapBoxColumns(swapBoxColumns, 0, 1);
+            sudokuGenerator.swapBoxRows(swapBoxColumns, 0, 1);
             assertTrue("" + i, swapBoxColumns.IsValid());
-            sudokuGenerator.swapBoxColumns(swapBoxColumns, 1, 2);
+            sudokuGenerator.swapBoxRows(swapBoxColumns, 1, 2);
             assertTrue("" + i, swapBoxColumns.IsValid());
-            sudokuGenerator.swapBoxColumns(swapBoxColumns, 0, 2);
+            sudokuGenerator.swapBoxRows(swapBoxColumns, 0, 2);
             assertTrue("" + i, swapBoxColumns.IsValid());
 
         }
@@ -83,6 +87,19 @@ public class ExampleUnitTest {
         sudokuGenerator.flipVertical(flipVertical);
         assertTrue(mySudoku.equals(flipVertical));
 
+    }
+
+    @Test
+    public void testFillEmptyGrid(){
+        for(int i = 0; i < 100; i++) {
+
+            SudokuSolver sudokuSolver = new SudokuSolver();
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            SudokuGrid mySudoku = sudokuGenerator.fillEmptyGrid();
+            assertTrue("" + i + mySudoku,mySudoku.IsValid());
+            Log.i("Test", "" + i + mySudoku );
+
+        }
     }
 
 

@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     //Long term by senior project
     //Todo: All UI capability
     //Todo: generation
-    //Todo: rotation and mirroring
+    //fill in blank sudoku grid to full
+    //reflect through origin, diagonals, change numbers,
+    //remove candidates one by one until desired difficulty
     //Todo: note capability
     //Todo: options menu
     //Todo: store sudokus in file, read from file
@@ -37,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: change all sudoku.getSudokuGrid[row][column] to getsudokucell(row, column)
     //Todo: sound effects
     //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
-    //Todo: activity for generation - include option for blank generation
     //Todo: activity for settings
-    //Todo: reflect through origin, diagonals, change numbers,
 
     //After senior project
     //undo and redo
