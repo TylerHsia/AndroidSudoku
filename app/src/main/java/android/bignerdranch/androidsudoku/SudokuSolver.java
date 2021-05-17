@@ -1326,9 +1326,16 @@ public class SudokuSolver {
                         {
                             //brute force it
                             if (bruteForceSolver(copy).equals("Mistake Made")) {
-                                mySudoku.getSudokuGrid()[row][column].remove(i);
-                                i--;
-                                solveForBruteForce(mySudoku);
+                                try {
+
+
+                                    mySudoku.getSudokuGrid()[row][column].remove(i);
+                                    i--;
+                                    solveForBruteForce(mySudoku);
+                                }
+                                catch(Exception e){
+                                    return "Mistake Made";
+                                }
 
                             } else if (IsSolved(copy)) {
                                 //mySudoku = Copy(copy);

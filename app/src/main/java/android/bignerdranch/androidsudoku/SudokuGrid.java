@@ -95,7 +95,7 @@ public class SudokuGrid{
         {
             return false;
         }
-        try {
+        //try {
             mySudoku.SolveForIsValid();
             //if simple solve, return is valid
             if (sudokuSolver.IsSolved(mySudoku)) {
@@ -114,9 +114,12 @@ public class SudokuGrid{
             if (sudokuSolver.InvalidMove(this)) {
                 return false;
             }
+            return true;
 
+            /*
             SudokuGrid firstSolve = new SudokuGrid();
             firstSolve = sudokuSolver.Copy(copy1);
+
 
             //else, guess all possibles and brute force solve. if multiple solutions, return false
             for (int row = 0; row < 9; row++) {
@@ -161,11 +164,15 @@ public class SudokuGrid{
                     }
                 }
             }
-        }
-        catch(Exception e){
-            return false;
-        }
+        //}
+        //catch(Exception e){
+          //  return false;
+        //}
         return true;
+
+             */
+
+
 
     }
 

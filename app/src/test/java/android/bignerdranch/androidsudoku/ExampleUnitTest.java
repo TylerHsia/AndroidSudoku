@@ -32,6 +32,34 @@ public class ExampleUnitTest {
 
     private int NumStoredSudokus = 23;
 
+
+    @Test
+    public void testBoxSwitcher() {
+        SudokuGrid mySudoku = new SudokuGrid();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        mySudoku = sudokuSolver.getInput(1);
+        SudokuGrid swapBoxColumns = sudokuSolver.getInput(1);
+        sudokuGenerator.swapBoxColumns(swapBoxColumns, 1, 1);
+        assertTrue(swapBoxColumns.equals(mySudoku));
+
+        sudokuGenerator.swapBoxColumns(swapBoxColumns, 1, 2);
+        sudokuGenerator.swapBoxColumns(mySudoku, 2, 1);
+        assertTrue(swapBoxColumns.equals(mySudoku));
+
+        for(int i = 1; i <= 23; i++){
+            swapBoxColumns = sudokuSolver.getInput(i);
+            assertTrue("" + i, swapBoxColumns.IsValid());
+            sudokuGenerator.swapBoxColumns(swapBoxColumns, 0, 1);
+            assertTrue("" + i, swapBoxColumns.IsValid());
+            sudokuGenerator.swapBoxColumns(swapBoxColumns, 1, 2);
+            assertTrue("" + i, swapBoxColumns.IsValid());
+            sudokuGenerator.swapBoxColumns(swapBoxColumns, 0, 2);
+            assertTrue("" + i, swapBoxColumns.IsValid());
+
+        }
+
+    }
     @Test
     public void testRotationAndReflection(){
         SudokuGrid mySudoku = new SudokuGrid();

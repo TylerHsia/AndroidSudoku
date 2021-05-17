@@ -9,6 +9,7 @@ public class SudokuGenerator {
         mySudoku = new SudokuGrid();
     }
 
+    //rotates a given sudoku 90 degrees clockwise
     public void rotateClockwise(SudokuGrid sudokuGrid){
         SudokuGrid copy = sudokuSolver.Copy(sudokuGrid);
         for (int i = 0; i < 9; ++i) {
@@ -18,6 +19,7 @@ public class SudokuGenerator {
         }
     }
 
+    //flips the sudoku around a horizontal midline
     public void flipHorizontal(SudokuGrid sudokuGrid){
         for(int row = 0; row < 3; row++){
             for(int column = 0; column < 9; column++){
@@ -28,6 +30,7 @@ public class SudokuGenerator {
         }
     }
 
+    //flips the sudoku around a vertical midline
     public void flipVertical(SudokuGrid sudokuGrid){
         for(int column = 0; column < 3; column++){
             for(int row = 0; row < 9; row++){
@@ -36,5 +39,22 @@ public class SudokuGenerator {
                 sudokuGrid.setSudokCell(8 - row, column, temp);
             }
         }
+    }
+
+    //swaps two boxColumns, index zero
+    public void swapBoxColumns(SudokuGrid sudokuGrid, int boxColumnOne, int boxColumnTwo){
+        SudokuGrid copy = sudokuSolver.Copy(sudokuGrid);
+        for(int row = 0; row < 9; row++){
+            for(int column = 0; column < 9; column++){
+                if(column / 3 == boxColumnOne){
+                    sudokuGrid.setSudokCell(row, column, copy.getSudokCell(row, boxColumnTwo * 3 + column % 3));
+                }
+                if(column / 3 == boxColumnTwo){
+                    sudokuGrid.setSudokCell(row, column, copy.getSudokCell(row, boxColumnOne * 3 + column % 3));
+                }
+
+            }
+        }
+
     }
 }

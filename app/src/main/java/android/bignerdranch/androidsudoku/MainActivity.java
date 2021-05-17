@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
     //Todo: activity for generation - include option for blank generation
     //Todo: activity for settings
+    //Todo: reflect through origin, diagonals, change numbers,
 
     //After senior project
     //undo and redo
