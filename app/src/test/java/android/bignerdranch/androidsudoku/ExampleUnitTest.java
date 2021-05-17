@@ -32,7 +32,30 @@ public class ExampleUnitTest {
 
     private int NumStoredSudokus = 23;
 
+    @Test
+    public void testRotationAndReflection(){
+        SudokuGrid mySudoku = new SudokuGrid();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        mySudoku = sudokuSolver.getInput(1);
+        SudokuGrid rotateSudoku = sudokuSolver.getInput(1);
+        sudokuGenerator.rotateClockwise(rotateSudoku);
+        sudokuGenerator.rotateClockwise(rotateSudoku);
+        sudokuGenerator.rotateClockwise(rotateSudoku);
+        sudokuGenerator.rotateClockwise(rotateSudoku);
+        assertTrue(mySudoku.equals(rotateSudoku));
 
+        SudokuGrid flipHorizontal = sudokuSolver.getInput(1);
+        sudokuGenerator.flipHorizontal(flipHorizontal);
+        sudokuGenerator.flipHorizontal(flipHorizontal);
+        assertTrue(mySudoku.equals(flipHorizontal));
+
+        SudokuGrid flipVertical = sudokuSolver.getInput(1);
+        sudokuGenerator.flipVertical(flipVertical);
+        sudokuGenerator.flipVertical(flipVertical);
+        assertTrue(mySudoku.equals(flipVertical));
+
+    }
 
 
     @Test
