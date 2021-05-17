@@ -181,7 +181,6 @@ public class SudokuBoard extends View {
                     letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
                     width = letterPaint.measureText(text);
                     height = letterPaintBounds.height();
-                    //Todo: get paint vals from xml
                     letterPaint.setColor(numberColorInputted);
 
                     if(isGiven[row][column]){
@@ -284,6 +283,9 @@ public class SudokuBoard extends View {
             if(sudokuSolver.InvalidMove(mySudoku, selected_row, selected_column)){
                 invalidUserMove[selected_row][selected_column] = true;
             }
+            else {
+                invalidUserMove[selected_row][selected_column] = false;
+            }
             drawNumbers();
         }
     }
@@ -343,7 +345,7 @@ public class SudokuBoard extends View {
     public void removeCell() {
         if(selected_column != -1 && selected_row != -1){
             if(!isGiven[selected_row][selected_column]) {
-                invalidUserMove[selected_column][selected_column] = false;
+                invalidUserMove[selected_row][selected_column] = false;
                 mySudoku.deleteCell(selected_row, selected_column);
             }
         }

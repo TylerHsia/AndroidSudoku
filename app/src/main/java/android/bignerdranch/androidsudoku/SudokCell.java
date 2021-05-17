@@ -196,10 +196,8 @@ public class SudokCell {
         return possibles.size();
     }
 
-    //Todo: make sure this method is being called, not generic equals
     public boolean equals(SudokCell obj)
     {
-        //Todo: this line might cause error if equals doesn't compares references
         if (!this.getPossibles().equals(obj.getPossibles()) || this.isSolved() != obj.isSolved())
         {
             return false;
