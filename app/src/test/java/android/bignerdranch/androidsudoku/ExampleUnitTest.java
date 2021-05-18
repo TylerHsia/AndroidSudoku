@@ -121,7 +121,7 @@ public class ExampleUnitTest {
     public void testGeneratDifficulty(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        for(int i = 1; i <=5; i++){
+        for(int i = 5; i <=5; i++){
             SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
             Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
             //Todo: store mySudoku to file

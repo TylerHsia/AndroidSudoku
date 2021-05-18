@@ -358,8 +358,23 @@ public class SudokuBoard extends View {
         if(difficulty != 6 && difficulty != 7){
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
             mySudoku = sudokuGenerator.generateDifficulty(difficulty);
-            invalidate();
+
         }
+        //each currently solved cell is a given. set given[][] to reflect that.
+        for(int row = 0; row < 9; row++){
+            for(int column = 0; column < 9; column++){
+                if(mySudoku.getSudokCell(row, column).isSolved()){
+                    isGiven[row][column] = true;
+                }
+                //reset memory of previous game
+                else{
+                    isGiven[row][column] = false;
+                }
+                computerSolved[row][column] = false;
+                invalidUserMove[row][column] = false;
+            }
+        }
+        drawNumbers();
     }
 }
 

@@ -151,15 +151,16 @@ public class SudokuGenerator {
         }
         Collections.shuffle(coordList);
 
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
         for (int i: coordList) {
             try {
-                SudokuGrid copy = sudokuSolver.Copy(mySudoku);
                 int row = i / 9;
                 int column = i % 9;
-                int size = mySudoku.getSudokCell(row, column).getPossibles().size();
+                int size = copy.getSudokCell(row, column).getPossibles().size();
                 int index = (int) (Math.random() * (size));
                 //set sudok cell to random of possible candidates
-                mySudoku.getSudokCell(row, column).solve(mySudoku.getSudokCell(row, column).getPossibles().get(index));
+                mySudoku.getSudokCell(row, column).solve(copy.getSudokCell(row, column).getPossibles().get(index));
+                copy.setSudokCell(row, column, new SudokCell(copy.getSudokCell(row, column).getPossibles().get(index)) );
 
                 if(mySudoku.IsValid() && sudokuSolver.RateDifficulty(mySudoku) == difficulty){
                     return mySudoku;
@@ -167,7 +168,7 @@ public class SudokuGenerator {
                 //Todo: need to only use solving methods that won't solve the sudoku too much
                 //Note: when using difficulty based on num unsolved, cuts runtime to 10% when using .Solve instead of .eliminate cands
                 //idea: even using eliminate cands, don't actually solve any cells. leave all cell solving to this algorithm.
-                sudokuSolver.eliminateCands(mySudoku);
+                sudokuSolver.Solve(copy, false);
             }
             catch (Exception e){
                 Log.i("GenerateDifficulty", "Caught exception");
