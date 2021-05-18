@@ -102,6 +102,20 @@ public class ExampleUnitTest {
         }
     }
 
+    @Test
+    public void testMakeInitialSudoku(){
+        for(int i = 0; i < 100; i++) {
+
+            SudokuSolver sudokuSolver = new SudokuSolver();
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            SudokuGrid mySudoku = sudokuGenerator.makeInitialSudoku();
+            assertTrue("" + i + mySudoku,mySudoku.IsValid());
+            //sudokuSolver.bruteForceSolver(mySudoku);
+            Log.i("Test", "" + i + "\nDifficulty: " + sudokuSolver.RateDifficulty(mySudoku) + mySudoku );
+
+        }
+    }
+
 
     @Test
     public void testInvalidMoveRowColumn(){
@@ -245,7 +259,7 @@ public class ExampleUnitTest {
 
         boolean solvedAll = true;
         //1 to 23, inclusive
-        for (int i = 1; i <= NumStoredSudokus; i++) {
+        for (int i = 1; i <= NumStoredSudokus - 1; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
 
             SudokuGrid mySudoku = getInput(i);

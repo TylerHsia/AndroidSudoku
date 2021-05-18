@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: sound effects
     //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
     //Todo: activity for settings
+    //Todo: stored logic for 23
 
     //After senior project
     //undo and redo

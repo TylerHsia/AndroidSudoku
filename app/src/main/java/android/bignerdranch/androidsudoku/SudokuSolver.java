@@ -1,5 +1,7 @@
 package android.bignerdranch.androidsudoku;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -223,14 +225,17 @@ public class SudokuSolver {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in the column
                         for (int row2 = 0; row2 < 9; row2++) {
+                            //if it is not a member of the naked set
                             if (!rowVals.contains(row2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].
                                         size();
                                      possibleIndex++) {
+                                    //if another cell has the candidates that are in the naked set, remove that candidate from it
                                     if (mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].
                                             getVal(possibleIndex)) != -1) {
                                         mySudoku.getSudokuGrid()[row2][column].remove(mySudoku.getSudokuGrid()[row2][column].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
+                                        candidatePairRookCheckerWorks = true;
                                     }
                                 }
                             }
@@ -258,20 +263,25 @@ public class SudokuSolver {
                     if (numSame == mySudoku.getSudokuGrid()[row][column].size()) {
                         //for each other element in that row
                         for (int column2 = 0; column2 < 9; column2++) {
+                            //if it is not a member of the naked set
                             if (!columnVals.contains(column2)) {
                                 for (int possibleIndex = 0; possibleIndex < mySudoku.getSudokuGrid()[row][column].
                                         size();
                                      possibleIndex++) {
+                                    //if another cell has the candidates that are in the naked set, remove that candidate from it
+
                                     if (mySudoku.getSudokuGrid()[row][column2].
                                             indexOf(mySudoku.getSudokuGrid()[row][column].
                                                     getVal(possibleIndex)) != -1) {
                                         mySudoku.getSudokuGrid()[row][column2].remove(mySudoku.getSudokuGrid()[row][column2].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
+                                        candidatePairRookCheckerWorks = true;
                                     }
                                 }
                             }
                         }
-                        candidatePairRookCheckerWorks = true;
+                        //Todo: this line caused all my problems
+                        //candidatePairRookCheckerWorks = true;
                         //candidatePairRookCheckerWorks =
                         RookChecker(mySudoku);
                         //candidatePairRookCheckerWorks =
@@ -836,6 +846,7 @@ public class SudokuSolver {
         return pointingPairRookToBoxWorks;
     }
 
+    //Todo: return boolean doesn't seem to always be correct
     //forcing chains checker
     public boolean forcingChainsChecker(SudokuGrid mySudoku) {
         //System.out.println("I was called");
@@ -959,7 +970,9 @@ public class SudokuSolver {
             return true;
         }
         //return false;
+        //Todo: while working on forcing chains commented this out
 
+        /*
         boolean forcingChainsCheckerWorks = false;
 
         if (InvalidMove(mySudoku)) {
@@ -973,7 +986,12 @@ public class SudokuSolver {
         if (forcingChainsCheckerWorks) {
             solveForForcingChains(mySudoku);
         }
+
+         */
+
+
         return false;
+
     }
 
     //make a copy of values
@@ -1074,6 +1092,8 @@ public class SudokuSolver {
 
     //solve method
     public void Solve(SudokuGrid mySudoku, boolean forcingChains) {
+        Log.i("Difficulty", "Solve Method");
+
         for (int i = 0; i < 10; i++) {
             RookChecker(mySudoku);
             BoxChecker(mySudoku);
@@ -1089,6 +1109,7 @@ public class SudokuSolver {
         boolean forcingChainsCheckerWorks = true;
         if (forcingChains) {
             while (forcingChainsCheckerWorks) {
+                Log.i("Difficulty", "while forcing chains checker works");
                 forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
             }
         }
@@ -1150,7 +1171,7 @@ public class SudokuSolver {
     //checks if an invalid cell has been entered
     public boolean InvalidMove(SudokuGrid mySudoku, int r, int c) {
         int cellVal = mySudoku.getSudokCell(r, c).getVal();
-        if(cellVal == -1){
+        if (cellVal == -1) {
             return false;
         }
         //check row for duplicates
@@ -1333,8 +1354,7 @@ public class SudokuSolver {
                                     mySudoku.getSudokuGrid()[row][column].remove(i);
                                     i--;
                                     solveForBruteForce(mySudoku);
-                                }
-                                catch(Exception e){
+                                } catch (Exception e) {
                                     return "Mistake Made";
                                 }
 
@@ -1477,6 +1497,7 @@ public class SudokuSolver {
     }
 
     public int RateDifficulty(SudokuGrid mySudoku) {
+
         if (!mySudoku.IsValid()) {
             return 0;
         }
@@ -1491,6 +1512,7 @@ public class SudokuSolver {
 
         //level 2
         while (currentWorks) {
+            Log.i("Difficulty", "While current works level 2");
             currentWorks = OnlyCandidateLeftRookChecker(mySudoku);
             if (!currentWorks) {
                 currentWorks = OnlyCandidateLeftBoxChecker(mySudoku);
@@ -1504,14 +1526,21 @@ public class SudokuSolver {
         //level 3
         currentWorks = true;
         while (currentWorks) {
+            Log.i("Difficulty", "While current works level 3");
             currentWorks = NakedCandidateRookChecker(mySudoku);
             if (!currentWorks) {
+                Log.i("Difficulty", "Naked box");
+
                 currentWorks = NakedCandidateBoxChecker(mySudoku);
             }
             if (!currentWorks) {
+                Log.i("Difficulty", "only rook");
+
                 currentWorks = OnlyCandidateLeftRookChecker(mySudoku);
             }
             if (!currentWorks) {
+                Log.i("Difficulty", "only box");
+
                 currentWorks = OnlyCandidateLeftBoxChecker(mySudoku);
             }
         }
@@ -1523,6 +1552,7 @@ public class SudokuSolver {
         //level 4
         currentWorks = true;
         while (currentWorks) {
+            Log.i("Difficulty", "While current works level 4");
             currentWorks = CandidateLinesChecker(mySudoku);
             if (!currentWorks) {
                 HiddenCandidatePairChecker(mySudoku);
