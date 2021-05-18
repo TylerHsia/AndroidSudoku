@@ -350,5 +350,16 @@ public class SudokuBoard extends View {
             }
         }
     }
+
+    public void generateSudoku(int difficulty) {
+        if(difficulty == 6){
+            mySudoku = new SudokuGrid();
+        }
+        if(difficulty != 6 && difficulty != 7){
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            mySudoku = sudokuGenerator.generateDifficulty(difficulty);
+            invalidate();
+        }
+    }
 }
 

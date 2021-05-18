@@ -109,9 +109,25 @@ public class ExampleUnitTest {
             SudokuSolver sudokuSolver = new SudokuSolver();
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
             SudokuGrid mySudoku = sudokuGenerator.makeInitialSudoku();
+            Log.i("Test", "" + i + mySudoku);
             assertTrue("" + i + mySudoku,mySudoku.IsValid());
             //sudokuSolver.bruteForceSolver(mySudoku);
-            Log.i("Test", "" + i + "\nDifficulty: " + sudokuSolver.RateDifficulty(mySudoku) + mySudoku );
+            Log.i("Test", "" + i + "\nDifficulty: " + sudokuSolver.RateDifficulty(mySudoku));
+
+        }
+    }
+
+    @Test
+    public void testGeneratDifficulty(){
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        for(int i = 1; i <=5; i++){
+            SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
+            Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
+            //Todo: store mySudoku to file
+            //It was able to generate difficulty one and two but not three in 20 minutes
+            assertTrue("" + i + mySudoku, mySudoku.IsValid());
+            //assertTrue("" + i + mySudoku, sudokuSolver.RateDifficulty(mySudoku) == i);
 
         }
     }
@@ -259,7 +275,7 @@ public class ExampleUnitTest {
 
         boolean solvedAll = true;
         //1 to 23, inclusive
-        for (int i = 1; i <= NumStoredSudokus - 1; i++) {
+        for (int i = 1; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
 
             SudokuGrid mySudoku = getInput(i);

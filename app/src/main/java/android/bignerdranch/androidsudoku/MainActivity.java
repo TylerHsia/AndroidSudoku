@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState != null){
             try{
                 int difficulty = savedInstanceState.getInt(difficultyExtra);
-                sudokuBoard.getInput((int) (Math.random() * 24) + 1);
+                sudokuBoard.generateSudoku(difficulty);
+                // sudokuBoard.getInput((int) (Math.random() * 24) + 1);
 
             }
             catch(Exception e){
@@ -136,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
             }
             int difficulty = data.getIntExtra(difficultyExtra, 0);
             Toast.makeText(getApplicationContext(), "" + difficulty, Toast.LENGTH_SHORT).show();
-            sudokuBoard.getInput((int) (Math.random() * 24) + 1);
-
+            sudokuBoard.generateSudoku(difficulty);
         }
     }
 

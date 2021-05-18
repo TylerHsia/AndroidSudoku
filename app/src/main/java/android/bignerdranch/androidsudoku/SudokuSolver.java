@@ -280,11 +280,7 @@ public class SudokuSolver {
                                 }
                             }
                         }
-                        //Todo: this line caused all my problems
-                        //candidatePairRookCheckerWorks = true;
-                        //candidatePairRookCheckerWorks =
                         RookChecker(mySudoku);
-                        //candidatePairRookCheckerWorks =
                         BoxChecker(mySudoku);
                     }
                 }
@@ -970,7 +966,8 @@ public class SudokuSolver {
             return true;
         }
         //return false;
-        //Todo: while working on forcing chains commented this out
+        //Todo: need this section until "to here" for solving methods to solve input 23,
+        //however, this section makes testMakeInitialSudoku go in an infinite loop
 
         /*
         boolean forcingChainsCheckerWorks = false;
@@ -986,6 +983,7 @@ public class SudokuSolver {
         if (forcingChainsCheckerWorks) {
             solveForForcingChains(mySudoku);
         }
+        //to here
 
          */
 
@@ -1092,7 +1090,7 @@ public class SudokuSolver {
 
     //solve method
     public void Solve(SudokuGrid mySudoku, boolean forcingChains) {
-        Log.i("Difficulty", "Solve Method");
+        //Log.i("Difficulty", "Solve Method");
 
         for (int i = 0; i < 10; i++) {
             RookChecker(mySudoku);
@@ -1109,7 +1107,7 @@ public class SudokuSolver {
         boolean forcingChainsCheckerWorks = true;
         if (forcingChains) {
             while (forcingChainsCheckerWorks) {
-                Log.i("Difficulty", "while forcing chains checker works");
+                //Log.i("Difficulty", "while forcing chains checker works");
                 forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
             }
         }
@@ -1496,8 +1494,8 @@ public class SudokuSolver {
         return true;
     }
 
-    public int RateDifficulty(SudokuGrid mySudoku) {
-
+    public int RateDifficulty(SudokuGrid sudokuGrid) {
+        SudokuGrid mySudoku = Copy(sudokuGrid);
         if (!mySudoku.IsValid()) {
             return 0;
         }
@@ -1512,7 +1510,7 @@ public class SudokuSolver {
 
         //level 2
         while (currentWorks) {
-            Log.i("Difficulty", "While current works level 2");
+            //Log.i("Difficulty", "While current works level 2");
             currentWorks = OnlyCandidateLeftRookChecker(mySudoku);
             if (!currentWorks) {
                 currentWorks = OnlyCandidateLeftBoxChecker(mySudoku);
@@ -1526,20 +1524,20 @@ public class SudokuSolver {
         //level 3
         currentWorks = true;
         while (currentWorks) {
-            Log.i("Difficulty", "While current works level 3");
+            //Log.i("Difficulty", "While current works level 3");
             currentWorks = NakedCandidateRookChecker(mySudoku);
             if (!currentWorks) {
-                Log.i("Difficulty", "Naked box");
+                //Log.i("Difficulty", "Naked box");
 
                 currentWorks = NakedCandidateBoxChecker(mySudoku);
             }
             if (!currentWorks) {
-                Log.i("Difficulty", "only rook");
+                //Log.i("Difficulty", "only rook");
 
                 currentWorks = OnlyCandidateLeftRookChecker(mySudoku);
             }
             if (!currentWorks) {
-                Log.i("Difficulty", "only box");
+                //Log.i("Difficulty", "only box");
 
                 currentWorks = OnlyCandidateLeftBoxChecker(mySudoku);
             }
@@ -1552,7 +1550,7 @@ public class SudokuSolver {
         //level 4
         currentWorks = true;
         while (currentWorks) {
-            Log.i("Difficulty", "While current works level 4");
+            //Log.i("Difficulty", "While current works level 4");
             currentWorks = CandidateLinesChecker(mySudoku);
             if (!currentWorks) {
                 HiddenCandidatePairChecker(mySudoku);
