@@ -32,6 +32,7 @@ public class SudokuBoard extends View {
     private final int numberColorInputted;
     private final int numberColorSolved;
     private final int numberColorGiven;
+    private final int sameNumberHighlightColor;
 
     //paints for drawing in the board grid and highlighting cells
     private final Paint boardColorPaint = new Paint();
@@ -86,6 +87,7 @@ public class SudokuBoard extends View {
             numberColorInputted = a.getInteger(R.styleable.SudokuBoard_numberColorInputted, 0);
             numberColorSolved = a.getInteger(R.styleable.SudokuBoard_numberColorSolved, 0);
             numberColorGiven = a.getInteger(R.styleable.SudokuBoard_numberColorGiven, 0);
+            sameNumberHighlightColor = a.getInteger(R.styleable.SudokuBoard_sameNumberHighlightColor, 0);
 
 
 
@@ -183,11 +185,19 @@ public class SudokuBoard extends View {
                     height = letterPaintBounds.height();
                     letterPaint.setColor(numberColorInputted);
 
+
                     if(isGiven[row][column]){
                         letterPaint.setColor(numberColorGiven);
                     }
                     if(computerSolved[row][column]){
                         letterPaint.setColor(numberColorSolved);
+                    }
+
+                    if(selected_column != -1 && selected_row != -1) {
+                        if (mySudoku.getSudokCell(row, column).getVal() == mySudoku.getSudokCell(selected_row, selected_column).getVal()
+                                && mySudoku.getSudokCell(row, column).isSolved()) {
+                            letterPaint.setColor(sameNumberHighlightColor);
+                        }
                     }
 
                     if(invalidUserMove[row][column]){
