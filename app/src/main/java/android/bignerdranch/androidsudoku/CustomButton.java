@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.bignerdranch.androidsudoku.R;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
     private int mHeight;
     private int mWidth;
+    private static int buttonColor = Color.BLACK;
     public CustomButton(Context context) {
         super(context);
         initView();
@@ -47,6 +49,9 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
 
         float x = event.getX();
         float y = event.getY();
+        setTextColor(buttonColor);
+        invalidate();
+
 
         //can differentiate between types of taps on screen
         int action = event.getAction();
@@ -65,7 +70,12 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
     private void initView() {
         Resources resources = getResources();
         setTextSize(1, 24);
-        setTextColor(Color.BLACK);
+        setTextColor(buttonColor);
+        Toast.makeText(getContext(), "InitView", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void setColor(int color){
+        buttonColor = color;
 
     }
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBoxHighlightCells;
     private static final int REQUEST_CODE_GENERATE = 0;
     private static final String difficultyExtra = "Difficulty";
+    private CheckBox noteBox;
 
     //Long term by senior project
     //Todo: All UI capability
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         sudokuBoard = findViewById(R.id.SudokuBoard);
 
 
+
         generateButton = (Button) findViewById(R.id.generatebutton);
         generateButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -112,6 +115,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sudokuBoard.setHighlightCells(checkBoxHighlightCells.isChecked());
+            }
+        });
+
+        noteBox = (CheckBox) findViewById(R.id.noteBox);
+        noteBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sudokuBoard.setNote(isChecked);
+                if(isChecked){
+                    CustomButton.setColor(Color.BLUE);
+                }
+                else{
+                    CustomButton.setColor(Color.BLACK);
+                }
+
             }
         });
     }

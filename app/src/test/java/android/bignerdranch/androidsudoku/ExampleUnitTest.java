@@ -276,7 +276,7 @@ public class ExampleUnitTest {
 
         boolean solvedAll = true;
         //1 to 23, inclusive
-        for (int i = 5; i <= NumStoredSudokus; i++) {
+        for (int i = 1; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
 
             SudokuGrid mySudoku = getInput(i);
@@ -423,8 +423,9 @@ public class ExampleUnitTest {
     @Test
     public void TestSolvingMethods(){
         boolean failed = false;
+        //Todo: infinite loop on 23
         //1 to 23, inclusive
-        for (int i = 1; i <= NumStoredSudokus; i++) {
+        for (int i = 23; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
             SudokuGrid mySudoku = getInput(i);
 
