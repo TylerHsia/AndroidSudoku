@@ -302,7 +302,17 @@ public class SudokuBoard extends View {
 
     //solves sudoku
     public void solveSudoku(){
-        if(mySudoku.IsValid()){
+        if(mySudoku.IsSolved()){
+            for(int row = 0; row < 9; row++){
+                for(int column = 0; column < 9; column++){
+                    if(computerSolved[row][column]){
+                        mySudoku.getSudokuGrid()[row][column] = new SudokCell();
+                        computerSolved[row][column] = false;
+                    }
+                }
+            }
+        }
+        else if(mySudoku.IsValid()){
             //when solving, if the cell is unsolved, set that that cell will be solved by computer
             for(int row = 0; row < 9; row++){
                 for(int column = 0; column < 9; column++){

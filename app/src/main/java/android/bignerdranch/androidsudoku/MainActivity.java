@@ -24,16 +24,14 @@ public class MainActivity extends AppCompatActivity {
     //Long term by senior project
     //Todo: All UI capability
     //Todo: generation
-    //fill in blank sudoku grid to full
     //reflect through origin, diagonals, change numbers,
-    //remove candidates one by one until desired difficulty
+    //remove candidates one by one until desired difficulty - could try adding until too easy, removing until too hard
     //Todo: note capability
     //Todo: options menu
     //Todo: store sudokus in file, read from file
     //Todo: onsolved, make happy display dances
     //Todo: capability to undo solved
     //Todo: solve cell
-    //Todo: highlight cells with same number as selected
 
     //Short term
     //Todo: lowercase method names
