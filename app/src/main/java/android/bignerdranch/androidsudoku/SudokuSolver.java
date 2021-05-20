@@ -959,7 +959,15 @@ public class SudokuSolver {
     //solve method for hidden candidate copies
     //returns true if an error is made in solving
     public boolean solveForForcingChains(SudokuGrid mySudoku) {
+        if(!mySudoku.IsValid()){
 
+            Log.i("Infinite loop", "Something wrong");
+            if(InvalidMove(mySudoku)){
+                Log.i("Infinite loop", "Invalid move already");
+
+            }
+            return true;
+        }
         try {
             if(mySudoku.IsSolved()){
                 return false;
@@ -980,6 +988,8 @@ public class SudokuSolver {
         }
         //return if made a remove all error
         catch (Exception e) {
+            Log.i("Infinite loop", "Exception caught in solvefor");
+
             return true;
         }
         //return false;
@@ -990,6 +1000,7 @@ public class SudokuSolver {
 
 
             if (mySudoku.IsValid()) {
+
 
                 boolean forcingChainsCheckerWorks = false;
 
@@ -1002,14 +1013,23 @@ public class SudokuSolver {
 
 
                 if (forcingChainsCheckerWorks) {
-                    solveForForcingChains(mySudoku);
+                    //Todo: do i need this line
+                    //solveForForcingChains(mySudoku);
                 }
+
+
                 //to here
 
             }
+            else{
+                return true;
+            }
         }
         catch (Exception e ){
+            Log.i("Infinite loop", "Exception caught in solvefor");
+
             return true;
+
         }
 
 

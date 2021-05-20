@@ -49,8 +49,7 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
 
         float x = event.getX();
         float y = event.getY();
-        setTextColor(buttonColor);
-        invalidate();
+
 
 
         //can differentiate between types of taps on screen
@@ -71,13 +70,9 @@ public class CustomButton extends androidx.appcompat.widget.AppCompatButton {
         Resources resources = getResources();
         setTextSize(1, 24);
         setTextColor(buttonColor);
-        Toast.makeText(getContext(), "InitView", Toast.LENGTH_SHORT).show();
     }
 
-    public static void setColor(int color){
-        buttonColor = color;
 
-    }
 
     /*
     android:id="@+id/button2"

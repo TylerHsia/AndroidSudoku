@@ -111,6 +111,7 @@ public class SudokuGenerator {
     //makes a random solved sudokuGrid
     public SudokuGrid makeInitialSudoku() {
         SudokuGrid sudokuGrid = new SudokuGrid();
+        SudokuGrid copy = sudokuSolver.Copy(sudokuGrid);
 
         ArrayList<Integer> coordList = new ArrayList<Integer>();
         for(int i = 0; i < 81; i++){
@@ -122,11 +123,12 @@ public class SudokuGenerator {
             try {
                 int row = i / 9;
                 int column = i % 9;
-                int size = sudokuGrid.getSudokCell(row, column).getPossibles().size();
+                int size = copy.getSudokCell(row, column).getPossibles().size();
                 int index = (int) (Math.random() * (size));
                 //set sudok cell to random of possible candidates
-                sudokuGrid.getSudokCell(row, column).solve(sudokuGrid.getSudokCell(row, column).getPossibles().get(index));
-                sudokuSolver.eliminateCands(sudokuGrid);
+                sudokuGrid.getSudokCell(row, column).solve(copy.getSudokCell(row, column).getPossibles().get(index));
+                copy.getSudokCell(row, column).solve(copy.getSudokCell(row, column).getPossibles().get(index));
+                sudokuSolver.Solve(copy, false);
                 if(sudokuGrid.IsValid()){
                     return sudokuGrid;
                 }
@@ -166,8 +168,6 @@ public class SudokuGenerator {
                     return mySudoku;
                 }
                 //Todo: need to only use solving methods that won't solve the sudoku too much
-                //Note: when using difficulty based on num unsolved, cuts runtime to 10% when using .Solve instead of .eliminate cands
-                //idea: even using eliminate cands, don't actually solve any cells. leave all cell solving to this algorithm.
                 sudokuSolver.Solve(copy, false);
             }
             catch (Exception e){

@@ -104,7 +104,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testMakeInitialSudoku(){
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 10; i++) {
 
             SudokuSolver sudokuSolver = new SudokuSolver();
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -121,7 +121,8 @@ public class ExampleUnitTest {
     public void testGeneratDifficulty(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        for(int i = 1; i <=5; i++){
+        //Todo: leave running on difficulty 3-5 to see if it will generate
+        for(int i = 1; i <=2; i++){
             SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
             Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
             //Todo: store mySudoku to file

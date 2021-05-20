@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     //Todo: generation
     //reflect through origin, diagonals, change numbers,
     //remove candidates one by one until desired difficulty - could try adding until too easy, removing until too hard
-    //Todo: note capability
     //Todo: options menu
     //Todo: store sudokus in file, read from file
     //Todo: onsolved, make happy display dances
@@ -123,12 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sudokuBoard.setNote(isChecked);
-                if(isChecked){
-                    CustomButton.setColor(Color.BLUE);
-                }
-                else{
-                    CustomButton.setColor(Color.BLACK);
-                }
+
 
             }
         });

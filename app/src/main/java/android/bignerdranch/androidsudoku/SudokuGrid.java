@@ -95,7 +95,7 @@ public class SudokuGrid{
         {
             return false;
         }
-        //try {
+        try {
             mySudoku.SolveForIsValid();
             //if simple solve, return is valid
             if (sudokuSolver.IsSolved(mySudoku)) {
@@ -105,6 +105,7 @@ public class SudokuGrid{
             boolean fsolvedOne = false;
 
             SudokuGrid copy1 = sudokuSolver.Copy(this);
+
             sudokuSolver.bruteForceSolver(copy1);
 
             if (!sudokuSolver.IsSolved(copy1)) {
@@ -164,10 +165,10 @@ public class SudokuGrid{
                     }
                 }
             }
-        //}
-        //catch(Exception e){
-          //  return false;
-        //}
+        }
+        catch(Exception e){
+            return false;
+        }
         return true;
 
 

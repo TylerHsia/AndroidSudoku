@@ -276,7 +276,9 @@ public class SudokuBoard extends View {
 
             }
         }
-
+        if(notesOn){
+            cellFillColorPaint.setColor(Color.GREEN);
+        }
         //fill cell selected with a different color
         fillCell(r, c, cellFillColorPaint);
         invalidate();
@@ -421,7 +423,7 @@ public class SudokuBoard extends View {
 
     //fills in the cell at the given row, column index
     public void fillCell(int row, int column, Paint paint) {
-        //hightlight cell
+        //highlight cell
         canvas.drawRect((column) * cellSize, (row) * cellSize, (column + 1) * cellSize, (row + 1) * cellSize,
                 paint);
     }
