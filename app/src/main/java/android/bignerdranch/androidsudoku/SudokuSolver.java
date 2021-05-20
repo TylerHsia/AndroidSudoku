@@ -845,6 +845,9 @@ public class SudokuSolver {
     //Todo: return boolean doesn't seem to always be correct
     //forcing chains checker
     public boolean forcingChainsChecker(SudokuGrid mySudoku) {
+        if(mySudoku.IsSolved()){
+            return false;
+        }
         //System.out.println("I was called");
         boolean forcingChainsCheckerWorks = false;
         //for each unsolved cell
@@ -894,22 +897,30 @@ public class SudokuSolver {
                     //all other guesses
                     for (int candidateIndex = 1; candidateIndex < numCands; candidateIndex++) {
                         SudokuGrid copy = Copy(mySudoku);
+                        //Solve copy cell to given index
                         copy.getSudokuGrid()[row][column].
                                 solve(mySudoku.getSudokuGrid()[row][column].getPossibles().get(candidateIndex))
                         ;
+                        //if error made in solving
                         if (solveForForcingChains(copy)) {
+                            //Remove that candidate
                             mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
                                     indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(candidateIndex)));
                             return true;
                         }
+                        //If other error made in solving
                         if (numUnsolved(copy) == 0 && !IsSolved(copy, false)) {
+                            //Remove that candidate
                             mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
                                     indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(candidateIndex)));
                             return true;
                         }
 
+                        //check if each guessed cell was solved the same
                         for (int row2 = 0; row2 < 9; row2++) {
                             for (int column2 = 0; column2 < 9; column2++) {
+                                //Todo: add an if statement here for sameSolved[row2][column2]==true
+                                //if this copy and first guess don't match at given cell, set sameSolved to false
                                 if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                     if (copy.getSudokuGrid()[row2][column2].isSolved()) {
                                         if (!copy.getSudokuGrid()[row2][column2].samePossible(copy1.getSudokuGrid()[row2][column2])) {
@@ -923,6 +934,7 @@ public class SudokuSolver {
                             }
                         }
                     }
+                    //If all guesses solved one cell to the same number, set that mySudoku cell to the number
                     for (int row2 = 0; row2 < 9; row2++) {
                         for (int column2 = 0; column2 < 9; column2++) {
                             if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
@@ -945,8 +957,13 @@ public class SudokuSolver {
     }
 
     //solve method for hidden candidate copies
+    //returns true if an error is made in solving
     public boolean solveForForcingChains(SudokuGrid mySudoku) {
+
         try {
+            if(mySudoku.IsSolved()){
+                return false;
+            }
             for (int i = 0; i < 10; i++) {
                 RookChecker(mySudoku);
                 BoxChecker(mySudoku);
@@ -969,23 +986,31 @@ public class SudokuSolver {
         //Todo: need this section until "to here" for solving methods to solve input 23,
         //however, this section makes testMakeInitialSudoku go in an infinite loop
 
-        /*
-        boolean forcingChainsCheckerWorks = false;
+        try {
 
-        if (InvalidMove(mySudoku)) {
+
+            if (mySudoku.IsValid()) {
+
+                boolean forcingChainsCheckerWorks = false;
+
+                if (InvalidMove(mySudoku)) {
+                    return true;
+                }
+                if (!IsSolved(mySudoku, false)) {
+                    forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
+                }
+
+
+                if (forcingChainsCheckerWorks) {
+                    solveForForcingChains(mySudoku);
+                }
+                //to here
+
+            }
+        }
+        catch (Exception e ){
             return true;
         }
-        if (!IsSolved(mySudoku, false)) {
-            forcingChainsCheckerWorks = forcingChainsChecker(mySudoku);
-        }
-
-
-        if (forcingChainsCheckerWorks) {
-            solveForForcingChains(mySudoku);
-        }
-        //to here
-
-         */
 
 
         return false;

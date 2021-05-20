@@ -121,7 +121,7 @@ public class ExampleUnitTest {
     public void testGeneratDifficulty(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        for(int i = 5; i <=5; i++){
+        for(int i = 1; i <=5; i++){
             SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
             Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
             //Todo: store mySudoku to file
@@ -184,6 +184,7 @@ public class ExampleUnitTest {
     }
     @Test
     public void TestRateDifficulty() {
+        //Todo: infinite while loop on 23
         SudokuSolver sudokuSolver = new SudokuSolver();
         for (int i = 1; i <= NumStoredSudokus; i++) {
             SudokCell sudokCell = new SudokCell();
@@ -275,11 +276,11 @@ public class ExampleUnitTest {
 
         boolean solvedAll = true;
         //1 to 23, inclusive
-        for (int i = 1; i <= NumStoredSudokus; i++) {
+        for (int i = 5; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
 
             SudokuGrid mySudoku = getInput(i);
-
+            Log.i("Test", "" + i);
             sudokuSolver.Solve(mySudoku, true);
 
             //if unsolved
@@ -321,6 +322,22 @@ public class ExampleUnitTest {
         }
         notValid1.getSudokuGrid()[1][1].solve(2);
         assertFalse("IsValid said a nonValid Sudoku is valid", notValid1.IsValid());
+
+        ArrayList<Integer> onlineSudokuHard = new ArrayList<Integer>();
+        onlineSudokuHard.add(265378149);
+        onlineSudokuHard.add(481269573);
+        onlineSudokuHard.add(793145862);
+        onlineSudokuHard.add(124596387);
+        onlineSudokuHard.add(358721694);
+        onlineSudokuHard.add(679483215);
+        onlineSudokuHard.add(546837921);
+        onlineSudokuHard.add(930610058);
+        onlineSudokuHard.add(810950036);
+
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid mySudoku = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(onlineSudokuHard));
+        assertFalse(mySudoku.IsValid());
+
     }
 
     @Test

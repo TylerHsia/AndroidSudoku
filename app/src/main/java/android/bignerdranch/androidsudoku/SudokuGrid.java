@@ -114,9 +114,9 @@ public class SudokuGrid{
             if (sudokuSolver.InvalidMove(this)) {
                 return false;
             }
-            return true;
 
-            /*
+
+            //if still not solved yet, see if there are multiple solutions
             SudokuGrid firstSolve = new SudokuGrid();
             firstSolve = sudokuSolver.Copy(copy1);
 
@@ -170,7 +170,7 @@ public class SudokuGrid{
         //}
         return true;
 
-             */
+
 
 
 

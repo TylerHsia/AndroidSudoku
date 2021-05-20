@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: onsolved, make happy display dances
     //Todo: capability to undo solved
     //Todo: solve cell
+    //Todo: highlight cells with same number as selected
 
     //Short term
     //Todo: lowercase method names
