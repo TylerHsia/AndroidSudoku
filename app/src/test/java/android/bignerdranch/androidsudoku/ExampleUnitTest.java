@@ -33,6 +33,19 @@ public class ExampleUnitTest {
     private int NumStoredSudokus = 23;
 
 
+    @Test
+    public void testModifyDifficulty(){
+        for(int difficulty = 1; difficulty <= 5; difficulty++){
+            Log.i("Test", "Working on modifying difficulty to be " + difficulty);
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            SudokuSolver sudokuSolver = new SudokuSolver();
+            SudokuGrid mySudoku = sudokuGenerator.fillEmptyGrid();
+            sudokuGenerator.modifyDifficuly(mySudoku, difficulty);
+            assertTrue("Sudoku was not valid ", mySudoku.IsValid());
+            assertTrue("difficulty was wrong" + mySudoku + "\n\nDifficulty wanted: " + difficulty + "\nDifficulty made: " +sudokuSolver.RateDifficulty(mySudoku), sudokuSolver.RateDifficulty(mySudoku) == difficulty);
+            Log.i("Test", "Generated sudoku of difficulty " + difficulty + mySudoku);
+        }
+    }
 
     @Test
     public void testBoxSwitcher() {

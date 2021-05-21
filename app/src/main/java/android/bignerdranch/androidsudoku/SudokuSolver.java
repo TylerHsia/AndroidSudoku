@@ -1419,7 +1419,7 @@ public class SudokuSolver {
     public void set(SudokuGrid mySudoku, SudokuGrid copy) {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
-                mySudoku.getSudokuGrid()[row][column].solve(copy.getSudokCell(row, column).getVal());
+                mySudoku.getSudokuGrid()[row][column] = copy.getSudokCell(row, column);
             }
         }
     }
@@ -1541,7 +1541,14 @@ public class SudokuSolver {
 
     public int RateDifficulty(SudokuGrid sudokuGrid) {
         SudokuGrid mySudoku = Copy(sudokuGrid);
+
         if (!mySudoku.IsValid()) {
+            return -1;
+        }
+
+
+        //level 0
+        if(numUnsolved(mySudoku) < 6){
             return 0;
         }
         //level 1
@@ -1549,6 +1556,10 @@ public class SudokuSolver {
         RookChecker(mySudoku);
         BoxChecker(mySudoku);
         if (mySudoku.IsSolved()) {
+            //minimum number unsolved in a level 1 sudoku
+            if(numUnsolved(sudokuGrid) < 30){
+                return 0;
+            }
             return 1;
         }
 

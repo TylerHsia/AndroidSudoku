@@ -177,7 +177,6 @@ public class SudokuGenerator {
             int column = i % 9;
 
 
-
             //if many solutions, make random guess of possibles
             if (j < 17 || copy.IsSolved()) {
                 try {
@@ -191,8 +190,7 @@ public class SudokuGenerator {
 
                     return generateDifficulty(difficulty);
                 }
-            }
-            else{
+            } else {
                 //only guess variances in allSolutions
                 ArrayList<SudokuGrid> allSolutions = allSolutions(copy);
 
@@ -211,27 +209,23 @@ public class SudokuGenerator {
                 SudokuGrid firstSolution = allSolutions.get(solutionNumber.get(0));
                 //compare to all others
                 allSolutions.remove(0);
-                for(int sol: solutionNumber){
-                    for(int coordNum : coordList){
+                for (int sol : solutionNumber) {
+                    for (int coordNum : coordList) {
                         int r = coordNum / 9;
                         int c = coordNum % 9;
                         //if first solution doesn't equal current solution at r, c
-                        if(allSolutions.size() != 0) {
+                        if (allSolutions.size() != 0) {
                             if (!firstSolution.getSudokCell(r, c).equals(allSolutions.get(sol).getSudokCell(r, c))) {
                                 mySudoku.getSudokuGrid()[r][c].solve(firstSolution.getSudokCell(r, c).getVal());
                                 copy.getSudokuGrid()[r][c].solve(firstSolution.getSudokCell(r, c).getVal());
                                 break;
                             }
-                        }
-                        else{
+                        } else {
                             return generateDifficulty(difficulty);
                         }
                     }
                     break;
                 }
-
-
-
 
 
             }
@@ -260,6 +254,173 @@ public class SudokuGenerator {
 
     }
 
+    //returns true if was succesful
+    //takes a given inputted sudoku and tries to modify it to become a certain difficulty
+    public boolean modifyDifficuly(SudokuGrid mySudoku, int difficulty) {
+        int initialDifficulty = sudokuSolver.RateDifficulty(mySudoku);
+        boolean modificationsSuccessful = true;
+        while (modificationsSuccessful) {
+            int currentDifficulty = sudokuSolver.RateDifficulty(mySudoku);
+            Log.i("Modify difficutly", "Current difficulty: " + currentDifficulty + mySudoku + "\n num unsolved: " +sudokuSolver.numUnsolved(mySudoku));
+            //if too easy
+            if (currentDifficulty < difficulty) {
+                modificationsSuccessful = false;
+                //Todo: change addOneRemoveTwo to do all possible combinations, rather than loop many times
+                for (int i = 0; i < 100; i++) {
+                    if (addOneRemoveTwo(mySudoku)) {
+                        modificationsSuccessful = true;
+                        i = 100;
+                    }
+                }
+                if (!modificationsSuccessful) {
+                    modificationsSuccessful = removeOneGiven(mySudoku);
+
+                }
+            }
+            //if too hard
+            else if (currentDifficulty > difficulty) {
+                modificationsSuccessful = false;
+                for (int i = 0; i < 1; i++) {
+                    if (addOneEasier(mySudoku)) {
+                        modificationsSuccessful = true;
+                    }
+                }
+                if (!modificationsSuccessful) {
+                    addOneGiven(mySudoku);
+                    modificationsSuccessful = true;
+                }
+
+            }
+            //right difficulty
+            else {
+                modificationsSuccessful = false;
+            }
+        }
+
+        if (sudokuSolver.RateDifficulty(mySudoku) == difficulty) {
+            return true;
+        }
+        return false;
+    }
+
+
+    //given a partially solved (valid) sudoku grid, randomly tries to remove two givens and add one and result in a valid sudoku
+    //returns true if it modified mySudoku, false otherwise
+    public boolean addOneRemoveTwo(SudokuGrid mySudoku) {
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+
+        SudokuGrid solved = sudokuSolver.Copy(copy);
+        sudokuSolver.bruteForceSolver(solved);
+
+        //make a random list of the coordinates of all solved cells and one of unsolved
+        ArrayList<Integer> solvedCoordList = new ArrayList<Integer>();
+        ArrayList<Integer> unsolvedCoordList = new ArrayList<Integer>();
+
+        for (int i = 0; i < 81; i++) {
+            if (copy.getSudokCell(i / 9, i % 9).isSolved()) {
+                solvedCoordList.add(i);
+            } else {
+                unsolvedCoordList.add(i);
+            }
+        }
+        Collections.shuffle(solvedCoordList);
+        Collections.shuffle(unsolvedCoordList);
+
+
+        //remove two of those solved cells
+        for (int i = 0; i <= 1; i++) {
+            copy.getSudokuGrid()[solvedCoordList.get(i) / 9][solvedCoordList.get(i) % 9] = new SudokCell();
+        }
+
+        //add one
+        //if original sudoku wasn't solved
+        if (unsolvedCoordList.size() != 0) {
+            copy.getSudokuGrid()[unsolvedCoordList.get(0) / 9][unsolvedCoordList.get(0) % 9].solve(solved.getSudokCell(unsolvedCoordList.get(0) / 9, unsolvedCoordList.get(0) % 9).getVal());
+        } /*else {
+            copy.getSudokuGrid()[solvedCoordList.get(2) / 9][solvedCoordList.get(2) % 9].solve(solved.getSudokCell(solvedCoordList.get(0) / 9, solvedCoordList.get(0) % 9).getVal());
+
+        }
+        */
+
+        if (copy.IsValid()) {
+            sudokuSolver.set(mySudoku, copy);
+            return true;
+        }
+        return false;
+    }
+
+    //adds one given
+    public void addOneGiven(SudokuGrid mySudoku) {
+        SudokuGrid solved = sudokuSolver.Copy(mySudoku);
+        sudokuSolver.bruteForceSolver(solved);
+        //for each unsolved cell in my sudoku
+        ArrayList<Integer> coordList = new ArrayList<Integer>();
+        for (int x = 0; x < 81; x++) {
+            if (!mySudoku.getSudokCell(x / 9, x % 9).isSolved()) {
+                coordList.add(x);
+            }
+        }
+        Collections.shuffle(coordList);
+        int coordNum = coordList.get(0);
+        int r = coordNum / 9;
+        int c = coordNum % 9;
+        mySudoku.getSudokCell(r, c).solve(solved.getSudokCell(r, c).getVal());
+    }
+
+    //removes one given, returns true if was able to do so and make valid sudoku
+    public boolean removeOneGiven(SudokuGrid mySudoku) {
+        //made coordList of all solved cells
+        ArrayList<Integer> coordList = new ArrayList<Integer>();
+        for (int x = 0; x < 81; x++) {
+            if (mySudoku.getSudokCell(x / 9, x % 9).isSolved()) {
+                coordList.add(x);
+            }
+        }
+        Collections.shuffle(coordList);
+
+        //remove one at a time in random order until the sudoku was valid
+        for (int coordNum : coordList) {
+            int r = coordNum / 9;
+            int c = coordNum % 9;
+            SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+            copy.getSudokuGrid()[r][c] = new SudokCell();
+            if (copy.IsValid()) {
+                sudokuSolver.set(mySudoku, copy);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //adds one given which makes a valid sudoku easier
+    //returns true if successful
+    public boolean addOneEasier(SudokuGrid mySudoku) {
+        int initialDifficulty = sudokuSolver.RateDifficulty(mySudoku);
+        SudokuGrid solved = sudokuSolver.Copy(mySudoku);
+        sudokuSolver.bruteForceSolver(solved);
+
+        //for each unsolved cell in my sudoku
+        ArrayList<Integer> coordList = new ArrayList<Integer>();
+        for (int x = 0; x < 81; x++) {
+            if (!mySudoku.getSudokCell(x / 9, x % 9).isSolved()) {
+                coordList.add(x);
+            }
+        }
+        Collections.shuffle(coordList);
+        for (int coordNum : coordList) {
+            int r = coordNum / 9;
+            int c = coordNum % 9;
+            SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+            copy.getSudokCell(r, c).solve(solved.getSudokCell(r, c).getVal());
+            if (sudokuSolver.RateDifficulty(copy) < initialDifficulty) {
+                sudokuSolver.set(mySudoku, copy);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public int difficultyBasedOnNumSolved(SudokuGrid mySudoku) {
         SudokuSolver sudokuSolver = new SudokuSolver();
         return (sudokuSolver.numUnsolved(mySudoku)) / 12;
@@ -278,6 +439,7 @@ public class SudokuGenerator {
             return solvedSudokus;
         }
         /* new way
+        //meant to find only unique solutions by recuring only on different guesses
         //find first unsolved cell, make guesses, recur
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {

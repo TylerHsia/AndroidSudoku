@@ -101,6 +101,9 @@ public class SudokCell {
         {
             possibles.remove(0);
         }
+        if(solution == -1){
+            throw new IllegalArgumentException("solution -1");
+        }
         possibles.add(solution);
         solved = true;
     }
