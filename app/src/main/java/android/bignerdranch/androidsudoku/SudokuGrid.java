@@ -35,6 +35,10 @@ public class SudokuGrid{
         cells[row][column] = s;
     }
 
+    public void setSudokCell(int row, int column, int val){
+        cells[row][column] = new SudokCell(val);
+    }
+
 
     public SudokuGrid()
     {
@@ -170,11 +174,6 @@ public class SudokuGrid{
             return false;
         }
         return true;
-
-
-
-
-
     }
 
     public boolean IsSolved()

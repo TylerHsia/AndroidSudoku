@@ -33,6 +33,7 @@ public class ExampleUnitTest {
     private int NumStoredSudokus = 23;
 
 
+
     @Test
     public void testBoxSwitcher() {
         SudokuGrid mySudoku = new SudokuGrid();
@@ -104,7 +105,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testMakeInitialSudoku(){
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 100; i++) {
 
             SudokuSolver sudokuSolver = new SudokuSolver();
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -122,7 +123,7 @@ public class ExampleUnitTest {
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver sudokuSolver = new SudokuSolver();
         //Todo: leave running on difficulty 3-5 to see if it will generate
-        for(int i = 1; i <=2; i++){
+        for(int i = 4; i <=5; i++){
             SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
             Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
             //Todo: store mySudoku to file
@@ -311,6 +312,8 @@ public class ExampleUnitTest {
             SudokCell sudokCell = new SudokCell();
             SudokuGrid mySudoku = getInput(i);
             assertTrue(i + " was said to be not valid" + mySudoku, mySudoku.IsValid());
+            //check that sudoku is unchanged by isValid method
+            assertTrue(i + "wasn't equal to original", mySudoku.equals(sudokuSolver.getInput(i)));
 
         }
 
@@ -424,7 +427,7 @@ public class ExampleUnitTest {
     @Test
     public void TestSolvingMethods(){
         boolean failed = false;
-        //Todo: infinite loop on 23
+        //Todo: solving methods couldn't solve 23
         //1 to 23, inclusive
         for (int i = 23; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();
