@@ -289,7 +289,7 @@ public class SudokuSolver {
         return candidatePairRookCheckerWorks;
     }
 
-    //checks for 2 boxes that have only 2 candidates in a box, eliminates those candidates from that box
+    //checks for 2 cells that have the same 2 candidates in a box, eliminates those candidates from that box
     public boolean NakedCandidateBoxChecker(SudokuGrid mySudoku) {
         boolean candidatePairBoxCheckerWorks = false;
         //two for loops to go through each element in mySudoku
@@ -1540,6 +1540,8 @@ public class SudokuSolver {
     }
 
     public int RateDifficulty(SudokuGrid sudokuGrid) {
+
+        //Todo: change to enum
         SudokuGrid mySudoku = Copy(sudokuGrid);
 
         if (!mySudoku.IsValid()) {

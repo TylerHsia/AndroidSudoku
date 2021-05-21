@@ -35,6 +35,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testModifyDifficulty(){
+        //Todo: set random seed for debugging
         for(int difficulty = 1; difficulty <= 5; difficulty++){
             Log.i("Test", "Working on modifying difficulty to be " + difficulty);
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -131,6 +132,8 @@ public class ExampleUnitTest {
         }
     }
 
+    /*
+
     @Test
     public void testGeneratDifficulty(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -146,6 +149,8 @@ public class ExampleUnitTest {
 
         }
     }
+
+     */
 
 
     @Test
@@ -199,8 +204,22 @@ public class ExampleUnitTest {
     }
     @Test
     public void TestRateDifficulty() {
+
+
+
         //Todo: infinite while loop on 23
         SudokuSolver sudokuSolver = new SudokuSolver();
+
+        ArrayList<Integer> generated4 = new ArrayList<>();
+        Collections.addAll(generated4, 70680001, 2500003, 60000002, 408000030, 50901008, 700008004, 24016, 0, 190000047);
+
+
+        SudokuGrid mySudoku2 = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(generated4));
+
+        sudokuSolver.RateDifficulty(mySudoku2);
+        sudokuSolver.RateDifficulty(mySudoku2);
+
+
         for (int i = 1; i <= NumStoredSudokus; i++) {
             SudokCell sudokCell = new SudokCell();
             //inputted sudoku
@@ -218,6 +237,9 @@ public class ExampleUnitTest {
 
             Log.i("Difficulty", "the level of " + i + " is " + sudokuSolver.RateDifficulty(mySudoku));
         }
+
+
+
     }
 
     @Test
