@@ -94,6 +94,7 @@
         custom:numberColorGiven="@color/black"
         custom:numberColorSolved="#366C00"
         custom:sameNumberHighlightColor="#53A600"
+        custom:solvedHighlightColor="#6664FFFF"
 
 
         tools:ignore="MissingPrefix">

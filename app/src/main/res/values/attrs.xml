@@ -8,6 +8,7 @@
         <attr name="numberColorGiven" format="color"/>
         <attr name="numberColorSolved" format="color"/>
         <attr name="sameNumberHighlightColor" format="color"/>
+        <attr name="solvedHighlightColor" format="color"/>
 
     </declare-styleable>
 

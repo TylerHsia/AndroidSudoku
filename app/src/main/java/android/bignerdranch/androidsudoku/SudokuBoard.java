@@ -39,6 +39,7 @@ public class SudokuBoard extends View {
     private final int numberColorSolved;
     private final int numberColorGiven;
     private final int sameNumberHighlightColor;
+    private final int solvedHighlightColor;
 
     //paints for drawing in the board grid and highlighting cells
     private final Paint boardColorPaint = new Paint();
@@ -98,6 +99,7 @@ public class SudokuBoard extends View {
             numberColorSolved = a.getInteger(R.styleable.SudokuBoard_numberColorSolved, 0);
             numberColorGiven = a.getInteger(R.styleable.SudokuBoard_numberColorGiven, 0);
             sameNumberHighlightColor = a.getInteger(R.styleable.SudokuBoard_sameNumberHighlightColor, 0);
+            solvedHighlightColor = a.getInteger(R.styleable.SudokuBoard_solvedHighlightColor, 0);
 
 
         } finally {
@@ -137,11 +139,11 @@ public class SudokuBoard extends View {
         boardColorPaint.setAntiAlias(true);
 
         cellFillColorPaint.setStyle(Paint.Style.FILL);
-        boardColorPaint.setAntiAlias(true);
+        cellFillColorPaint.setAntiAlias(true);
         cellFillColorPaint.setColor(cellFillColor);
 
         cellsHighlightColorPaint.setStyle(Paint.Style.FILL);
-        boardColorPaint.setAntiAlias(true);
+        cellsHighlightColorPaint.setAntiAlias(true);
         cellsHighlightColorPaint.setColor(cellsHighlightColor);
 
         letterPaint.setStyle(Paint.Style.FILL);
@@ -151,33 +153,16 @@ public class SudokuBoard extends View {
         if (!mySudoku.IsSolved()) {
             colorCells(canvas, selected_row, selected_column);
 
+        }else{
+            Paint solvedPaint = new Paint();
+            solvedPaint.setStyle(Paint.Style.FILL);
+            solvedPaint.setAntiAlias(true);
+            solvedPaint.setColor(solvedHighlightColor);
+            colorAllCells(canvas, solvedPaint);
         }
         canvas.drawRect(0, 0, getWidth(), getHeight(), boardColorPaint);
         drawBoard(canvas);
         drawNumbers();
-
-
-        //if the sudoku is solved
-        if (mySudoku.IsSolved() && false) {
-            Paint solvedPaint = new Paint();
-            solvedPaint.setStyle(Paint.Style.FILL);
-            solvedPaint.setAntiAlias(true);
-            solvedPaint.setColor(numberColorInputted);
-            Toast.makeText(sudokuBoard.getContext(), "hi", Toast.LENGTH_SHORT).show();
-            for (int rc = 0; rc < 9; rc++) {
-                //sudokuBoard.fillCell(rc, rc, solvedPaint);
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                }
-
-
-                fillCell(rc, rc, solvedPaint);
-            }
-        }
-
     }
 
     //click event handler
@@ -310,6 +295,15 @@ public class SudokuBoard extends View {
         invalidate();
     }
 
+    public void colorAllCells(Canvas canvas, Paint paint){
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c< 9 ; c++){
+                fillCell(r, c, paint);
+            }
+        }
+    }
+
+
     //set BOARDCOLORPAINT to thick value
     private void thickLineStyle() {
         boardColorPaint.setStyle(Paint.Style.STROKE);
@@ -360,7 +354,6 @@ public class SudokuBoard extends View {
                 if (!mySudoku.getSudokCell(selected_row, selected_column).isSolved()) {
                     //if note is already there, remove
                     if (userNotes[selected_row][selected_column].indexOf(num) != -1) {
-                        //Todo: check if this line works
                         userNotes[selected_row][selected_column].remove((Integer) num);
                     } else {
                         userNotes[selected_row][selected_column].add(num);
@@ -384,27 +377,7 @@ public class SudokuBoard extends View {
                     }
                     //if the sudoku is solved
                     if (mySudoku.IsSolved()) {
-                        Paint solvedPaint = new Paint();
-                        solvedPaint.setStyle(Paint.Style.FILL);
-                        solvedPaint.setAntiAlias(true);
-                        solvedPaint.setColor(Color.RED);
-                        Toast.makeText(sudokuBoard.getContext(), "hi", Toast.LENGTH_SHORT).show();
-                        for (int rc = 0; rc < 9; rc++) {
-                            sudokuBoard.fillCell(rc, rc, solvedPaint);
-                            invalidate();
-
-                            try {
-                                Thread.sleep(400);
-
-                                //wait(4);
-                            } catch (Exception e) {
-
-                            }
-
-
-                            fillCell(rc, rc, solvedPaint);
-                            break;
-                        }
+                        Toast.makeText(sudokuBoard.getContext(), "You solved it!", Toast.LENGTH_SHORT).show();
                     }
 
                     //set notes blank
@@ -484,6 +457,7 @@ public class SudokuBoard extends View {
 
             }
         }
+        invalidate();
     }
 
     public void generateSudoku(int difficulty) {
