@@ -1136,7 +1136,7 @@ public class SudokuSolver {
     //solve method
     public void Solve(SudokuGrid mySudoku, boolean forcingChains) {
         //Log.i("Difficulty", "Solve Method");
-
+        //Todo: change to while(works)
         for (int i = 0; i < 10; i++) {
             RookChecker(mySudoku);
             BoxChecker(mySudoku);

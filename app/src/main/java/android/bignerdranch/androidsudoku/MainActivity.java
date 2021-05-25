@@ -26,14 +26,12 @@ public class MainActivity extends AppCompatActivity {
     //Long term by senior project
     //Todo: All UI capability
     //Todo: generation
-    //To fill in more intelligently: find all solutions to the grid after a certain point, only add givens that are different between the multiple solutions
     //reflect through origin, diagonals, change numbers,
-    //remove candidates one by one until desired difficulty - could try adding until too easy, removing until too hard
     //Todo: options menu
     //Todo: store sudokus in file, read from file
     //Todo: onsolved, make happy display dances
-    //Todo: capability to undo solved
     //Todo: solve cell
+    //Todo: isvalid
 
     //Short term
     //Todo: lowercase method names
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     //hinting
     //improve and comment all old C# code
     //store data on app close
+    //fix generation code where a stack overflow is possible
 
 
     @Override

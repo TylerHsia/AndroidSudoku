@@ -159,6 +159,7 @@ public class SudokuGenerator {
         return makeInitialSudoku();
     }
 
+    //fills in cells one at a time until the desired difficulty is achieved
     public SudokuGrid generateDifficulty(int difficulty) {
         Log.i("GenerateDifficulty", "is called");
         SudokuGrid mySudoku = new SudokuGrid();

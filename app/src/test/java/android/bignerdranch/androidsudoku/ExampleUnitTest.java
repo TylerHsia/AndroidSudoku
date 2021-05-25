@@ -36,6 +36,7 @@ public class ExampleUnitTest {
     @Test
     public void testModifyDifficulty(){
         //Todo: set random seed for debugging
+        //Todo: store mySudoku to file
         for(int difficulty = 1; difficulty <= 5; difficulty++){
             Log.i("Test", "Working on modifying difficulty to be " + difficulty);
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -138,11 +139,9 @@ public class ExampleUnitTest {
     public void testGeneratDifficulty(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        //Todo: leave running on difficulty 3-5 to see if it will generate
         for(int i = 4; i <=5; i++){
             SudokuGrid mySudoku = sudokuGenerator.generateDifficulty(i);
             Log.i("Test", "TestGenerateDifficulty at difficulty " + i + mySudoku);
-            //Todo: store mySudoku to file
             //It was able to generate difficulty one and two but not three in 20 minutes
             assertTrue("" + i + mySudoku, mySudoku.IsValid());
             //assertTrue("" + i + mySudoku, sudokuSolver.RateDifficulty(mySudoku) == i);
@@ -211,12 +210,12 @@ public class ExampleUnitTest {
         SudokuSolver sudokuSolver = new SudokuSolver();
 
         ArrayList<Integer> generated4 = new ArrayList<>();
-        Collections.addAll(generated4, 70680001, 2500003, 60000002, 408000030, 50901008, 700008004, 24016, 0, 190000047);
-
+        //Collections.addAll(generated4, 70680001, 2500003, 60000002, 408000030, 50901008, 700008004, 24016, 0, 190000047);
+        Collections.addAll(generated4, 93060427, 500007080, 7000005, 610730598, 709080030, 358009000, 405926000, 901470256, 206050049);
 
         SudokuGrid mySudoku2 = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(generated4));
 
-        sudokuSolver.RateDifficulty(mySudoku2);
+        Log.i("Test", ""+ sudokuSolver.RateDifficulty(mySudoku2));
         sudokuSolver.RateDifficulty(mySudoku2);
 
 

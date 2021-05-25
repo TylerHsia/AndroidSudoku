@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.nio.file.FileVisitOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +77,8 @@ public class SudokuBoard extends View {
             sudokuBoard = this;
         }
         userNotes = new ArrayList[9][9];
-        for(int row = 0; row < 9; row++){
-            for(int column = 0; column < 9; column++){
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
                 userNotes[row][column] = new ArrayList<Integer>();
             }
         }
@@ -147,10 +148,36 @@ public class SudokuBoard extends View {
         letterPaint.setAntiAlias(true);
         letterPaint.setColor(numberColorInputted);
 
-        colorCells(canvas, selected_row, selected_column);
+        if (!mySudoku.IsSolved()) {
+            colorCells(canvas, selected_row, selected_column);
+
+        }
         canvas.drawRect(0, 0, getWidth(), getHeight(), boardColorPaint);
         drawBoard(canvas);
         drawNumbers();
+
+
+        //if the sudoku is solved
+        if (mySudoku.IsSolved() && false) {
+            Paint solvedPaint = new Paint();
+            solvedPaint.setStyle(Paint.Style.FILL);
+            solvedPaint.setAntiAlias(true);
+            solvedPaint.setColor(numberColorInputted);
+            Toast.makeText(sudokuBoard.getContext(), "hi", Toast.LENGTH_SHORT).show();
+            for (int rc = 0; rc < 9; rc++) {
+                //sudokuBoard.fillCell(rc, rc, solvedPaint);
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+
+
+                fillCell(rc, rc, solvedPaint);
+            }
+        }
+
     }
 
     //click event handler
@@ -219,11 +246,10 @@ public class SudokuBoard extends View {
                 }
 
 
-
                 //draw notes
                 else {
 
-                    for(Integer i: userNotes[row][column]){
+                    for (Integer i : userNotes[row][column]) {
                         letterPaint.setColor(Color.BLACK);
                         letterPaint.setTextSize(cellSize / 3);
 
@@ -237,8 +263,8 @@ public class SudokuBoard extends View {
                         int tinyRow = (i - 1) / 3;
                         int tinyColumn = (i - 1) % 3;
                         //draws the number centered
-                        canvas.drawText(text, (column * cellSize) + ((cellSize - width) / 2) + (tinyColumn - 1) * cellSize/3,
-                                (row * cellSize + cellSize) - (cellSize - height) / 2 + (tinyRow - 1) * cellSize/3, letterPaint);
+                        canvas.drawText(text, (column * cellSize) + ((cellSize - width) / 2) + (tinyColumn - 1) * cellSize / 3,
+                                (row * cellSize + cellSize) - (cellSize - height) / 2 + (tinyRow - 1) * cellSize / 3, letterPaint);
                     }
 
                 }
@@ -276,7 +302,7 @@ public class SudokuBoard extends View {
 
             }
         }
-        if(notesOn){
+        if (notesOn) {
             cellFillColorPaint.setColor(Color.GREEN);
         }
         //fill cell selected with a different color
@@ -328,27 +354,23 @@ public class SudokuBoard extends View {
         if (this.selected_row != -1 && this.selected_column != -1) {
 
             //if note is on
-            if(notesOn){
+            if (notesOn) {
                 //make a note
                 //if cell blank
-                if(!mySudoku.getSudokCell(selected_row, selected_column).isSolved()){
+                if (!mySudoku.getSudokCell(selected_row, selected_column).isSolved()) {
                     //if note is already there, remove
-                    if(userNotes[selected_row][selected_column].indexOf(num) != -1){
+                    if (userNotes[selected_row][selected_column].indexOf(num) != -1) {
                         //Todo: check if this line works
                         userNotes[selected_row][selected_column].remove((Integer) num);
-                    }
-                    else {
+                    } else {
                         userNotes[selected_row][selected_column].add(num);
                     }
                 }
             }
 
 
-
-
-
             //if not a given
-            else if(!isGiven[selected_row][selected_column]) {
+            else if (!isGiven[selected_row][selected_column]) {
                 //if same val is already there, delete
                 if (mySudoku.getSudokCell(this.selected_row, this.selected_column).getVal() == num) {
                     mySudoku.getSudokuGrid()[this.selected_row][this.selected_column] = new SudokCell();
@@ -359,6 +381,30 @@ public class SudokuBoard extends View {
                         invalidUserMove[selected_row][selected_column] = true;
                     } else {
                         invalidUserMove[selected_row][selected_column] = false;
+                    }
+                    //if the sudoku is solved
+                    if (mySudoku.IsSolved()) {
+                        Paint solvedPaint = new Paint();
+                        solvedPaint.setStyle(Paint.Style.FILL);
+                        solvedPaint.setAntiAlias(true);
+                        solvedPaint.setColor(Color.RED);
+                        Toast.makeText(sudokuBoard.getContext(), "hi", Toast.LENGTH_SHORT).show();
+                        for (int rc = 0; rc < 9; rc++) {
+                            sudokuBoard.fillCell(rc, rc, solvedPaint);
+                            invalidate();
+
+                            try {
+                                Thread.sleep(400);
+
+                                //wait(4);
+                            } catch (Exception e) {
+
+                            }
+
+
+                            fillCell(rc, rc, solvedPaint);
+                            break;
+                        }
                     }
 
                     //set notes blank
@@ -421,7 +467,7 @@ public class SudokuBoard extends View {
         drawNumbers();
     }
 
-    //fills in the cell at the given row, column index
+    //paints in the cell at the given row, column index
     public void fillCell(int row, int column, Paint paint) {
         //highlight cell
         canvas.drawRect((column) * cellSize, (row) * cellSize, (column + 1) * cellSize, (row + 1) * cellSize,
@@ -441,8 +487,8 @@ public class SudokuBoard extends View {
     }
 
     public void generateSudoku(int difficulty) {
-
-        getInput((int) (Math.random() * 23));
+        getInput(1);
+        //getInput((int) (Math.random() * 23));
         //commented out my generation method
         /*
         if (difficulty == 6) {
