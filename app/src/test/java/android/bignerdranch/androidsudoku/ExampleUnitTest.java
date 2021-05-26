@@ -523,6 +523,21 @@ public class ExampleUnitTest {
         }
     }
 
+    @Test
+    public void testChangeNumbers(){
+        for(int i = 1; i < 23; i++) {
+            SudokuGrid mySudoku = getInput(i);
+            Log.i("Test", "" + mySudoku);
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            sudokuGenerator.changeNumbers(mySudoku);
+            Log.i("Test", "" + mySudoku);
+            assertTrue(mySudoku.IsValid());
+
+
+
+        }
+    }
+
     public SudokuGrid getInput(int i){
         SudokuSolver sudokuSolver = new SudokuSolver();
         //inputted sudoku

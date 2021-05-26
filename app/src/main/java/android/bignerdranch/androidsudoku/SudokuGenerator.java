@@ -111,6 +111,25 @@ public class SudokuGenerator {
         }
     }
 
+    //changes all of each number to be entirely a new number. Ex, changes all 9s to be 2s
+    public void changeNumbers(SudokuGrid mySudoku){
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+        ArrayList<Integer> numList = new ArrayList<>();
+        Collections.addAll(numList, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Collections.shuffle(numList);
+        //for each int i in the original sudoku, replace with the element at index i in numList
+        for(int i = 1; i <= 9; i++){
+            for(int r = 0; r < 9; r++){
+                for(int c = 0; c < 9; c++){
+                    if(copy.getSudokuGrid()[r][c].getVal() == i) {
+                        mySudoku.getSudokuGrid()[r][c] = new SudokCell(numList.get(i - 1));
+                    }
+                }
+            }
+        }
+    }
+
 
     //makes a random solved sudokuGrid
     public SudokuGrid fillEmptyGrid() {
