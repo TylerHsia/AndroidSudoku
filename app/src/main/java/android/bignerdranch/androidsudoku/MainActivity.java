@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     //Long term by senior project
     //Todo: All UI capability
     //Todo: generation
-    //reflect through origin, diagonals, change numbers,
+    //write and read to and from file
     //Todo: options menu
     //Todo: store sudokus in file, read from file
     //Todo: solve cell

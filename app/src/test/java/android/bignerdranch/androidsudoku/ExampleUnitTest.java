@@ -4,6 +4,9 @@ import android.util.Log;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -538,6 +541,64 @@ public class ExampleUnitTest {
         }
     }
 
+    @Test
+    public void writeSudokusToFile(){
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+
+
+
+        //generates 100 of each difficulty sudoku
+        for(int difficulty = 1; difficulty < 6; difficulty++){
+
+            Log.i("Test", "Writing difficulty " + difficulty);
+            /*
+            //create file
+            File myFile;
+            try {
+                myFile = new File("C:\\Users\\Tyler\\AndroidStudioProjects\\AndroidSudoku\\difficulty" + difficulty + ".txt");
+                if (myFile.createNewFile()) {
+                    Log.i("Test", "File created: " + myFile.getName());
+                } else {
+                    Log.i("Test", "File already exists.");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+             */
+
+            //make new filewriter
+            FileWriter myWriter;
+            try {
+                myWriter = new FileWriter("difficulty" + difficulty + ".txt");
+
+                //generate 100
+                for(int i = 0; i < 100 ; i++){
+                    Log.i("Test", "Index " + i);
+
+                    SudokuGrid mySudoku = sudokuGenerator.fillEmptyGrid();
+                    boolean modifiedSuccessfully = false;
+                    while(!modifiedSuccessfully){
+                        modifiedSuccessfully = sudokuGenerator.modifyDifficuly(mySudoku, difficulty);
+                    }
+                    //store to file
+                    myWriter.write("Index " + i + "\n");
+                    myWriter.write(mySudoku.storeString() +"\n");
+
+
+                }
+                myWriter.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
     public SudokuGrid getInput(int i){
         SudokuSolver sudokuSolver = new SudokuSolver();
         //inputted sudoku
@@ -549,6 +610,7 @@ public class ExampleUnitTest {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 mySudoku.getSudokuGrid()[row][column] = new SudokCell(sudokuInputted[row][column]);
+
             }
         }
         return mySudoku;

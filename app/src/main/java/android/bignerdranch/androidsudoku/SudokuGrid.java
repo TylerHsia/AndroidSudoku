@@ -316,4 +316,20 @@ public class SudokuGrid{
             }
         }
     }
+
+    //makes String representation of a given sudoku grid to be stored in a file
+    public String storeString() {
+        String sudoku = "";
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c< 9 ; c++){
+                int sudokuVal = this.getSudokuGrid()[r][c].getVal();
+                if(sudokuVal == -1){
+                    sudoku = sudoku + 0;
+                }else{
+                    sudoku = sudoku + sudokuVal;
+                }
+            }
+        }
+        return sudoku;
+    }
 }

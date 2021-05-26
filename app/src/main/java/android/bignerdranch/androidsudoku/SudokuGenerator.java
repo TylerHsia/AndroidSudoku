@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class SudokuGenerator {
+
+
     private SudokuSolver sudokuSolver;
 
     public SudokuGenerator() {
@@ -315,7 +317,7 @@ public class SudokuGenerator {
         boolean modificationsSuccessful = true;
         while (modificationsSuccessful) {
             int currentDifficulty = sudokuSolver.RateDifficulty(mySudoku);
-            Log.i("Modify difficutly", "Current difficulty: " + currentDifficulty + mySudoku + "\n num unsolved: " +sudokuSolver.numUnsolved(mySudoku));
+            //Log.i("Modify difficutly", "Current difficulty: " + currentDifficulty + mySudoku + "\n num unsolved: " +sudokuSolver.numUnsolved(mySudoku));
             //if too easy
             if (currentDifficulty < difficulty) {
                 modificationsSuccessful = false;

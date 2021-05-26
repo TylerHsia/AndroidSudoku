@@ -960,10 +960,10 @@ public class SudokuSolver {
     //returns true if an error is made in solving
     public boolean solveForForcingChains(SudokuGrid mySudoku) {
         if(!mySudoku.IsValid()){
-
-            Log.i("Infinite loop", "Something wrong");
+            //Todo: uncommment these and figure out if there is something wrong
+            //Log.i("Infinite loop", "Something wrong");
             if(InvalidMove(mySudoku)){
-                Log.i("Infinite loop", "Invalid move already");
+                //Log.i("Infinite loop", "Invalid move already");
 
             }
             return true;
