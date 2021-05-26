@@ -494,6 +494,35 @@ public class ExampleUnitTest {
         assertFalse(failed);
     }
 
+    @Test
+    public void testReflectOrigin(){
+        for(int i = 1; i < 2; i++) {
+            SudokuGrid mySudoku = getInput(i);
+            Log.i("Test", "" + mySudoku);
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            sudokuGenerator.reflectOrigin(mySudoku);
+            Log.i("Test", "" + mySudoku);
+            assertTrue(mySudoku.IsValid());
+        }
+    }
+
+    @Test
+    public void testReflectDiagonals(){
+        for(int i = 1; i < 2; i++) {
+            SudokuGrid mySudoku = getInput(i);
+            Log.i("Test", "" + mySudoku);
+            SudokuGenerator sudokuGenerator = new SudokuGenerator();
+            sudokuGenerator.reflectBottomTopDiagonal(mySudoku);
+            Log.i("Test", "" + mySudoku);
+            assertTrue(mySudoku.IsValid());
+            sudokuGenerator.reflectTopBottomDiagonal(mySudoku);
+            Log.i("Test", "" + mySudoku);
+            assertTrue(mySudoku.IsValid());
+
+
+        }
+    }
+
     public SudokuGrid getInput(int i){
         SudokuSolver sudokuSolver = new SudokuSolver();
         //inputted sudoku

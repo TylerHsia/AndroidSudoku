@@ -78,6 +78,40 @@ public class SudokuGenerator {
         }
     }
 
+    //reflect a given sudoku through the origin
+    public void reflectOrigin(SudokuGrid mySudoku){
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                mySudoku.getSudokuGrid()[r][c] = copy.getSudokuGrid()[8-r][8-c];
+            }
+        }
+    }
+
+    //reflect a given sudoku through diagonal bottom left to top right
+    public void reflectBottomTopDiagonal(SudokuGrid mySudoku){
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                mySudoku.getSudokuGrid()[r][c] = copy.getSudokuGrid()[8 - c][8 - r];
+            }
+        }
+    }
+
+    //reflect a given sudoku through diagonal top left to bottom right
+    public void reflectTopBottomDiagonal(SudokuGrid mySudoku){
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                mySudoku.getSudokuGrid()[r][c] = copy.getSudokuGrid()[c][r];
+            }
+        }
+    }
+
+
     //makes a random solved sudokuGrid
     public SudokuGrid fillEmptyGrid() {
         SudokuGrid sudokuGrid = new SudokuGrid();

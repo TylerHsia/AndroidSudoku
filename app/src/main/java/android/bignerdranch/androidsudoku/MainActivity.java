@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     //reflect through origin, diagonals, change numbers,
     //Todo: options menu
     //Todo: store sudokus in file, read from file
-    //Todo: onsolved, make happy display dances
     //Todo: solve cell
     //Todo: isvalid
 
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     //improve and comment all old C# code
     //store data on app close
     //fix generation code where a stack overflow is possible
+    //custom animation for onsolved
 
 
     @Override
