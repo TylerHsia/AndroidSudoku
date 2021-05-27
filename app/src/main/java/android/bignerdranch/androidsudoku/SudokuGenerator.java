@@ -1,11 +1,22 @@
 package android.bignerdranch.androidsudoku;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class SudokuGenerator {
 
@@ -577,5 +588,103 @@ public class SudokuGenerator {
             }
         }
         return solvedSudokus;
+    }
+
+    //Todo: delete this method
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public SudokuGrid retrieveDifficulty(int difficulty) {
+
+
+
+
+
+        try {
+            FileWriter myWriter = new FileWriter("/Dummy file2.txt");
+            myWriter.write("hello");
+            myWriter.close();
+
+
+            File myFile = new File("Dummy file2.txt");
+            Scanner scanner = new Scanner(myFile);
+            String txt = scanner.nextLine();
+        }catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+         String sudokuString = "";
+
+        try {
+            //File file = new File("")
+            File here = new File("asdf.");
+            FileReader fileReader = new FileReader("/difficulty1.txt");
+            fileReader.read();
+            Log.i("here.getabsolutepath", (here.getAbsolutePath()));
+            String heres = here.getAbsolutePath();
+            Log.i("FileReading", (new File(".").getAbsolutePath()));
+            String text = new File(",").getAbsolutePath();
+            //File myFile = new File("difficulty" + difficulty + ".txt");
+            String data = "";
+            //data = new String(Files.readAllBytes(Paths.get("difficulty1.txt")));
+            File myFile = new File("/difficulty1.txt");
+            //FileReader fr = new FileReader("C:\\Users\\Tyler\\AndroidStudioProjects\\AndroidSudoku\\app\\difficulty1.txt");
+
+            /*
+            int j;
+            while ((j=fr.read()) != -1)
+                System.out.print((char) j);
+
+             */
+
+
+
+            if (myFile.exists()) {
+                System.out.println("File name: " + myFile.getName());
+                System.out.println("Absolute path: " + myFile.getAbsolutePath());
+                System.out.println("Writeable: " + myFile.canWrite());
+                System.out.println("Readable " + myFile.canRead());
+                System.out.println("File size in bytes " + myFile.length());
+            } else {
+                System.out.println("The file does not exist.");
+            }
+
+
+            Scanner myReader = new Scanner(myFile);
+
+
+
+            int index = (int) (Math.random() * 100);
+            for(int i = 0; i <= index; i++){
+                if(myReader.nextLine().equals("Index " + index)){
+                    sudokuString = myReader.nextLine();
+                }
+                myReader.nextLine();
+            }
+
+
+            /*
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+
+             */
+            //myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch(Exception e){
+
+        }
+
+        SudokuGrid sudokuGrid = new SudokuGrid();
+        return sudokuGrid.readString(sudokuString);
     }
 }

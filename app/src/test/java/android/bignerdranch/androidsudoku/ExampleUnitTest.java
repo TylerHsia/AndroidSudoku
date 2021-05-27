@@ -5,10 +5,12 @@ import android.util.Log;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -551,27 +553,11 @@ public class ExampleUnitTest {
         SudokuSolver sudokuSolver = new SudokuSolver();
 
 
-        //Todo: failed to generate second difficulty 3 sudoku after 10 minutes
         //generates 100 of each difficulty sudoku
         for(int difficulty = 3; difficulty < 6; difficulty++){
 
             Log.i("Test", "Writing difficulty " + difficulty);
-            /*
-            //create file
-            File myFile;
-            try {
-                myFile = new File("C:\\Users\\Tyler\\AndroidStudioProjects\\AndroidSudoku\\difficulty" + difficulty + ".txt");
-                if (myFile.createNewFile()) {
-                    Log.i("Test", "File created: " + myFile.getName());
-                } else {
-                    Log.i("Test", "File already exists.");
-                }
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
 
-             */
 
             //make new filewriter
             FileWriter myWriter;
@@ -602,6 +588,27 @@ public class ExampleUnitTest {
 
 
         }
+    }
+
+    @Test
+    public void writeAndReadFile(){
+        try {
+            FileWriter myWriter = new FileWriter("Dummy file.txt");
+            myWriter.write("hello");
+            myWriter.close();
+
+
+            File myFile = new File("Dummy file.txt");
+            //FileReader fileReader = new FileReader("Dummy file.txt");
+            Scanner scanner = new Scanner(myFile);
+            String txt = scanner.nextLine();
+            assertTrue(txt.equals("hello"));
+        }catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            fail();
+        }
+
     }
 
     @Test

@@ -9,12 +9,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.nio.file.FileVisitOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -461,18 +465,37 @@ public class SudokuBoard extends View {
     }
 
     public void generateSudoku(int difficulty) {
-        getInput(1);
-        //getInput((int) (Math.random() * 23));
-        //commented out my generation method
-        /*
+
         if (difficulty == 6) {
             mySudoku = new SudokuGrid();
         }
+
+        //retrieve from file
         if (difficulty != 6 && difficulty != 7) {
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
-            mySudoku = sudokuGenerator.generateDifficulty(difficulty);
+            String txt;
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(getContext().getAssets().open("difficulty" + difficulty)));
+                String sudokuString = "";
+                int index = (int) (Math.random() * 100);
+                for(int i = 0; i <= index; i++){
+                    if(reader.readLine().equals("Index " + index)){
+                        sudokuString = reader.readLine();
+                    }
+                    reader.readLine();
+                }
+                SudokuGrid sudokuGrid = new SudokuGrid();
+                mySudoku = sudokuGrid.readString(sudokuString);
 
+            }
+            catch(Exception e){
+                Log.i("test", "test");
+            }
         }
+
+
+
+
         //each currently solved cell is a given. set given[][] to reflect that.
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
@@ -488,7 +511,7 @@ public class SudokuBoard extends View {
             }
         }
 
-         */
+
         drawNumbers();
     }
 

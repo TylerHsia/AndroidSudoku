@@ -25,16 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
     //Long term by senior project
     //Todo: All UI capability
-    //Todo: generation
     //write and read to and from file
     //Todo: options menu
     //Todo: store sudokus in file, read from file
     //Todo: solve cell
     //Todo: isvalid
+    //Todo: savestate save current sudoku
 
     //Short term
-    //Todo: lowercase method names
-    //Todo: change all sudoku.getSudokuGrid[row][column] to getsudokucell(row, column)
     //Todo: sound effects
     //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
     //Todo: activity for settings
