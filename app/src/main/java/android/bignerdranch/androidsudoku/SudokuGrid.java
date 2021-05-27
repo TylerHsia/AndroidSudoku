@@ -332,4 +332,15 @@ public class SudokuGrid{
         }
         return sudoku;
     }
+
+    //returns a sudoku grid object for a given string
+    public static SudokuGrid readString(String string){
+        SudokuGrid mySudoku = new SudokuGrid();
+        for(int i = 0; i < 81; i++){
+            int r = i/9;
+            int c = i%9;
+            mySudoku.getSudokuGrid()[r][c] = new SudokCell(Integer.parseInt(string.substring(i, i + 1)));
+        }
+        return mySudoku;
+    }
 }

@@ -317,15 +317,15 @@ public class SudokuGenerator {
         boolean modificationsSuccessful = true;
         while (modificationsSuccessful) {
             int currentDifficulty = sudokuSolver.RateDifficulty(mySudoku);
-            //Log.i("Modify difficutly", "Current difficulty: " + currentDifficulty + mySudoku + "\n num unsolved: " +sudokuSolver.numUnsolved(mySudoku));
+            Log.i("Modify difficutly", "Current difficulty: " + currentDifficulty + mySudoku + "\n num unsolved: " +sudokuSolver.numUnsolved(mySudoku));
             //if too easy
             if (currentDifficulty < difficulty) {
                 modificationsSuccessful = false;
                 //Todo: change addOneRemoveTwo to do all possible combinations, rather than loop many times
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 200; i++) {
                     if (addOneRemoveTwo(mySudoku)) {
                         modificationsSuccessful = true;
-                        i = 100;
+                        i = 1000;
                     }
                 }
                 if (!modificationsSuccessful) {

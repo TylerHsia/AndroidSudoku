@@ -47,7 +47,10 @@ public class ExampleUnitTest {
             SudokuGrid mySudoku = sudokuGenerator.fillEmptyGrid();
             sudokuGenerator.modifyDifficuly(mySudoku, difficulty);
             assertTrue("Sudoku was not valid ", mySudoku.IsValid());
+
             assertTrue("difficulty was wrong" + mySudoku + "\n\nDifficulty wanted: " + difficulty + "\nDifficulty made: " +sudokuSolver.RateDifficulty(mySudoku), sudokuSolver.RateDifficulty(mySudoku) == difficulty);
+            assertTrue(sudokuGenerator.modifyDifficuly(mySudoku, difficulty));
+
             Log.i("Test", "Generated sudoku of difficulty " + difficulty + mySudoku);
         }
     }
@@ -547,9 +550,9 @@ public class ExampleUnitTest {
         SudokuSolver sudokuSolver = new SudokuSolver();
 
 
-
+        //Todo: failed to generate second difficulty 3 sudoku after 10 minutes
         //generates 100 of each difficulty sudoku
-        for(int difficulty = 1; difficulty < 6; difficulty++){
+        for(int difficulty = 3; difficulty < 6; difficulty++){
 
             Log.i("Test", "Writing difficulty " + difficulty);
             /*
@@ -581,6 +584,7 @@ public class ExampleUnitTest {
                     SudokuGrid mySudoku = sudokuGenerator.fillEmptyGrid();
                     boolean modifiedSuccessfully = false;
                     while(!modifiedSuccessfully){
+                        mySudoku = sudokuGenerator.fillEmptyGrid();
                         modifiedSuccessfully = sudokuGenerator.modifyDifficuly(mySudoku, difficulty);
                     }
                     //store to file
@@ -599,6 +603,26 @@ public class ExampleUnitTest {
         }
     }
 
+    @Test
+    public void testSudokuGridReadString(){
+        SudokuGrid mySudoku= SudokuGrid.readString("030760010420901007061045928002630105010807090040109862693478051154090006078516340");
+        Log.i("Test", "" + mySudoku);
+        assertTrue(mySudoku.IsValid());
+    }
+
+    @Test
+    public void testModifyDifficultyLevel3InfiniteLoop(){
+        ArrayList<Integer> sudoku = new ArrayList<>();
+        //Collections.addAll(sudoku, 401030000, 5020400, 80000000, 900000000, 3100540, 40000062, 90000, 700358006, 160000000);
+        Collections.addAll(sudoku, 640570000, 900000000, 1083, 68000005, 900010, 700200000, 2000009, 0, 13807);
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid mySudoku = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(sudoku));
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        assertTrue(mySudoku.IsValid());
+        assertTrue(sudokuGenerator.modifyDifficuly(mySudoku, 3));
+        assertTrue(sudokuSolver.RateDifficulty(mySudoku)== 3);
+    }
+
     public SudokuGrid getInput(int i){
         SudokuSolver sudokuSolver = new SudokuSolver();
         //inputted sudoku
@@ -615,6 +639,9 @@ public class ExampleUnitTest {
         }
         return mySudoku;
     }
+
+
+
 
             /*
     RookChecker(mySudoku);
