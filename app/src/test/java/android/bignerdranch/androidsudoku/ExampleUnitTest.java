@@ -544,6 +544,7 @@ public class ExampleUnitTest {
         }
     }
 
+
     @Test
     public void writeSudokusToFile(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
