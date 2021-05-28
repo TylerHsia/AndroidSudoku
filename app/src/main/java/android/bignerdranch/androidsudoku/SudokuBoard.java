@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,8 +28,8 @@ import java.util.List;
 public class SudokuBoard extends View {
 
     SudokuSolver sudokuSolver = new SudokuSolver();
-    SudokuGrid mySudoku = new SudokuGrid();
-    ArrayList<Integer>[][] userNotes;
+    private SudokuGrid mySudoku = new SudokuGrid();
+    private ArrayList<Integer>[][] userNotes;
     static SudokuBoard sudokuBoard;
     int selected_row;
     int selected_column;
@@ -518,8 +519,74 @@ public class SudokuBoard extends View {
         drawNumbers();
     }
 
-    public void setNote(boolean isChecked) {
+    //getters and setters
+    public boolean getNotesOn(){
+        return notesOn;
+    }
+
+    public void setNotesON(boolean isChecked) {
         notesOn = isChecked;
     }
+
+    public ArrayList<Integer>[][] getUserNotes() {
+        return userNotes;
+    }
+
+    public void setUserNotes(ArrayList<Integer>[][] userNotes) {
+        this.userNotes = userNotes;
+
+        /*
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                for(int i = 0; i < userNotes[r][c].size(); i++){
+                    double numD =  (userNotes[r][c].get(i).doubleValue());
+                    int num = (int) numD;
+
+                    userNotes[r][c].set(i, num);
+                }
+            }
+        }
+
+         */
+
+
+
+    }
+
+    public SudokuGrid getMySudoku() {
+        return mySudoku;
+    }
+
+    public void setMySudoku(SudokuGrid mySudoku) {
+        this.mySudoku = mySudoku;
+    }
+
+    public boolean[][] getIsGiven() {
+        return isGiven;
+    }
+
+    public void setIsGiven(boolean[][] isGiven) {
+        this.isGiven = isGiven;
+    }
+
+    public boolean[][] getComputerSolved() {
+        return computerSolved;
+    }
+
+    public void setComputerSolved(boolean[][] computerSolved) {
+        this.computerSolved = computerSolved;
+    }
+
+    public boolean[][] getInvalidUserMove() {
+        return invalidUserMove;
+    }
+
+    public void setInvalidUserMove(boolean[][] invalidUserMove) {
+        this.invalidUserMove = invalidUserMove;
+    }
+
+
+
+    //end of getters and setters
 }
 

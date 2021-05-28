@@ -5,13 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private SudokuBoard sudokuBoard;
@@ -22,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_GENERATE = 0;
     private static final String difficultyExtra = "Difficulty";
     private CheckBox noteBox;
+    //keys for storing state data
+    private final String userNotesKey = "usernotes";
+    private final String mySudokuKey = "mysudok";
+    private final String notesOnKey = "note";
+    private final String isGivenKey = "givens";
+    private final String computerSolvedKey = "computerSolved";
+    private final String invalidUserMoveKey = "invalidUserMove";
 
     //Long term by senior project
     //Todo: All UI capability
@@ -54,15 +67,101 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+    }
+
+    //store current state of board to shared preferences
+    @Override
+    public void onDestroy(){
+
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json;
+        json = gson.toJson(sudokuBoard.getUserNotes());
+        sharedPreferences.edit().putString(userNotesKey, json).apply();
+
+        json = gson.toJson(sudokuBoard.getMySudoku());
+        sharedPreferences.edit().putString(mySudokuKey, json).apply();
+
+        json = gson.toJson(sudokuBoard.getNotesOn());
+        sharedPreferences.edit().putString(notesOnKey, json).apply();
+
+        json = gson.toJson(sudokuBoard.getIsGiven());
+        sharedPreferences.edit().putString(isGivenKey, json).apply();
+
+        json = gson.toJson(sudokuBoard.getComputerSolved());
+        sharedPreferences.edit().putString(computerSolvedKey, json).apply();
+
+        json = gson.toJson(sudokuBoard.getInvalidUserMove());
+        sharedPreferences.edit().putString(invalidUserMoveKey, json).apply();
+        super.onDestroy();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sudokuBoard = findViewById(R.id.SudokuBoard);
+
+        //retrieve values from sharedPreferences
+        SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json;
+
+        json = sharedPreferences.getString(userNotesKey, "");
+        //if shared preferences not blank
+        if(!json.equals("")){
+            ArrayList[][] userNotesD = (gson.fromJson(json, ArrayList[][].class));
+            ArrayList<Integer>[][] userNotes = new ArrayList[9][9];
+            userNotes = new ArrayList[9][9];
+            for (int row = 0; row < 9; row++) {
+                for (int column = 0; column < 9; column++) {
+                    userNotes[row][column] = new ArrayList<Integer>();
+                    for(int i = 0; i < userNotesD[row][column].size(); i++){
+                        //userNotes[row][column].add(userNotesD[row][column].get(i));
+                    }
+                }
+            }
+
+
+
+            //sudokuBoard.setUserNotes(userNotes);
+
+            json = sharedPreferences.getString(mySudokuKey, "");
+            sudokuBoard.setMySudoku(gson.fromJson(json, SudokuGrid.class));
+
+            json = sharedPreferences.getString(notesOnKey, "");
+            sudokuBoard.setNotesON(gson.fromJson(json, boolean.class));
+
+            json = sharedPreferences.getString(isGivenKey, "");
+            sudokuBoard.setIsGiven(gson.fromJson(json, boolean[][].class));
+
+            json = sharedPreferences.getString(computerSolvedKey, "");
+            sudokuBoard.setComputerSolved(gson.fromJson(json, boolean[][].class));
+
+            json = sharedPreferences.getString(invalidUserMoveKey, "");
+            sudokuBoard.setInvalidUserMove(gson.fromJson(json, boolean[][].class));
+        }
+
+
+
+
+
+
+
+
         if(savedInstanceState != null){
             try{
                 int difficulty = savedInstanceState.getInt(difficultyExtra);
-                sudokuBoard.generateSudoku(difficulty);
+                //sudokuBoard.generateSudoku(difficulty);
                 // sudokuBoard.getInput((int) (Math.random() * 24) + 1);
+                //Todo: sudokuBoard.set(sudoku, boolean arrays, notes array
+
+                //sudokuBoard = gson.fromJson(json, SudokuBoard.class);
 
             }
             catch(Exception e){
@@ -70,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        sudokuBoard = findViewById(R.id.SudokuBoard);
 
 
 
@@ -119,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         noteBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sudokuBoard.setNote(isChecked);
+                sudokuBoard.setNotesON(isChecked);
 
 
             }
