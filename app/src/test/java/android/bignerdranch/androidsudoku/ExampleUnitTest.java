@@ -631,6 +631,16 @@ public class ExampleUnitTest {
         assertTrue(sudokuSolver.RateDifficulty(mySudoku)== 3);
     }
 
+    @Test
+    public void testPerturb(){
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        for(int i = 1; i < 20; i++){
+            SudokuGrid mySudoku = getInput(i);
+            sudokuGenerator.perturb(mySudoku);
+            assertTrue("" + i, mySudoku.IsValid());
+
+        }
+    }
     public SudokuGrid getInput(int i){
         SudokuSolver sudokuSolver = new SudokuSolver();
         //inputted sudoku

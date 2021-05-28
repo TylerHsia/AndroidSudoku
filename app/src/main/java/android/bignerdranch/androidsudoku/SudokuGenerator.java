@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SudokuGenerator {
@@ -590,101 +591,48 @@ public class SudokuGenerator {
         return solvedSudokus;
     }
 
-    //Todo: delete this method
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public SudokuGrid retrieveDifficulty(int difficulty) {
 
 
+    public void perturb(SudokuGrid mySudoku) {
+        changeNumbers(mySudoku);
+        Random random = new Random();
 
-
-
-        try {
-            FileWriter myWriter = new FileWriter("/Dummy file2.txt");
-            myWriter.write("hello");
-            myWriter.close();
-
-
-            File myFile = new File("Dummy file2.txt");
-            Scanner scanner = new Scanner(myFile);
-            String txt = scanner.nextLine();
-        }catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        //50% chance
+        if(random.nextBoolean()){
+            reflectTopBottomDiagonal(mySudoku);
+        }
+        //50% chance
+        if(random.nextBoolean()){
+            reflectBottomTopDiagonal(mySudoku);
+        }
+        //50% chance
+        if(random.nextBoolean()){
+            reflectOrigin(mySudoku);
+        }
+        //50% chance
+        if(random.nextBoolean()){
+            flipVertical(mySudoku);
+        }
+        //50% chance
+        if(random.nextBoolean()){
+            flipHorizontal(mySudoku);
+        }
+        //random rotation
+        int numRotations = (int) (Math.random() * 4);
+        for(int i = 0; i < numRotations; i++){
+            rotateClockwise(mySudoku);
         }
 
-
-
-
-
-
-
-
-         String sudokuString = "";
-
-        try {
-            //File file = new File("")
-            File here = new File("asdf.");
-            FileReader fileReader = new FileReader("/difficulty1.txt");
-            fileReader.read();
-            Log.i("here.getabsolutepath", (here.getAbsolutePath()));
-            String heres = here.getAbsolutePath();
-            Log.i("FileReading", (new File(".").getAbsolutePath()));
-            String text = new File(",").getAbsolutePath();
-            //File myFile = new File("difficulty" + difficulty + ".txt");
-            String data = "";
-            //data = new String(Files.readAllBytes(Paths.get("difficulty1.txt")));
-            File myFile = new File("/difficulty1.txt");
-            //FileReader fr = new FileReader("C:\\Users\\Tyler\\AndroidStudioProjects\\AndroidSudoku\\app\\difficulty1.txt");
-
-            /*
-            int j;
-            while ((j=fr.read()) != -1)
-                System.out.print((char) j);
-
-             */
-
-
-
-            if (myFile.exists()) {
-                System.out.println("File name: " + myFile.getName());
-                System.out.println("Absolute path: " + myFile.getAbsolutePath());
-                System.out.println("Writeable: " + myFile.canWrite());
-                System.out.println("Readable " + myFile.canRead());
-                System.out.println("File size in bytes " + myFile.length());
-            } else {
-                System.out.println("The file does not exist.");
-            }
-
-
-            Scanner myReader = new Scanner(myFile);
-
-
-
-            int index = (int) (Math.random() * 100);
-            for(int i = 0; i <= index; i++){
-                if(myReader.nextLine().equals("Index " + index)){
-                    sudokuString = myReader.nextLine();
-                }
-                myReader.nextLine();
-            }
-
-
-            /*
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-            }
-
-             */
-            //myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        } catch(Exception e){
-
+        //random boxrow swaps a random number of times
+        int numBoxRowSwaps = (int) (Math.random() * 4);
+        for(int i = 0; i < numBoxRowSwaps; i++){
+            swapBoxRows(mySudoku, (int) (Math.random() * 3), (int) (Math.random() * 3));
         }
 
-        SudokuGrid sudokuGrid = new SudokuGrid();
-        return sudokuGrid.readString(sudokuString);
+        //random boxColumn swaps a random number of times
+        int numBoxColumnSwaps = (int) (Math.random() * 4);
+        for(int i = 0; i < numBoxColumnSwaps; i++){
+            swapBoxColumns(mySudoku, (int) (Math.random() * 3), (int) (Math.random() * 3));
+        }
     }
 }

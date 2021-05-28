@@ -493,6 +493,9 @@ public class SudokuBoard extends View {
             }
         }
 
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        sudokuGenerator.perturb(mySudoku);
+
 
 
 
