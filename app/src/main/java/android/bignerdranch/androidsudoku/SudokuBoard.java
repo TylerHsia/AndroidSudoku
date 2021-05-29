@@ -512,6 +512,7 @@ public class SudokuBoard extends View {
                 }
                 computerSolved[row][column] = false;
                 invalidUserMove[row][column] = false;
+                userNotes[row][column] = new ArrayList<Integer>();
             }
         }
 
@@ -528,8 +529,19 @@ public class SudokuBoard extends View {
         notesOn = isChecked;
     }
 
-    public ArrayList<Integer>[][] getUserNotes() {
-        return userNotes;
+    //1d array, 81 values, each value has a string with all userNotes in that cell
+    public String[] getUserNotesForJson() {
+        String[] stringNotes = new String[81];
+        for(int i = 0; i < 81; i++){
+            int row = i/9;
+            int column = i%9;
+            String cellNote = "";
+            for(int j = 0; j < userNotes[row][column].size(); j++){
+                cellNote = cellNote + userNotes[row][column].get(j);
+            }
+            stringNotes[i] = cellNote;
+        }
+        return stringNotes;
     }
 
     public void setUserNotes(ArrayList<Integer>[][] userNotes) {

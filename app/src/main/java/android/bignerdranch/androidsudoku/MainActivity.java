@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: solve cell
     //Todo: isvalid
     //Todo: savestate save current sudoku
+    //sudokuBoard not responding after back button
 
     //Short term
     //Todo: sound effects
@@ -61,25 +60,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
     }
 
     //store current state of board to shared preferences
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
 
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json;
-        json = gson.toJson(sudokuBoard.getUserNotes());
+        json = gson.toJson(sudokuBoard.getUserNotesForJson());
         sharedPreferences.edit().putString(userNotesKey, json).apply();
 
         json = gson.toJson(sudokuBoard.getMySudoku());
@@ -114,22 +113,21 @@ public class MainActivity extends AppCompatActivity {
 
         json = sharedPreferences.getString(userNotesKey, "");
         //if shared preferences not blank
-        if(!json.equals("")){
-            ArrayList[][] userNotesD = (gson.fromJson(json, ArrayList[][].class));
+        if (!json.equals("")) {
+            String[] stringNotes = (gson.fromJson(json, String[].class));
             ArrayList<Integer>[][] userNotes = new ArrayList[9][9];
             userNotes = new ArrayList[9][9];
-            for (int row = 0; row < 9; row++) {
-                for (int column = 0; column < 9; column++) {
-                    userNotes[row][column] = new ArrayList<Integer>();
-                    for(int i = 0; i < userNotesD[row][column].size(); i++){
-                        //userNotes[row][column].add(userNotesD[row][column].get(i));
+            for (int i = 0; i < 81; i++) {
+                int row = i / 9;
+                int column = i % 9;
+                userNotes[row][column] = new ArrayList<Integer>();
+                if(stringNotes[i] != null) {
+                    for (int j = 0; j < stringNotes[i].length(); j++) {
+                        userNotes[row][column].add(Integer.parseInt(stringNotes[i].substring(j, j + 1)));
                     }
                 }
             }
-
-
-
-            //sudokuBoard.setUserNotes(userNotes);
+            sudokuBoard.setUserNotes(userNotes);
 
             json = sharedPreferences.getString(mySudokuKey, "");
             sudokuBoard.setMySudoku(gson.fromJson(json, SudokuGrid.class));
@@ -143,19 +141,14 @@ public class MainActivity extends AppCompatActivity {
             json = sharedPreferences.getString(computerSolvedKey, "");
             sudokuBoard.setComputerSolved(gson.fromJson(json, boolean[][].class));
 
+            //Todo: invalid user move was wrong at some point, not sure how or why
             json = sharedPreferences.getString(invalidUserMoveKey, "");
             sudokuBoard.setInvalidUserMove(gson.fromJson(json, boolean[][].class));
         }
 
 
-
-
-
-
-
-
-        if(savedInstanceState != null){
-            try{
+        if (savedInstanceState != null) {
+            try {
                 int difficulty = savedInstanceState.getInt(difficultyExtra);
                 //sudokuBoard.generateSudoku(difficulty);
                 // sudokuBoard.getInput((int) (Math.random() * 24) + 1);
@@ -163,19 +156,16 @@ public class MainActivity extends AppCompatActivity {
 
                 //sudokuBoard = gson.fromJson(json, SudokuBoard.class);
 
-            }
-            catch(Exception e){
+            } catch (Exception e) {
 
             }
         }
 
 
-
-
         generateButton = (Button) findViewById(R.id.generatebutton);
-        generateButton.setOnClickListener(new View.OnClickListener(){
+        generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent intent = ViewGenerate.newIntent(getApplicationContext());
                 startActivityForResult(intent, REQUEST_CODE_GENERATE);
 
@@ -184,11 +174,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         solveButton = (Button) findViewById(R.id.solvebutton);
-        solveButton.setOnClickListener(new View.OnClickListener(){
+        solveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 sudokuBoard.solveSudoku();
                 sudokuBoard.invalidate();
 
@@ -196,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         deleteButton = (Button) findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(new View.OnClickListener(){
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 sudokuBoard.removeCell();
 
             }
@@ -214,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         noteBox = (CheckBox) findViewById(R.id.noteBox);
+        noteBox.setChecked(sudokuBoard.getNotesOn());
         noteBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -224,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent newIntent(Context packageContext, int difficulty){
+    public static Intent newIntent(Context packageContext, int difficulty) {
         Intent intent = new Intent(packageContext, MainActivity.class);
         intent.putExtra(difficultyExtra, difficulty);
         return intent;
@@ -245,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
             int difficulty = data.getIntExtra(difficultyExtra, 0);
             Toast.makeText(getApplicationContext(), "" + difficulty, Toast.LENGTH_SHORT).show();
             sudokuBoard.generateSudoku(difficulty);
+            SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
+            //set program to not use shared preferences for data, but just use current board.
+            sharedPreferences.edit().putString(userNotesKey, "").apply();
         }
     }
 
