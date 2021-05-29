@@ -74,11 +74,15 @@ public class SudokuBoard extends View {
         return sudokuBoard;
     }
 
+    public void setSudokuBoard(SudokuBoard s){
+        sudokuBoard = s;
+    }
+
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         myAttrs = attrs;
-
+        //Todo: sudokuBoard is using the wrong sudokuBoard after back is pressed
         if (sudokuBoard == null) {
             sudokuBoard = this;
         }
@@ -182,8 +186,8 @@ public class SudokuBoard extends View {
         //can differentiate between types of taps on screen
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
-            sudokuBoard.selected_row = ((int) Math.ceil(y / cellSize)) - 1;
-            sudokuBoard.selected_column = ((int) Math.ceil(x / cellSize)) - 1;
+            selected_row = ((int) Math.ceil(y / cellSize)) - 1;
+            selected_column = ((int) Math.ceil(x / cellSize)) - 1;
 
             colorCells(canvas, selected_row, selected_column);
             isValid = true;

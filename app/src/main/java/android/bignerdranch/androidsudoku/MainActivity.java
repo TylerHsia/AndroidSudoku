@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     //Todo: isvalid
     //Todo: savestate save current sudoku
     //sudokuBoard not responding after back button
-    //sharedpreferences not stored on app close
 
     //Short term
     //Todo: sound effects
@@ -63,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+        sudokuBoard.setSudokuBoard(sudokuBoard);
+        //sudokuBoard = findViewById(R.id.SudokuBoard);
     }
 
     @Override
@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
 
         Log.i("Shared Preferences", "on destroy called");
+
+        //sets to null so that when the app is reloaded, it makes a new sudokuBoard
+        sudokuBoard.setSudokuBoard(null);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -98,8 +101,11 @@ public class MainActivity extends AppCompatActivity {
         json = gson.toJson(sudokuBoard.getInvalidUserMove());
         sharedPreferences.edit().putString(invalidUserMoveKey, json).apply();
         super.onStop();
+        //putting super.onDestroy here fixes problem of back button
+        //super.onDestroy();
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
