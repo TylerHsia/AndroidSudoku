@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     //Todo: All UI capability
     //write and read to and from file
     //Todo: options menu
-    //Todo: store sudokus in file, read from file
     //Todo: solve cell
     //Todo: isvalid
     //Todo: savestate save current sudoku
     //sudokuBoard not responding after back button
+    //sharedpreferences not stored on app close
 
     //Short term
     //Todo: sound effects
@@ -72,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     //store current state of board to shared preferences
     @Override
-    public void onDestroy() {
+    public void onStop() {
 
+        Log.i("Shared Preferences", "on destroy called");
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         json = gson.toJson(sudokuBoard.getInvalidUserMove());
         sharedPreferences.edit().putString(invalidUserMoveKey, json).apply();
-        super.onDestroy();
+        super.onStop();
 
     }
 
@@ -237,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
             sudokuBoard.generateSudoku(difficulty);
             SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
             //set program to not use shared preferences for data, but just use current board.
+            Log.i("Shared Preferences", "shared preferences erased");
             sharedPreferences.edit().putString(userNotesKey, "").apply();
         }
     }
