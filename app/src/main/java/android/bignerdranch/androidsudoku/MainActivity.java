@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     //Todo: solve cell
     //Todo: isvalid
     //Todo: basic hinting - next solved cell
+    //Todo: delete coordinate and hint class
 
 
     //After senior project
@@ -233,6 +234,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 sudokuBoard.solveCell();
+            }
+        });
+
+        hintButton = (Button) findViewById(R.id.hintButton);
+        hintButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sudokuBoard.hint();
             }
         });
     }

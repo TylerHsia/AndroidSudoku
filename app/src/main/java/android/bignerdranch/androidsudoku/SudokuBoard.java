@@ -65,6 +65,7 @@ public class SudokuBoard extends View {
     boolean[][] isGiven = new boolean[9][9];
     boolean[][] computerSolved = new boolean[9][9];
     boolean[][] invalidUserMove = new boolean[9][9];
+    int hintCoord = -1;
 
 
     public static SudokuBoard get(Context context) {
@@ -298,8 +299,15 @@ public class SudokuBoard extends View {
         if (notesOn) {
             cellFillColorPaint.setColor(Color.GREEN);
         }
+
         //fill cell selected with a different color
         fillCell(r, c, cellFillColorPaint);
+
+        //fill hint cell
+        if(hintCoord != -1){
+            cellFillColorPaint.setColor(Color.YELLOW);
+            fillCell(hintCoord / 9, hintCoord % 9, cellFillColorPaint);
+        }
         invalidate();
     }
 
@@ -377,6 +385,7 @@ public class SudokuBoard extends View {
                     mySudoku.getSudokuGrid()[this.selected_row][this.selected_column] = new SudokCell();
                 } else {
                     //set to new val
+                    hintCoord = -1;
                     mySudoku.getSudokCell(this.selected_row, this.selected_column).solve(num);
                     if (sudokuSolver.InvalidMove(mySudoku, selected_row, selected_column)) {
                         invalidUserMove[selected_row][selected_column] = true;
@@ -624,6 +633,11 @@ public class SudokuBoard extends View {
             }
         }
 
+    }
+
+    public void hint() {
+        SudokuHinter sudokuHinter = new SudokuHinter();
+        hintCoord = sudokuHinter.getNextSolvedCoord(mySudoku);
     }
 
 
