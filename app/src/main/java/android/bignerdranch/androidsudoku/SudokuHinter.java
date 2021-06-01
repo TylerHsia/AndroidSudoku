@@ -17,7 +17,7 @@ public class SudokuHinter {
     //returns coordNum of next solved cell
     public int getNextSolvedCoord(SudokuGrid mySudoku) {
         SudokuSolver sudokuSolver = new SudokuSolver();
-        Hint myHint = new Hint();
+
         int coord;
         SudokuGrid copy = sudokuSolver.Copy(mySudoku);
         boolean methodWorks = true;
