@@ -34,6 +34,7 @@ public class SudokuHinter {
             }
         }
 
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = OnlyCandidateLeftRookChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -42,6 +43,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = OnlyCandidateLeftBoxChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -50,6 +52,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = NakedCandidateRookChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -58,6 +61,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = NakedCandidateBoxChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -66,6 +70,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = CandidateLinesChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -74,6 +79,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = HiddenCandidatePairChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
@@ -82,6 +88,7 @@ public class SudokuHinter {
                 return coord;
             }
         }
+        methodWorks = true;
         while (methodWorks) {
             methodWorks = pointingPairRookToBoxChecker(copy);
             coord = getRandCoordNumDifferent(mySudoku, copy);
