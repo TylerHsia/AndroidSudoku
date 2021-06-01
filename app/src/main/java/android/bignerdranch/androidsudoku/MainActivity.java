@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_GENERATE = 0;
     private static final String difficultyExtra = "Difficulty";
     private CheckBox noteBox;
+    private Button solveCellButton;
+    private Button hintButton;
+    private Button validButton;
     //keys for storing state data
     private final String userNotesKey = "usernotes";
     private final String mySudokuKey = "mysudok";
@@ -216,6 +219,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        validButton = (Button) findViewById(R.id.isValidButton);
+        validButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sudokuBoard.isValid();
+            }
+        });
     }
 
     public static Intent newIntent(Context packageContext, int difficulty) {
@@ -237,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             int difficulty = data.getIntExtra(difficultyExtra, 0);
-            Toast.makeText(getApplicationContext(), "" + difficulty, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "" + difficulty, Toast.LENGTH_SHORT).show();
             sudokuBoard.generateSudoku(difficulty);
             SharedPreferences sharedPreferences = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE);
             //set program to not use shared preferences for data, but just use current board.

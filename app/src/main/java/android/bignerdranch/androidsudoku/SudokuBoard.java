@@ -600,6 +600,13 @@ public class SudokuBoard extends View {
         this.invalidUserMove = invalidUserMove;
     }
 
+    public void isValid() {
+        if(mySudoku.IsValid()){
+            Toast.makeText(getContext(), "Sudoku is valid", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getContext(), "Sudoku is invalid", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     //end of getters and setters

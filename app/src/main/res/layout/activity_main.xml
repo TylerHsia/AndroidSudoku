@@ -15,69 +15,123 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/SudokuBoard"
         app:layout_constraintStart_toStartOf="@+id/SudokuBoard"
-        app:layout_constraintTop_toBottomOf="@id/SudokuBoard">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
         <Button
             android:id="@+id/generatebutton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1274DC"
+            android:layout_weight="1"
+
             android:text="Generate"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_marginHorizontal="1dp"
+            >
 
         </Button>
-        <CheckBox
-            android:id="@+id/checkBoxHighlightCells"
+
+        <Button
+            android:id="@+id/isValidButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="HighlightCells"
-            android:backgroundTint="#1274DC"
-            android:backgroundTintMode="add"/>
+            android:layout_weight="1"
+            android:text="Valid?"
+            android:layout_marginHorizontal="1dp"
+
+            >
+
+        </Button>
+
+
         <Button
             android:id="@+id/solvebutton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1274DC"
-            android:text="Solve"
-
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_weight="1"
+            android:layout_marginHorizontal="1dp"
+            android:text="Solve">
 
         </Button>
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/hintButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="1dp"
+
+            android:text="Hint" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="1dp"
+
+
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/solveCellButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="1dp"
+
+            android:text="SolveCell" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hello"
-        custom:layout_constraintBottom_toTopOf="@+id/SudokuBoard"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-        custom:layout_constraintTop_toTopOf="parent">
+        <CheckBox
+            android:id="@+id/checkBoxHighlightCells"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#1274DC"
+            android:backgroundTintMode="add"
+            android:text="HighlightCells"
 
-    </TextView>
+            android:gravity="center"/>
+        <CheckBox
+            android:id="@+id/noteBox"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Note"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkBoxHighlightCells"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+
+
+
+
 
     <android.bignerdranch.androidsudoku.SudokuBoard
         android:id="@+id/SudokuBoard"
@@ -92,8 +146,8 @@
         custom:boardColor="#000000"
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
-        custom:numberColorInputted="#5900FF"
         custom:numberColorGiven="@color/black"
+        custom:numberColorInputted="#5900FF"
         custom:numberColorSolved="#366C00"
         custom:sameNumberHighlightColor="#53A600"
         custom:solvedHighlightColor="#6664FFFF"
@@ -108,11 +162,13 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteButton">
+        app:layout_constraintTop_toBottomOf="@+id/SudokuBoard">
 
         <android.bignerdranch.androidsudoku.CustomButton
             android:layout_width="0dp"
@@ -171,16 +227,7 @@
 
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/noteBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Note"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
