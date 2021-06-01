@@ -608,6 +608,24 @@ public class SudokuBoard extends View {
         }
     }
 
+    public void solveCell() {
+        //if selected cell is unsolved
+        if(mySudoku.IsValid()) {
+            if (selected_column != -1 && selected_row != -1) {
+                if (!mySudoku.getSudokCell(selected_row, selected_column).isSolved()) {
+                    //solve it
+                    SudokuGrid copy = sudokuSolver.Copy(mySudoku);
+                    sudokuSolver.bruteForceSolver(copy);
+                    mySudoku.getSudokCell(selected_row, selected_column).solve(copy.getSudokCell(selected_row, selected_column).getVal());
+                    computerSolved[selected_row][selected_column] = true;
+                }
+
+
+            }
+        }
+
+    }
+
 
     //end of getters and setters
 }

@@ -227,7 +227,16 @@ public class MainActivity extends AppCompatActivity {
                 sudokuBoard.isValid();
             }
         });
+
+        solveCellButton = (Button) findViewById(R.id.solveCellButton);
+        solveCellButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sudokuBoard.solveCell();
+            }
+        });
     }
+
 
     public static Intent newIntent(Context packageContext, int difficulty) {
         Intent intent = new Intent(packageContext, MainActivity.class);
