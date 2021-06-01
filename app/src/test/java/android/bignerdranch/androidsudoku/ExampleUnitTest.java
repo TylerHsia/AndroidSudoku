@@ -41,7 +41,6 @@ public class ExampleUnitTest {
     @Test
     public void testModifyDifficulty(){
         //Todo: set random seed for debugging
-        //Todo: store mySudoku to file
         for(int difficulty = 1; difficulty <= 5; difficulty++){
             Log.i("Test", "Working on modifying difficulty to be " + difficulty);
             SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -469,7 +468,6 @@ public class ExampleUnitTest {
     @Test
     public void TestSolvingMethods(){
         boolean failed = false;
-        //Todo: solving methods couldn't solve 23
         //1 to 23, inclusive
         for (int i = 23; i <= NumStoredSudokus; i++) {
             SudokuSolver sudokuSolver = new SudokuSolver();

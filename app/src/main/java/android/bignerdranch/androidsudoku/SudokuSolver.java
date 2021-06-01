@@ -842,7 +842,7 @@ public class SudokuSolver {
         return pointingPairRookToBoxWorks;
     }
 
-    //Todo: return boolean doesn't seem to always be correct
+    //Todo: by using .isValid, this method indirectly uses brute force
     //forcing chains checker
     public boolean forcingChainsChecker(SudokuGrid mySudoku) {
         if(mySudoku.IsSolved()){
@@ -1541,7 +1541,7 @@ public class SudokuSolver {
 
     public int RateDifficulty(SudokuGrid sudokuGrid) {
 
-        //Todo: change to enum
+
         SudokuGrid mySudoku = Copy(sudokuGrid);
 
         if (!mySudoku.IsValid()) {

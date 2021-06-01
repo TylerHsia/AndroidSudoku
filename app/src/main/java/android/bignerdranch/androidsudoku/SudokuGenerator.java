@@ -196,7 +196,7 @@ public class SudokuGenerator {
                 sudokuGrid.getSudokCell(row, column).solve(copy.getSudokCell(row, column).getPossibles().get(index));
                 copy.getSudokCell(row, column).solve(copy.getSudokCell(row, column).getPossibles().get(index));
 
-                //Todo: comment these lines out
+                /*
                 for (int r = 0; r < 9; r++) {
                     for (int c = 0; c < 9; c++) {
                         if (sudokuGrid.getSudokCell(r, c).isSolved()) {
@@ -206,6 +206,8 @@ public class SudokuGenerator {
                         }
                     }
                 }
+
+                 */
                 sudokuSolver.Solve(copy, false);
                 if (sudokuGrid.IsValid()) {
                     return sudokuGrid;

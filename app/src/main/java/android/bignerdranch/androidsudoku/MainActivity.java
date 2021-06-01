@@ -35,20 +35,12 @@ public class MainActivity extends AppCompatActivity {
     private final String computerSolvedKey = "computerSolved";
     private final String invalidUserMoveKey = "invalidUserMove";
 
-    //Long term by senior project
-    //Todo: All UI capability
-    //write and read to and from file
-    //Todo: options menu
+    //by senior project
+    //Todo: All UI capability - remove hello, change name, change black text on dark blue
     //Todo: solve cell
     //Todo: isvalid
-    //Todo: savestate save current sudoku
-    //sudokuBoard not responding after back button
+    //Todo: basic hinting - next solved cell
 
-    //Short term
-    //Todo: sound effects
-    //Todo: reason for why a sudoku is invalid (no solutions, multiples solutions)
-    //Todo: activity for settings
-    //Todo: stored logic for 23
 
     //After senior project
     //undo and redo
@@ -57,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
     //store data on app close
     //fix generation code where a stack overflow is possible
     //custom animation for onsolved
+    //options menu
+    //sound effects
+    //reason for why a sudoku is invalid (no solutions, multiples solutions)
+    //activity for settings
+    //Log.i("infinite loop
+    //change difficulty ratings to enum
+    //Notes are removed when number is inputted
+    //note checkbox sometimes hidden by bottom screen menu
+
 
 
     @Override
@@ -149,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
             json = sharedPreferences.getString(computerSolvedKey, "");
             sudokuBoard.setComputerSolved(gson.fromJson(json, boolean[][].class));
 
-            //Todo: invalid user move was wrong at some point, not sure how or why
             json = sharedPreferences.getString(invalidUserMoveKey, "");
             sudokuBoard.setInvalidUserMove(gson.fromJson(json, boolean[][].class));
         }
@@ -158,11 +158,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             try {
                 int difficulty = savedInstanceState.getInt(difficultyExtra);
-                //sudokuBoard.generateSudoku(difficulty);
-                // sudokuBoard.getInput((int) (Math.random() * 24) + 1);
-                //Todo: sudokuBoard.set(sudoku, boolean arrays, notes array
 
-                //sudokuBoard = gson.fromJson(json, SudokuBoard.class);
 
             } catch (Exception e) {
 
