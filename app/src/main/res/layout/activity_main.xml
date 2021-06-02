@@ -150,7 +150,7 @@
         custom:numberColorInputted="#5900FF"
         custom:numberColorSolved="#366C00"
         custom:sameNumberHighlightColor="#53A600"
-        custom:solvedHighlightColor="#6664FFFF"
+        custom:solvedHighlightColor="#66FFFFFF"
 
 
         tools:ignore="MissingPrefix">

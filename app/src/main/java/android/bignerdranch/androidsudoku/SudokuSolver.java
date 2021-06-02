@@ -1137,16 +1137,33 @@ public class SudokuSolver {
     public void Solve(SudokuGrid mySudoku, boolean forcingChains) {
         //Log.i("Difficulty", "Solve Method");
         //Todo: change to while(works)
-        for (int i = 0; i < 10; i++) {
-            RookChecker(mySudoku);
-            BoxChecker(mySudoku);
-            OnlyCandidateLeftRookChecker(mySudoku);
-            OnlyCandidateLeftBoxChecker(mySudoku);
-            NakedCandidateRookChecker(mySudoku);
-            NakedCandidateBoxChecker(mySudoku);
-            CandidateLinesChecker(mySudoku);
-            HiddenCandidatePairChecker(mySudoku);
-            pointingPairRookToBoxChecker(mySudoku);
+        boolean methodsWork = true;
+        while(methodsWork){
+            methodsWork = RookChecker(mySudoku);
+            if(!methodsWork){
+                methodsWork = BoxChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = OnlyCandidateLeftRookChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = OnlyCandidateLeftBoxChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = NakedCandidateRookChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = NakedCandidateBoxChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = CandidateLinesChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = HiddenCandidatePairChecker(mySudoku);
+            }
+            if(!methodsWork) {
+                methodsWork = pointingPairRookToBoxChecker(mySudoku);
+            }
             //forcingChainsChecker(mySudoku);
         }
         boolean forcingChainsCheckerWorks = true;

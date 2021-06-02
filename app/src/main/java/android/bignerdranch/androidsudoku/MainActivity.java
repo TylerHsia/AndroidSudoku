@@ -38,17 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private final String computerSolvedKey = "computerSolved";
     private final String invalidUserMoveKey = "invalidUserMove";
 
-    //by senior project
-    //Todo: All UI capability - remove hello, change name, change black text on dark blue
-    //Todo: solve cell
-    //Todo: isvalid
-    //Todo: basic hinting - next solved cell
-    //Todo: delete coordinate and hint class
 
 
+    //If all of a number are inputted, turn off button
     //After senior project
+    //make app fit on more square screens
     //undo and redo
-    //hinting
+    //hinting with candidates
     //improve and comment all old C# code
     //store data on app close
     //fix generation code where a stack overflow is possible
@@ -61,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     //change difficulty ratings to enum
     //Notes are removed when number is inputted
     //note checkbox sometimes hidden by bottom screen menu
+    //Solve sudoku on background thread and store it
 
 
 

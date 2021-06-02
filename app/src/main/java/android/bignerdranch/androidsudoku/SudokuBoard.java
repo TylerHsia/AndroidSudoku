@@ -479,7 +479,7 @@ public class SudokuBoard extends View {
 
     public void generateSudoku(int difficulty) {
 
-        if (difficulty == 6) {
+        if (difficulty == 6 || difficulty == 7) {
             mySudoku = new SudokuGrid();
         }
 
@@ -527,6 +527,7 @@ public class SudokuBoard extends View {
                 userNotes[row][column] = new ArrayList<Integer>();
             }
         }
+        hintCoord = -1;
 
 
         drawNumbers();
@@ -637,7 +638,7 @@ public class SudokuBoard extends View {
 
     public void hint() {
         SudokuHinter sudokuHinter = new SudokuHinter();
-        hintCoord = sudokuHinter.getNextSolvedCoord(mySudoku);
+        hintCoord = sudokuHinter.getNextSolvedCoord(mySudoku, getContext());
     }
 
 

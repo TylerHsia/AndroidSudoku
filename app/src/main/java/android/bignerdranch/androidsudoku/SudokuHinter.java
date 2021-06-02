@@ -1,7 +1,9 @@
 package android.bignerdranch.androidsudoku;
 
+import android.content.Context;
 import android.mtp.MtpConstants;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +17,7 @@ public class CoordinateList
 
 public class SudokuHinter {
     //returns coordNum of next solved cell
-    public int getNextSolvedCoord(SudokuGrid mySudoku) {
+    public int getNextSolvedCoord(SudokuGrid mySudoku, Context context) {
         SudokuSolver sudokuSolver = new SudokuSolver();
 
         int coord;
@@ -30,6 +32,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "1");
+                Toast.makeText(context, "Naked single", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -40,6 +43,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "3");
+                Toast.makeText(context, "Hidden single", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -49,6 +53,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "4");
+                Toast.makeText(context, "Hidden single", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -58,6 +63,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "5");
+                Toast.makeText(context, "Naked pair", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -67,6 +73,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "6");
+                Toast.makeText(context, "Naked pair", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -76,6 +83,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "7");
+                Toast.makeText(context, "Candidate lines", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -85,6 +93,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "8");
+                Toast.makeText(context, "Hidden Pair", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -94,6 +103,7 @@ public class SudokuHinter {
             coord = getRandCoordNumDifferent(mySudoku, copy);
             if (coord != -1) {
                 Log.i("Hint", "9");
+                Toast.makeText(context, "Pointing Pair", Toast.LENGTH_SHORT).show();
                 return coord;
             }
         }
@@ -447,7 +457,8 @@ public class SudokuHinter {
         return candidatePairBoxCheckerWorks;
     }
 
-    //checks for hidden candidate sets and removes candidates from those
+    //checks for hidden candidate sets and removes candidates from those. ex: a 2 and 9 can only go in 2 cells in a row,
+    //eliminate all other cands from those cells
     public boolean HiddenCandidatePairChecker(SudokuGrid mySudoku) {
         boolean hiddenCandidatePairCheckerWorks = false;
         //find in a row

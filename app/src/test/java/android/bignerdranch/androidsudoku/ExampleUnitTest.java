@@ -545,6 +545,7 @@ public class ExampleUnitTest {
     }
 
 
+    /*
     @Test
     public void writeSudokusToFile(){
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
@@ -587,6 +588,8 @@ public class ExampleUnitTest {
 
         }
     }
+
+     */
 
     @Test
     public void writeAndReadFile(){
