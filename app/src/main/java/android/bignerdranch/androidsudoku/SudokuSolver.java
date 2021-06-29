@@ -686,6 +686,7 @@ public class SudokuSolver {
         return candidateLinesCheckerWorks;
     }
 
+    //if candidate can only go in one box in a row or column, remove that candidate from the rest of that box
     public boolean pointingPairRookToBoxChecker(SudokuGrid mySudoku) {
         boolean pointingPairRookToBoxWorks = false;
         //check rows
@@ -840,6 +841,61 @@ public class SudokuSolver {
 
 
         return pointingPairRookToBoxWorks;
+    }
+
+
+    //checks xWings
+    public boolean xWingChecker(SudokuGrid mySudoku){
+        return false;
+    }
+
+    //checks basic fish. x wings (numhouses = 2), swordfish (numhouses = 3), jellyfis (numhouses = 4).
+    //Basic Fish larger than Jellyfish are of course possible, but unnecessary: For any larger fish a complementary smaller one will exist.
+    //basic fish means single digit patterns in rows and columns
+
+    public boolean basicFishChecker(SudokuGrid mySudoku, int numHouses){
+        //rows are base set (eliminates in column)
+
+        for(int r = 0; r < 9; r++){
+            for(int c = 0; c < 9; c++){
+                //numCand stores the number of cands and the index of the value of the cand. ie if there are two 3s, then 2 would be stored at index 3
+                int[] numCand ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                for(int index = 0; index < mySudoku.getSudokCell(r, c).size(); index++){
+                    int val = mySudoku.getSudokCell(r, c).getVal(index);
+                    numCand[val] = numCand[val] + 1;
+                }
+                for(int candidateValue = 1; candidateValue < numCand.length; candidateValue++){
+                    //if the number of the candidate of one digit is less than or equal to the numHouses. then check columns
+                    if(numCand[candidateValue] <= numHouses){
+                        //list of the columns in which the cands are
+                        ArrayList<Integer> columnList = new ArrayList<Integer>();
+                        for(int c2 = 0; c2 < 9; c2++){
+                            if(mySudoku.getSudokCell(r, c2).contains(candidateValue)){
+                                columnList.add(c2);
+                            }
+                        }
+
+                        //checks all other rows for a matching row - needs numHouses of total matching rows
+                        for(int row = 0; row < 9; row++){
+
+                            boolean rowMatches = true;
+                            for(int column = 0; column < 9; column++){
+                                //if column is not one of the columnList columns that can contain the same candidate value
+                                if(!columnList.contains(column)){
+                                    if(mySudoku.getSudokCell(row, column).contains(candidateValue)){
+                                        rowMatches = false;
+                                        //Todo: this method of using
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //columns are base set  (eliminates in row)
+        return false;
     }
 
     //Todo: by using .isValid, this method indirectly uses brute force

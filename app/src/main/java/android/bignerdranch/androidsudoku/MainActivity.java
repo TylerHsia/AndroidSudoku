@@ -1,5 +1,7 @@
 package android.bignerdranch.androidsudoku;
 
+//copyright tyler hsia sudoku app
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -38,26 +40,45 @@ public class MainActivity extends AppCompatActivity {
     private final String computerSolvedKey = "computerSolved";
     private final String invalidUserMoveKey = "invalidUserMove";
 
+    //To dos
 
-
-    //If all of a number are inputted, turn off button
-    //After senior project
+    //Front end
     //make app fit on more square screens
-    //undo and redo
-    //hinting with candidates
-    //improve and comment all old C# code
-    //store data on app close
-    //fix generation code where a stack overflow is possible
     //custom animation for onsolved
-    //options menu
+    //options menu/settings
     //sound effects
-    //reason for why a sudoku is invalid (no solutions, multiples solutions)
-    //activity for settings
-    //Log.i("infinite loop
+    //rate difficulty
+    //way to see what difficulty you're currently on
+    //change red error checker to highlight all duplicates
+        //if inputting duplicates in the same row, and you remove the one that is not red, then the other one stays red
+    //add ability to restart sudoku which would delete all givens
+    //export and import sudoku. do by copying to clipboard?
+
+
+    //simple
+    //If all of a number are inputted, turn off button
+    //improve and comment all old C# code
     //change difficulty ratings to enum
-    //Notes are removed when number is inputted
-    //note checkbox sometimes hidden by bottom screen menu
+    //generate activity remembers difficulty
+    //perturbation idea: in any box row or box column, can swap the row or column in any place within that box row or box column
+
+
+
+    //complex
+    //hinting with candidates - change hints so that hints are entirely sequential and include candidate elimination. maybe overlay a new sudoku board with computer generated candidates to show this?
+    //undo and redo
+    //fix generation code where a stack overflow is possible
+    //reason for why a sudoku is invalid (no solutions, multiples solutions)
+    //Log.i("infinite loop
     //Solve sudoku on background thread and store it
+        //when isvalid pressed, show which cells are wrong if invalid
+    //Make forcing chains not use isvalid so that it cannot brute force
+    //custom generation
+        //solving strategies
+            //General fish
+            //Basic Fish larger than Jellyfish are of course possible, but unnecessary: For any larger fish a complementary smaller one will exist.
+            //Some specific chains
+
 
 
 

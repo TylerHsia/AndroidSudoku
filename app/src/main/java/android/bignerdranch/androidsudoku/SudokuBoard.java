@@ -383,6 +383,7 @@ public class SudokuBoard extends View {
                 //if same val is already there, delete
                 if (mySudoku.getSudokCell(this.selected_row, this.selected_column).getVal() == num) {
                     mySudoku.getSudokuGrid()[this.selected_row][this.selected_column] = new SudokCell();
+                    invalidUserMove[selected_row][selected_column] = false;
                 } else {
                     //set to new val
                     hintCoord = -1;

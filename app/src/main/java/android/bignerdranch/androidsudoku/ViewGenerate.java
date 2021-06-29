@@ -39,7 +39,7 @@ public class ViewGenerate extends AppCompatActivity {
 
          */
 
-        String[] items = new String[] { "Very Easy", "Easy", "Normal", "Hard", "Impossible", "Custom", "Blank" };
+        String[] items = new String[] { "Very Easy", "Easy", "Medium", "Hard", "Impossible", "Custom", "Blank" };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, items);
