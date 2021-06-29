@@ -1,14 +1,11 @@
 package android.bignerdranch.androidsudoku;
 
 import android.content.Context;
-import android.mtp.MtpConstants;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 /*
 public class CoordinateList
 {
@@ -148,7 +145,7 @@ public class SudokuHinter {
 
                             //if not solved element has solved value
                             if (index != -1) {
-                                mySudoku.getSudokuGrid()[row2][column].remove(index);
+                                mySudoku.getSudokuGrid()[row2][column].removeAt(index);
                                 return true;
                             }
                         }
@@ -163,7 +160,7 @@ public class SudokuHinter {
 
                             //if not solved element has solved value
                             if (index != -1) {
-                                mySudoku.getSudokuGrid()[row][column2].remove(index);
+                                mySudoku.getSudokuGrid()[row][column2].removeAt(index);
                                 return true;
 
                             }
@@ -198,7 +195,7 @@ public class SudokuHinter {
                                         getVal());
 
                                 if (index != -1) {
-                                    mySudoku.getSudokuGrid()[row2][column2].remove(index);
+                                    mySudoku.getSudokuGrid()[row2][column2].removeAt(index);
                                     return true;
                                 }
                             }
@@ -338,7 +335,7 @@ public class SudokuHinter {
                                     //if another cell has the candidates that are in the naked set, remove that candidate from it
                                     if (mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].
                                             getVal(possibleIndex)) != -1) {
-                                        mySudoku.getSudokuGrid()[row2][column].remove(mySudoku.getSudokuGrid()[row2][column].
+                                        mySudoku.getSudokuGrid()[row2][column].removeAt(mySudoku.getSudokuGrid()[row2][column].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                         candidatePairRookCheckerWorks = true;
                                     }
@@ -374,7 +371,7 @@ public class SudokuHinter {
                                     if (mySudoku.getSudokuGrid()[row][column2].
                                             indexOf(mySudoku.getSudokuGrid()[row][column].
                                                     getVal(possibleIndex)) != -1) {
-                                        mySudoku.getSudokuGrid()[row][column2].remove(mySudoku.getSudokuGrid()[row][column2].
+                                        mySudoku.getSudokuGrid()[row][column2].removeAt(mySudoku.getSudokuGrid()[row][column2].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                         candidatePairRookCheckerWorks = true;
                                     }
@@ -440,7 +437,7 @@ public class SudokuHinter {
                                                 getVal(possibleIndex))) {
                                             //remove that possibility from the other cell
                                             //printBoard(mySudoku, true);
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                             candidatePairBoxCheckerWorks = true;
                                         }
@@ -505,12 +502,12 @@ public class SudokuHinter {
                                         //removal
                                         if (mySudoku.getSudokuGrid()[row][kColumnCoord1].contains(j)) {
                                             mySudoku.getSudokuGrid()[row][kColumnCoord1]
-                                                    .remove(mySudoku.getSudokuGrid()[row][kColumnCoord1].indexOf(j));
+                                                    .removeAt(mySudoku.getSudokuGrid()[row][kColumnCoord1].indexOf(j));
 
                                         }
                                         if (mySudoku.getSudokuGrid()[row][kColumnCoord2].contains(j)) {
                                             mySudoku.getSudokuGrid()[row][kColumnCoord2].
-                                                    remove(mySudoku.getSudokuGrid()[row][kColumnCoord2].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[row][kColumnCoord2].indexOf(j));
 
                                         }
                                     }
@@ -566,12 +563,12 @@ public class SudokuHinter {
                                         //removal
                                         if (mySudoku.getSudokuGrid()[kRowCoord1][column].contains(j)) {
                                             mySudoku.getSudokuGrid()[kRowCoord1][column].
-                                                    remove(mySudoku.getSudokuGrid()[kRowCoord1][column].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[kRowCoord1][column].indexOf(j));
 
                                         }
                                         if (mySudoku.getSudokuGrid()[kRowCoord2][column].contains(j)) {
                                             mySudoku.getSudokuGrid()[kRowCoord2][column].
-                                                    remove(mySudoku.getSudokuGrid()[kRowCoord2][column].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[kRowCoord2][column].indexOf(j));
 
                                         }
                                     }
@@ -646,13 +643,13 @@ public class SudokuHinter {
                                             //removal
                                             if (mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].contains(j)) {
                                                 mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
-                                                        remove(mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
+                                                        removeAt(mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
                                                                 indexOf(j));
 
                                             }
                                             if (mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].contains(j)) {
                                                 mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
-                                                        remove(mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
+                                                        removeAt(mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
                                                                 indexOf(j));
 
                                             }
@@ -728,7 +725,7 @@ public class SudokuHinter {
                                     if (mySudoku.getSudokuGrid()[rowVals.get(0)][column2].contains(i)) {
                                         //remove that candidate
                                         mySudoku.getSudokuGrid()[rowVals.get(0)][column2].
-                                                remove(mySudoku.getSudokuGrid()[rowVals.get(0)][column2].indexOf(i));
+                                                removeAt(mySudoku.getSudokuGrid()[rowVals.get(0)][column2].indexOf(i));
                                         removedACandidate = true;
                                     }
                                 }
@@ -759,7 +756,7 @@ public class SudokuHinter {
                                     if (mySudoku.getSudokuGrid()[row2][columnVals.get(0)].contains(i)) {
                                         //remove that candidate
                                         mySudoku.getSudokuGrid()[row2][columnVals.get(0)].
-                                                remove(mySudoku.getSudokuGrid()[row2][columnVals.get(0)].indexOf(i));
+                                                removeAt(mySudoku.getSudokuGrid()[row2][columnVals.get(0)].indexOf(i));
                                         removedACandidate = true;
                                     }
                                 }
@@ -812,7 +809,7 @@ public class SudokuHinter {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
 
                                         }
@@ -839,7 +836,7 @@ public class SudokuHinter {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
 
                                         }
@@ -885,7 +882,7 @@ public class SudokuHinter {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
 
                                         }
@@ -912,7 +909,7 @@ public class SudokuHinter {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
 
                                         }

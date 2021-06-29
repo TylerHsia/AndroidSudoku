@@ -37,6 +37,62 @@ public class ExampleUnitTest {
 
     private int NumStoredSudokus = 23;
 
+    @Test
+    public void testXWingChecker(){
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        SudokuGrid mySudoku;
+
+        ArrayList<Integer> xWingRowBase = new ArrayList<Integer>();
+        xWingRowBase.add(41729030);
+        xWingRowBase.add(769003402);
+        xWingRowBase.add(32640719);
+        xWingRowBase.add(403900170);
+        xWingRowBase.add(607004903);
+        xWingRowBase.add(195370024);
+        xWingRowBase.add(214567398);
+        xWingRowBase.add(376090541);
+        xWingRowBase.add(958431267);
+        mySudoku = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(xWingRowBase));
+        assertTrue(mySudoku.IsValid());
+        sudokuSolver.RookChecker(mySudoku);
+        sudokuSolver.BoxChecker(mySudoku);
+        sudokuSolver.xWingChecker(mySudoku);
+        assertTrue(mySudoku.IsValid());
+        assertFalse(mySudoku.getSudokCell(3, 4).contains(5));
+
+
+        ArrayList<Integer> xWingColumnBase = new ArrayList<Integer>();
+        xWingColumnBase.add(980062753);
+        xWingColumnBase.add(65003000);
+        xWingColumnBase.add(327050006);
+        xWingColumnBase.add(790030500);
+        xWingColumnBase.add(50009000);
+        xWingColumnBase.add(832045009);
+        xWingColumnBase.add(673591428);
+        xWingColumnBase.add(249087005);
+        xWingColumnBase.add(518020007);
+        mySudoku = sudokuSolver.FromIntArray(sudokuSolver.twoDConverter(xWingColumnBase));
+        assertTrue(mySudoku.IsValid());
+
+        sudokuSolver.RookChecker(mySudoku);
+        sudokuSolver.BoxChecker(mySudoku);
+        sudokuSolver.xWingChecker(mySudoku);
+        assertTrue(mySudoku.IsValid());
+        assertFalse(mySudoku.getSudokCell(1, 3).contains(1));
+
+
+
+        for(int i = 4; i <= 22; i++) {
+            Log.i("test x wings", "" + i);
+            mySudoku = sudokuSolver.getInput(i);
+            sudokuSolver.RookChecker(mySudoku);
+            sudokuSolver.BoxChecker(mySudoku);
+            sudokuSolver.xWingChecker(mySudoku);
+            assertTrue(mySudoku.IsValid());
+
+        }
+    }
+
 
     @Test
     public void testModifyDifficulty(){

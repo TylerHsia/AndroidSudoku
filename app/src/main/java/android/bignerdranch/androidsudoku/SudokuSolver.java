@@ -28,7 +28,7 @@ public class SudokuSolver {
 
                             //if not solved element has solved value
                             if (index != -1) {
-                                mySudoku.getSudokuGrid()[row2][column].remove(index);
+                                mySudoku.getSudokuGrid()[row2][column].removeAt(index);
                                 //checkerMethodOneWorks = true;
                                 //checkerMethodOneWorks =
                                 RookChecker(mySudoku);
@@ -47,7 +47,7 @@ public class SudokuSolver {
 
                             //if not solved element has solved value
                             if (index != -1) {
-                                mySudoku.getSudokuGrid()[row][column2].remove(index);
+                                mySudoku.getSudokuGrid()[row][column2].removeAt(index);
 
                                 //checkerMethodOneWorks = true;
                                 //RookCheckerWorks =
@@ -86,7 +86,7 @@ public class SudokuSolver {
                                         getVal());
 
                                 if (index != -1) {
-                                    mySudoku.getSudokuGrid()[row2][column2].remove(index);
+                                    mySudoku.getSudokuGrid()[row2][column2].removeAt(index);
                                     //boxCheckerWorks = true;
                                     //boxCheckerWorks =
                                     BoxChecker(mySudoku);
@@ -233,7 +233,7 @@ public class SudokuSolver {
                                     //if another cell has the candidates that are in the naked set, remove that candidate from it
                                     if (mySudoku.getSudokuGrid()[row2][column].indexOf(mySudoku.getSudokuGrid()[row][column].
                                             getVal(possibleIndex)) != -1) {
-                                        mySudoku.getSudokuGrid()[row2][column].remove(mySudoku.getSudokuGrid()[row2][column].
+                                        mySudoku.getSudokuGrid()[row2][column].removeAt(mySudoku.getSudokuGrid()[row2][column].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                         candidatePairRookCheckerWorks = true;
                                     }
@@ -273,7 +273,7 @@ public class SudokuSolver {
                                     if (mySudoku.getSudokuGrid()[row][column2].
                                             indexOf(mySudoku.getSudokuGrid()[row][column].
                                                     getVal(possibleIndex)) != -1) {
-                                        mySudoku.getSudokuGrid()[row][column2].remove(mySudoku.getSudokuGrid()[row][column2].
+                                        mySudoku.getSudokuGrid()[row][column2].removeAt(mySudoku.getSudokuGrid()[row][column2].
                                                 indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                         candidatePairRookCheckerWorks = true;
                                     }
@@ -340,7 +340,7 @@ public class SudokuSolver {
                                                 getVal(possibleIndex))) {
                                             //remove that possibility from the other cell
                                             //printBoard(mySudoku, true);
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(mySudoku.getSudokuGrid()[row][column].getVal(possibleIndex)));
                                             candidatePairBoxCheckerWorks = true;
                                         }
@@ -407,13 +407,13 @@ public class SudokuSolver {
                                         //removal
                                         if (mySudoku.getSudokuGrid()[row][kColumnCoord1].contains(j)) {
                                             mySudoku.getSudokuGrid()[row][kColumnCoord1]
-                                                    .remove(mySudoku.getSudokuGrid()[row][kColumnCoord1].indexOf(j));
+                                                    .removeAt(mySudoku.getSudokuGrid()[row][kColumnCoord1].indexOf(j));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
                                         }
                                         if (mySudoku.getSudokuGrid()[row][kColumnCoord2].contains(j)) {
                                             mySudoku.getSudokuGrid()[row][kColumnCoord2].
-                                                    remove(mySudoku.getSudokuGrid()[row][kColumnCoord2].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[row][kColumnCoord2].indexOf(j));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
                                         }
@@ -470,13 +470,13 @@ public class SudokuSolver {
                                         //removal
                                         if (mySudoku.getSudokuGrid()[kRowCoord1][column].contains(j)) {
                                             mySudoku.getSudokuGrid()[kRowCoord1][column].
-                                                    remove(mySudoku.getSudokuGrid()[kRowCoord1][column].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[kRowCoord1][column].indexOf(j));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
                                         }
                                         if (mySudoku.getSudokuGrid()[kRowCoord2][column].contains(j)) {
                                             mySudoku.getSudokuGrid()[kRowCoord2][column].
-                                                    remove(mySudoku.getSudokuGrid()[kRowCoord2][column].indexOf(j));
+                                                    removeAt(mySudoku.getSudokuGrid()[kRowCoord2][column].indexOf(j));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
                                         }
@@ -552,14 +552,14 @@ public class SudokuSolver {
                                             //removal
                                             if (mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].contains(j)) {
                                                 mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
-                                                        remove(mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
+                                                        removeAt(mySudoku.getSudokuGrid()[kRowCoord1][kColumnCoord1].
                                                                 indexOf(j));
                                                 RookChecker(mySudoku);
                                                 BoxChecker(mySudoku);
                                             }
                                             if (mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].contains(j)) {
                                                 mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
-                                                        remove(mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
+                                                        removeAt(mySudoku.getSudokuGrid()[kRowCoord2][kColumnCoord2].
                                                                 indexOf(j));
                                                 RookChecker(mySudoku);
                                                 BoxChecker(mySudoku);
@@ -636,7 +636,7 @@ public class SudokuSolver {
                                     if (mySudoku.getSudokuGrid()[rowVals.get(0)][column2].contains(i)) {
                                         //remove that candidate
                                         mySudoku.getSudokuGrid()[rowVals.get(0)][column2].
-                                                remove(mySudoku.getSudokuGrid()[rowVals.get(0)][column2].indexOf(i));
+                                                removeAt(mySudoku.getSudokuGrid()[rowVals.get(0)][column2].indexOf(i));
                                         removedACandidate = true;
                                     }
                                 }
@@ -667,7 +667,7 @@ public class SudokuSolver {
                                     if (mySudoku.getSudokuGrid()[row2][columnVals.get(0)].contains(i)) {
                                         //remove that candidate
                                         mySudoku.getSudokuGrid()[row2][columnVals.get(0)].
-                                                remove(mySudoku.getSudokuGrid()[row2][columnVals.get(0)].indexOf(i));
+                                                removeAt(mySudoku.getSudokuGrid()[row2][columnVals.get(0)].indexOf(i));
                                         removedACandidate = true;
                                     }
                                 }
@@ -722,7 +722,7 @@ public class SudokuSolver {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
@@ -750,7 +750,7 @@ public class SudokuSolver {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
@@ -797,7 +797,7 @@ public class SudokuSolver {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
@@ -825,7 +825,7 @@ public class SudokuSolver {
                                     if (!mySudoku.getSudokuGrid()[row2][column2].isSolved()) {
                                         //remove i
                                         if (mySudoku.getSudokuGrid()[row2][column2].contains(i)) {
-                                            mySudoku.getSudokuGrid()[row2][column2].remove(mySudoku.getSudokuGrid()[row2][column2].
+                                            mySudoku.getSudokuGrid()[row2][column2].removeAt(mySudoku.getSudokuGrid()[row2][column2].
                                                     indexOf(i));
                                             RookChecker(mySudoku);
                                             BoxChecker(mySudoku);
@@ -844,8 +844,92 @@ public class SudokuSolver {
     }
 
 
-    //checks xWings
+    //calls rowBaseXWings for two different orientations to find all x wings
     public boolean xWingChecker(SudokuGrid mySudoku){
+        if(rowBaseXWings(mySudoku)){
+            return true;
+        }
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        sudokuGenerator.rotateClockwise(mySudoku);
+        boolean wasSuccesful = rowBaseXWings(mySudoku);
+        sudokuGenerator.rotateCounterClockwise(mySudoku);
+        return wasSuccesful;
+    }
+
+    //checks xWings with row base
+    public boolean rowBaseXWings(SudokuGrid mySudoku){
+        //general idea: find a row with two of one candidate, check the two columns where those candidates were for another
+        //row that has just those two candidates in the right area
+        //for each row, find if there are two of a given candidate
+        for(int r = 0; r < 9; r++) {
+
+            for(int candidate = 1; candidate < 10; candidate++) {
+                //Todo: delete this if
+                if(r == 1 && candidate == 5){
+                    int x = candidate * 2;
+                }
+                //numcandidate is the number of that candidate in the row
+                int numCandidate = 0;
+                //first and second column values recorded
+                int c1 = -1;
+                int c2 = -1;
+                for (int c = 0; c < 9; c++) {
+                    if(mySudoku.getSudokCell(r, c).contains(candidate)){
+                        numCandidate++;
+                        c2 = c1;
+                        c1 = c;
+                    }
+                }
+                if(numCandidate == 2){
+                    //check the stored columns that each has 1 more candidate in the same row
+                    //not necessarily only one more candidate in the column
+                    //but has to be only 2 candidates in that row
+                    for(int row = 0; row < 9; row++){
+                        //if not in the row already checked
+                        if(row != r) {
+                            //if both stored column vals have the candidate in the new row, check that they are the only ones in the row
+                            if (mySudoku.getSudokCell(row, c1).contains(candidate) &&
+                                    mySudoku.getSudokCell(row, c2).contains(candidate)){
+
+                                boolean failed = false;
+                                for(int column = 0; column < 9; column++) {
+                                    if (column != c1 && column != c2) {
+                                        if (mySudoku.getSudokCell(row, column).contains(candidate)) {
+                                            failed = true;
+                                        }
+                                    }
+                                }
+                                if(!failed){
+
+                                    boolean xWingsWorked = false;
+                                    //remove that candidate from the rest of the column
+                                    for(int rowRemove = 0; rowRemove < 9; rowRemove++){
+                                        //if neither of the original two base rows
+                                        if(rowRemove != row && rowRemove != r){
+                                            //remove candidate from stored columns
+                                            if(mySudoku.getSudokCell(rowRemove, c1).contains(candidate)){
+                                                mySudoku.getSudokuGrid()[rowRemove][c1].removeVal(candidate);
+                                                xWingsWorked = true;
+                                            }
+                                            if(mySudoku.getSudokCell(rowRemove, c2).contains(candidate)){
+                                                mySudoku.getSudokuGrid()[rowRemove][c2].removeVal(candidate);
+                                                xWingsWorked = true;
+                                            }
+                                        }
+                                    }
+                                    if(xWingsWorked){
+                                        return true;
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
         return false;
     }
 
@@ -932,12 +1016,12 @@ public class SudokuSolver {
                             solve(mySudoku.getSudokuGrid()[row][column].getPossibles().get(0));
 
                     if (solveForForcingChains(copy1)) {
-                        mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
+                        mySudoku.getSudokuGrid()[row][column].removeAt(mySudoku.getSudokuGrid()[row][column].
                                 indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(0)));
                         return true;
                     }
                     if (numUnsolved(copy1) == 0 && !IsSolved(copy1, false)) {
-                        mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
+                        mySudoku.getSudokuGrid()[row][column].removeAt(mySudoku.getSudokuGrid()[row][column].
                                 indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(0)));
                         return true;
                     }
@@ -960,14 +1044,14 @@ public class SudokuSolver {
                         //if error made in solving
                         if (solveForForcingChains(copy)) {
                             //Remove that candidate
-                            mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
+                            mySudoku.getSudokuGrid()[row][column].removeAt(mySudoku.getSudokuGrid()[row][column].
                                     indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(candidateIndex)));
                             return true;
                         }
                         //If other error made in solving
                         if (numUnsolved(copy) == 0 && !IsSolved(copy, false)) {
                             //Remove that candidate
-                            mySudoku.getSudokuGrid()[row][column].remove(mySudoku.getSudokuGrid()[row][column].
+                            mySudoku.getSudokuGrid()[row][column].removeAt(mySudoku.getSudokuGrid()[row][column].
                                     indexOf(mySudoku.getSudokuGrid()[row][column].getPossibles().get(candidateIndex)));
                             return true;
                         }
@@ -1434,7 +1518,7 @@ public class SudokuSolver {
 
                         //if solving the copy make a remove all error, remove the guessed candidate from mySudoku
                         if (solveForBruteForce(copy)) {
-                            mySudoku.getSudokuGrid()[row][column].remove(i);
+                            mySudoku.getSudokuGrid()[row][column].removeAt(i);
                             i--;
                             solveForBruteForce(mySudoku);
                         } else if (IsSolved(copy)) {
@@ -1444,7 +1528,7 @@ public class SudokuSolver {
                             return "Solved";
                         } else if (InvalidMove(copy)) {
                             try {
-                                mySudoku.getSudokuGrid()[row][column].remove(i);
+                                mySudoku.getSudokuGrid()[row][column].removeAt(i);
                                 i--;
                                 solveForBruteForce(mySudoku);
                             } catch (Exception e) {
@@ -1454,7 +1538,7 @@ public class SudokuSolver {
                             //bruteForceSolver(mySudoku);
                             //return "";
                         } else if (numUnsolved(copy) == 0) {
-                            mySudoku.getSudokuGrid()[row][column].remove(i);
+                            mySudoku.getSudokuGrid()[row][column].removeAt(i);
                             i--;
                             solveForBruteForce(mySudoku);
                             //bruteForceSolver(mySudoku);
@@ -1467,7 +1551,7 @@ public class SudokuSolver {
                                 try {
 
 
-                                    mySudoku.getSudokuGrid()[row][column].remove(i);
+                                    mySudoku.getSudokuGrid()[row][column].removeAt(i);
                                     i--;
                                     solveForBruteForce(mySudoku);
                                 } catch (Exception e) {

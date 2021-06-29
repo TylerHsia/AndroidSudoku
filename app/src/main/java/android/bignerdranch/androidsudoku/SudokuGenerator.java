@@ -38,6 +38,13 @@ public class SudokuGenerator {
         }
     }
 
+    //rotates a sudoku 90 degress counterclockwise
+    public void rotateCounterClockwise(SudokuGrid sudokuGrid){
+        rotateClockwise(sudokuGrid);
+        rotateClockwise(sudokuGrid);
+        rotateClockwise(sudokuGrid);
+    }
+
     //flips the sudoku around a horizontal midline
     public void flipHorizontal(SudokuGrid sudokuGrid) {
         for (int row = 0; row < 3; row++) {

@@ -71,27 +71,39 @@ public class SudokCell {
         return possibles.indexOf(val);
     }
     //removes a candidate
-    public boolean remove(int toRemove)
+    public boolean removeAt(int index)
     {
 
         //to be commented out
         boolean toPrint = false;
 
-        possibles.remove(toRemove);
+        possibles.remove(index);
         if (possibles.size() == 1)
         {
             solved = true;
         }
 
-        //to be commented out
         if (possibles.size() == 0)
         {
-            //System.out.println("Removed all possibilities, my null pointer exception");
-            toPrint = true;
 
             throw new IllegalStateException("Cell has zero candidates");
         }
         return toPrint;
+    }
+
+    public void removeVal(int val){
+        int index = possibles.indexOf(val);
+        possibles.remove(index);
+        if (possibles.size() == 1)
+        {
+            solved = true;
+        }
+
+        if (possibles.size() == 0)
+        {
+
+            throw new IllegalStateException("Cell has zero candidates");
+        }
     }
 
     //removes all other candidates
