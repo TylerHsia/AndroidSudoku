@@ -99,6 +99,28 @@ public class SudokuGenerator {
         }
     }
 
+    //swaps two rows in a box row. input ints should be 0, 1, or 2
+    public void swapRowsInBoxRow(SudokuGrid sudokuGrid, int boxRow, int rowAdd, int rowAddTwo){
+        SudokuGrid copy = sudokuSolver.Copy(sudokuGrid);
+        int r1 = boxRow * 3 + rowAdd;
+        int r2 = boxRow * 3 + rowAddTwo;
+        for(int column = 0; column < 9; column++){
+            sudokuGrid.setSudokCell(r1, column, copy.getSudokCell(r2, column));
+            sudokuGrid.setSudokCell(r2, column, copy.getSudokCell(r1, column));
+        }
+    }
+
+    //swaps two columns in a box column. input ints should be 0, 1, or 2
+    public void swapColumnInBoxColumn(SudokuGrid sudokuGrid, int boxColumn, int columnAdd, int columnAddTwo){
+        SudokuGrid copy = sudokuSolver.Copy(sudokuGrid);
+        int c1 = boxColumn * 3 + columnAdd;
+        int c2 = boxColumn * 3 + columnAddTwo;
+        for(int row = 0; row < 9; row++){
+            sudokuGrid.setSudokCell(row, c1, copy.getSudokCell(row, c2));
+            sudokuGrid.setSudokCell(row, c2, copy.getSudokCell(row, c1));
+        }
+    }
+
     //reflect a given sudoku through the origin
     public void reflectOrigin(SudokuGrid mySudoku){
         SudokuSolver sudokuSolver = new SudokuSolver();
@@ -643,5 +665,19 @@ public class SudokuGenerator {
         for(int i = 0; i < numBoxColumnSwaps; i++){
             swapBoxColumns(mySudoku, (int) (Math.random() * 3), (int) (Math.random() * 3));
         }
+
+        //radnom number of swap columns in box column
+        int numSwapColumnInBoxColumn = (int) (Math.random() * 9);
+        for(int i = 0; i < numSwapColumnInBoxColumn; i++){
+            swapColumnInBoxColumn(mySudoku, (int) (Math.random() * 3), (int) (Math.random() * 3), (int) (Math.random() * 3));
+        }
+
+        //random number of swap row in box row
+        int numSwapRowInBowRow = (int) (Math.random() * 9);
+        for(int i = 0; i < numSwapRowInBowRow; i++){
+            swapRowsInBoxRow(mySudoku, (int) (Math.random() * 3), (int) (Math.random() * 3), (int) (Math.random() * 3));
+        }
+
+
     }
 }
