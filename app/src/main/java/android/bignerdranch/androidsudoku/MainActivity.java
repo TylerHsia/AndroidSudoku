@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     //improve and comment all old C# code
     //change difficulty ratings to enum
     //generate activity remembers difficulty
-    //perturbation idea: in any box row or box column, can swap the row or column in any place within that box row or box column
-
 
 
     //complex

@@ -938,48 +938,43 @@ public class SudokuSolver {
     //basic fish means single digit patterns in rows and columns
 
     public boolean basicFishChecker(SudokuGrid mySudoku, int numHouses){
-        //rows are base set (eliminates in column)
+        if(rowBaseFishChecker(mySudoku, numHouses)){
+            return true;
+        }
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        sudokuGenerator.rotateClockwise(mySudoku);
+        boolean wasSuccesful = rowBaseFishChecker(mySudoku, numHouses);
+        sudokuGenerator.rotateCounterClockwise(mySudoku);
+        return wasSuccesful;
 
-        for(int r = 0; r < 9; r++){
-            for(int c = 0; c < 9; c++){
-                //numCand stores the number of cands and the index of the value of the cand. ie if there are two 3s, then 2 would be stored at index 3
-                int[] numCand ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-                for(int index = 0; index < mySudoku.getSudokCell(r, c).size(); index++){
-                    int val = mySudoku.getSudokCell(r, c).getVal(index);
-                    numCand[val] = numCand[val] + 1;
-                }
-                for(int candidateValue = 1; candidateValue < numCand.length; candidateValue++){
-                    //if the number of the candidate of one digit is less than or equal to the numHouses. then check columns
-                    if(numCand[candidateValue] <= numHouses){
-                        //list of the columns in which the cands are
-                        ArrayList<Integer> columnList = new ArrayList<Integer>();
-                        for(int c2 = 0; c2 < 9; c2++){
-                            if(mySudoku.getSudokCell(r, c2).contains(candidateValue)){
-                                columnList.add(c2);
-                            }
-                        }
+    }
 
-                        //checks all other rows for a matching row - needs numHouses of total matching rows
-                        for(int row = 0; row < 9; row++){
+    //four rows such that, in total, four cells are occupied in the row by a candidate number
+    //deletes candidates in columns
+    public boolean rowBaseFishChecker(SudokuGrid mySudoku, int numHouses){
+        //for each candidate, go through each cell, recording all the rows that the candidate appears in numhouses or fewer times
+        for(int candidate = 1; candidate < 10; candidate ++) {
+            ArrayList<Integer> rowsWithCandidate = new ArrayList<Integer>();
 
-                            boolean rowMatches = true;
-                            for(int column = 0; column < 9; column++){
-                                //if column is not one of the columnList columns that can contain the same candidate value
-                                if(!columnList.contains(column)){
-                                    if(mySudoku.getSudokCell(row, column).contains(candidateValue)){
-                                        rowMatches = false;
-                                        //Todo: this method of using
-                                    }
-                                }
-                            }
-                        }
+            for (int row = 0; row < 9; row++) {
+                int numInRow = 0;
+                for (int column = 0; column < 9; column++) {
+
+                    //if the candidate is anywhere in that row, add it to the list and increment row
+                    if(mySudoku.getSudokCell(row, column).contains(candidate)){
+                        numInRow++;
                     }
                 }
+                if(numInRow <= numHouses){
+                    rowsWithCandidate.add(row);
+                }
+            }
+            //if found a fish
+            if(rowsWithCandidate.size() == numHouses){
+                //eliminate from columns
+
             }
         }
-
-        //columns are base set  (eliminates in row)
-        return false;
     }
 
     //Todo: by using .isValid, this method indirectly uses brute force
